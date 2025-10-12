@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Project Synapse 启动脚本
+# Synapse 启动脚本
 # 用于快速启动开发环境
 
 set -e  # 遇到错误立即退出
@@ -32,7 +32,7 @@ print_error() {
 # 打印欢迎信息
 echo ""
 echo -e "${BLUE}═══════════════════════════════════════════════${NC}"
-echo -e "${BLUE}    Project Synapse - AI洞察引擎演示平台${NC}"
+echo -e "${BLUE}    Synapse - AI洞察引擎演示平台${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════════${NC}"
 echo ""
 

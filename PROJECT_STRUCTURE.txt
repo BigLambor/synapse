@@ -1,4 +1,4 @@
-Project Synapse - 项目结构
+Synapse - 项目结构
 =====================================
 
 synapse/
@@ -34,7 +34,7 @@ synapse/
 │   │   ├── ExplorationView.vue    # 🚧 智能探索
 │   │   ├── CollaborationView.vue  # 🚧 协作
 │   │   ├── ModelOptimizationView.vue # 🚧 模型优化
-│   │   └── DashboardView.vue      # 🚧 CTO仪表板
+│   │   └── DashboardView.vue      # 🚧 Director仪表板
 │   │
 │   ├── 🎯 composables/            # 组合式函数
 │   │   └── (待开发)

@@ -1,8 +1,8 @@
 /* 自定义动画样式 */
 
-/* 淡入动画 */
+/* 淡入动画 - 优化：减少动画时长 */
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 
 @keyframes fadeIn {
@@ -14,18 +14,149 @@
   }
 }
 
-/* 滑入动画 */
+/* 滑入动画 - 优化：减少动画时长并使用硬件加速 */
 .animate-slide-up {
-  animation: slideUp 0.6s var(--ease-out-expo);
+  animation: slideUp 0.4s ease-out;
+  will-change: transform, opacity;
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(30px);
+    transform: translate3d(0, 20px, 0);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
+}
+
+/* 交错动画 - 优化：减少动画时长，使用硬件加速 */
+.stagger-item {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  will-change: transform, opacity;
+}
+
+.stagger-item.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* 脉冲发光效果 - 优化：减少使用或禁用 */
+.pulse-glow {
+  /* 性能优化：默认禁用，仅在需要时启用 */
+  /* animation: pulseGlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+  }
+}
+
+/* 加载旋转动画 */
+.animate-spin-slow {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 骨架屏动画 */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 弹跳动画 */
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* 缩放动画 - 优化：使用硬件加速 */
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.95, 0.95, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* 悬停提升效果 - 优化：减少动画时长，使用硬件加速 */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 悬停缩放 - 优化：减少动画时长，使用硬件加速 */
+.hover-scale {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.hover-scale:hover {
+  transform: scale3d(1.03, 1.03, 1);
+}
+
+/* 渐变背景动画 */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
 }

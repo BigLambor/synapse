@@ -1,4 +1,4 @@
-# Project Synapse - 项目状态
+# Synapse - 项目状态
 
 ## 📊 当前进度
 
@@ -66,7 +66,7 @@
    - 通知系统
 
 2. **useUserStore** - 用户管理 ✅
-   - 角色切换（Sarah/Leo/Emma）
+   - 角色切换（张三/李四/王五）
    - 用户信息
    - 权限管理
 
@@ -93,7 +93,7 @@
 - ✅ ExplorationView - 智能探索（占位）
 - ✅ CollaborationView - 协作（占位）
 - ✅ ModelOptimizationView - 模型优化（占位）
-- ✅ DashboardView - CTO仪表板（占位）
+- ✅ DashboardView - Director仪表板（占位）
 
 ### 配置文件
 
@@ -147,7 +147,7 @@
   - [ ] TheHeader
   - [ ] ResultsGrid
   - [ ] DatasetBuilder
-  - [ ] VectorSpace3D
+  - [ ] VeDirectorrSpace3D
   - [ ] KnowledgeCard
 - [ ] 集成GSAP动画
 - [ ] 集成Three.js和D3.js

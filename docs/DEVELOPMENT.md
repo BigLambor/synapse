@@ -74,12 +74,12 @@ git commit -m "feat: add new feature"
 
 ```typescript
 // ✅ 好的命名
-const userName = 'Sarah'
+const userName = '张三'
 const isLoading = true
 const handleClick = () => {}
 
 // ❌ 避免的命名
-const data = 'Sarah'
+const data = '张三'
 const flag = true
 const func = () => {}
 ```
@@ -281,7 +281,7 @@ export const useExampleStore = defineStore('example', () => {
 - **fix**: Bug修复
 - **docs**: 文档更新
 - **style**: 代码格式（不影响功能）
-- **refactor**: 重构
+- **refaDirectorr**: 重构
 - **perf**: 性能优化
 - **test**: 测试相关
 - **chore**: 构建/工具相关
@@ -291,7 +291,7 @@ export const useExampleStore = defineStore('example', () => {
 ```bash
 feat(search): add semantic search functionality
 
-Implement semantic search using vector embeddings.
+Implement semantic search using veDirectorr embeddings.
 Support natural language queries.
 
 Closes #123

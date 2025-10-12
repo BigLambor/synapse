@@ -7,7 +7,7 @@ const router = createRouter({
       path: '/',
       name: 'Landing',
       component: () => import('@/views/LandingView.vue'),
-      meta: { title: 'Project Synapse - AI洞察引擎' }
+      meta: { title: 'Synapse - AI洞察引擎' }
     },
     {
       path: '/ingestion',
@@ -43,7 +43,7 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: () => import('@/views/DashboardView.vue'),
-      meta: { title: 'CTO仪表板' }
+      meta: { title: 'Director仪表板' }
     }
   ]
 })

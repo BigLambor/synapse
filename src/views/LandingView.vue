@@ -2,7 +2,7 @@
   <div class="landing-view min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-950 via-primary-900/20 to-neutral-950">
     <div class="text-center px-4">
       <h1 class="heading-xl text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400 mb-6 animate-fade-in">
-        Project Synapse
+        Synapse
       </h1>
       <p class="body-lg text-neutral-300 mb-12 max-w-2xl mx-auto animate-slide-up">
         AI洞察引擎动态演示平台

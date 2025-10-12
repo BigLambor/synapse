@@ -1,8 +1,8 @@
-# Project Synapse - 架构文档
+# Synapse - 架构文档
 
 ## 系统架构概述
 
-Project Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，确保代码的可维护性和可扩展性。
+Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，确保代码的可维护性和可扩展性。
 
 ## 架构分层
 
@@ -26,7 +26,7 @@ Project Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，
 
 - **Atoms (原子组件)**: Button, Input, Badge, Avatar, Icon
 - **Molecules (分子组件)**: SearchBar, FileUploader, TagCloud, ProgressBar
-- **Organisms (组织组件)**: Header, ResultsGrid, DatasetBuilder, VectorSpace3D
+- **Organisms (组织组件)**: Header, ResultsGrid, DatasetBuilder, VeDirectorrSpace3D
 - **Templates (模板组件)**: DashboardLayout, ModalLayout
 
 #### 页面路由
@@ -39,7 +39,7 @@ Project Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，
 | /exploration | ExplorationView | 多模态搜索 |
 | /collaboration | CollaborationView | 团队协作 |
 | /model-optimization | ModelOptimizationView | 模型优化 |
-| /dashboard | DashboardView | CTO仪表板 |
+| /dashboard | DashboardView | Director仪表板 |
 
 ### 2. 应用层 (Application Layer)
 
@@ -234,4 +234,4 @@ CDN (Static Assets)
 
 **文档版本**: 1.0  
 **最后更新**: 2025-10-07  
-**维护者**: Project Synapse Team
+**维护者**: Synapse Team

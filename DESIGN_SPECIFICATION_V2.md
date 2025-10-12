@@ -1,11 +1,11 @@
-# **Project Synapse - AI洞察引擎动态演示平台**
+# **Synapse - AI洞察引擎动态演示平台**
 ## **设计规范文档 v2.0**
 
 ---
 
 ## **📋 执行摘要 (Executive Summary)**
 
-本文档定义了 Project Synapse 动态演示平台的完整技术架构与实施方案。该平台是一个企业级、可交互的前端应用，旨在向决策层、客户及技术团队展示多模态AI数据湖的端到端价值。
+本文档定义了 Synapse 动态演示平台的完整技术架构与实施方案。该平台是一个企业级、可交互的前端应用，旨在向决策层、客户及技术团队展示多模态AI数据湖的端到端价值。
 
 **核心改进点**：
 - ✅ 强化的技术栈，引入 TypeScript、测试框架和性能监控
@@ -49,17 +49,17 @@
 
 ### **2.2 角色深化**
 
-#### **Sarah Chen - 高级市场分析师**
+#### **张三 - 高级市场分析师**
 - **背景**: 8年汽车行业经验，MBA学位，擅长竞品分析
 - **痛点**: 每天需要手动浏览50+份文档和视频，难以发现隐藏洞察
 - **目标**: 快速定位用户痛点，为产品团队提供可行动的建议
 
-#### **Leo Zhang - AI工程师**
+#### **李四 - AI工程师**
 - **背景**: 3年NLP经验，专注语音交互系统优化
 - **痛点**: 获取高质量标注数据困难，模型迭代周期长
 - **目标**: 用真实场景数据快速验证模型改进效果
 
-#### **新增角色: Dr. Emma Liu - 首席技术官 (观察者视角)**
+#### **新增角色: 王五 - 技术总监 (观察者视角)**
 - **目标**: 通过实时仪表板监控团队协作效率和数据资产ROI
 
 ### **2.3 增强的故事线 (7幕剧结构)**
@@ -84,14 +84,14 @@
 └─ 语义搜索："用户不满意的设计" → 跨模态洞察聚合
 
 幕六：协作赋能 (Collaboration)
-├─ Sarah将洞察打包成"AI优化任务包"
-├─ 一键推送给Leo，附带数据集和标注建议
-└─ Leo在平台内直接启动模型微调
+├─ 张三将洞察打包成"AI优化任务包"
+├─ 一键推送给李四，附带数据集和标注建议
+└─ 李四在平台内直接启动模型微调
 
 幕七：价值闭环 (Value Loop)
 ├─ 对比展示：优化前后的模型性能（准确率提升）
 ├─ 业务指标改善：预测用户满意度提升
-└─ CTO仪表板显示平台使用带来的效率提升
+└─ Director仪表板显示平台使用带来的效率提升
 ```
 
 ---
@@ -183,7 +183,7 @@ synapse/
 │   │   │   ├── TheHeader.vue
 │   │   │   ├── ResultsGrid.vue
 │   │   │   ├── DatasetBuilder.vue
-│   │   │   └── VectorSpace3D.vue
+│   │   │   └── VeDirectorrSpace3D.vue
 │   │   └── templates/         # 模板组件
 │   │       ├── DashboardLayout.vue
 │   │       └── ModalLayout.vue
@@ -195,7 +195,7 @@ synapse/
 │   │   ├── ExplorationView.vue       # 统一探索页（原SearchView）
 │   │   ├── CollaborationView.vue     # 新增：协作页
 │   │   ├── ModelOptimizationView.vue # 模型优化页（原ModelFinetuneView）
-│   │   └── DashboardView.vue         # CTO仪表板
+│   │   └── DashboardView.vue         # Director仪表板
 │   │
 │   ├── composables/           # 组合式函数（业务逻辑复用）
 │   │   ├── useSearch.ts       # 搜索逻辑
@@ -277,7 +277,7 @@ export namespace Domain {
     type: AssetType
     metadata: AssetMetadata
     processingStatus: ProcessingStatus
-    features: FeatureVector
+    features: FeatureVeDirectorr
   }
 
   // 搜索领域
@@ -363,7 +363,7 @@ export function useSearch() {
 **内容**:
 - Hero动画：数据流从混乱到有序的视觉隐喻
 - 价值主张：3个核心数字（50%效率提升，3x洞察速度，90%满意度）
-- 角色选择入口：点击Sarah/Leo头像进入对应视角
+- 角色选择入口：点击张三/李四头像进入对应视角
 - 自动播放模式按钮：无需操作，自动演示完整流程（5分钟）
 
 #### **页面2: ProcessingView.vue - 处理可视化页**
@@ -379,9 +379,9 @@ export function useSearch() {
 **目标**: 展示跨角色协作的无缝体验
 
 **功能**:
-- 分屏视图：左侧Sarah的洞察看板，右侧Leo的任务队列
+- 分屏视图：左侧张三的洞察看板，右侧李四的任务队列
 - 数据集打包流程：选择资产 → 添加标注建议 → 生成任务卡
-- 实时通知：模拟WebSocket推送（"Leo已接受任务"）
+- 实时通知：模拟WebSocket推送（"李四已接受任务"）
 - 评论与反馈：模拟异步协作对话
 
 #### **原有页面优化**
@@ -402,7 +402,7 @@ export function useSearch() {
 - 混淆矩阵可视化
 - 真实测试案例播放（语音唤醒成功率对比）
 
-**DashboardView.vue** - CTO视角:
+**DashboardView.vue** - Director视角:
 - 实时指标：今日处理文件数、活跃用户、存储使用率
 - 协作效率图表：从数据到洞察的平均时长
 - ROI计算器：展示使用平台带来的成本节省
@@ -487,10 +487,10 @@ const emit = defineEmits<{
 </template>
 ```
 
-**VectorSpace3D.vue** - 新增组件
+**VeDirectorrSpace3D.vue** - 新增组件
 ```vue
 <template>
-  <div ref="containerRef" class="vector-space-3d">
+  <div ref="containerRef" class="veDirectorr-space-3d">
     <canvas ref="canvasRef"></canvas>
     
     <!-- 控制面板 -->
@@ -511,9 +511,9 @@ const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 
 // 向量点渲染逻辑
-function renderVectorPoints(vectors: FeatureVector[]) {
+function renderVeDirectorrPoints(veDirectorrs: FeatureVeDirectorr[]) {
   // 使用PCA降维到3D
-  const reduced = performPCA(vectors, 3)
+  const reduced = performPCA(veDirectorrs, 3)
   
   // 创建粒子系统
   reduced.forEach((point, idx) => {
@@ -620,16 +620,16 @@ export const MOCK_DATABASE = {
 
   users: [
     {
-      id: 'user_sarah',
-      name: 'Sarah Chen',
+      id: 'user_张三',
+      name: '张三',
       role: 'Market Analyst',
-      avatar: '/avatars/sarah.jpg'
+      avatar: '/avatars/张三.jpg'
     },
     {
-      id: 'user_leo',
-      name: 'Leo Zhang',
+      id: 'user_李四',
+      name: '李四',
       role: 'AI Engineer',
-      avatar: '/avatars/leo.jpg'
+      avatar: '/avatars/李四.jpg'
     }
   ],
 
@@ -637,8 +637,8 @@ export const MOCK_DATABASE = {
     {
       id: 'task_001',
       title: '优化语音唤醒模型 - 噪音环境适应性',
-      creator: 'user_sarah',
-      assignee: 'user_leo',
+      creator: 'user_张三',
+      assignee: 'user_李四',
       dataset: {
         assetIds: ['vid_001', 'pdf_002'],
         annotations: [
@@ -837,8 +837,8 @@ export class MockWebSocketService {
     setTimeout(() => {
       this.emit('task:accepted', {
         taskId: 'task_001',
-        acceptedBy: 'user_leo',
-        message: 'Leo has started working on this task'
+        acceptedBy: 'user_李四',
+        message: '李四 has started working on this task'
       })
     }, 8000)
   }
@@ -1314,14 +1314,14 @@ describe('useSearch', () => {
 // tests/e2e/user-journey.spec.ts
 import { test, expect } from '@playwright/test'
 
-test.describe('Complete User Journey - Sarah Persona', () => {
+test.describe('Complete User Journey - 张三 Persona', () => {
   test('should successfully search and create AI task', async ({ page }) => {
     // 1. 访问着陆页
     await page.goto('/')
-    await expect(page.getByRole('heading', { name: /Project Synapse/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Synapse/i })).toBeVisible()
     
-    // 2. 选择Sarah角色
-    await page.getByRole('button', { name: /Sarah Chen/i }).click()
+    // 2. 选择张三角色
+    await page.getByRole('button', { name: /张三/i }).click()
     await expect(page).toHaveURL('/exploration')
     
     // 3. 执行文本搜索
@@ -1353,7 +1353,7 @@ test.describe('Complete User Journey - Sarah Persona', () => {
     // 10. 填写任务表单
     const taskForm = page.getByRole('dialog')
     await taskForm.getByLabel(/任务标题/i).fill('优化语音唤醒模型')
-    await taskForm.getByLabel(/分配给/i).selectOption('user_leo')
+    await taskForm.getByLabel(/分配给/i).seleDirectorption('user_李四')
     await taskForm.getByRole('button', { name: /提交/i }).click()
     
     // 11. 验证成功通知
@@ -1476,7 +1476,7 @@ npm run storybook  # Storybook启动
   - TheHeader（全局导航）
   - ResultsGrid（虚拟滚动）
   - DatasetBuilder（多步表单）
-  - VectorSpace3D（Three.js集成）
+  - VeDirectorrSpace3D（Three.js集成）
   - KnowledgeCard（多类型支持）
 - [ ] 集成 GSAP 动画库
 - [ ] 集成 Three.js 和 D3.js
@@ -1584,7 +1584,7 @@ npm run storybook  # Storybook启动
 - [ ] 视频播放器（时间轴跳转）
 
 **CollaborationView.vue**:
-- [ ] 分屏布局（Sarah/Leo视角）
+- [ ] 分屏布局（张三/李四视角）
 - [ ] 数据集打包流程
 - [ ] 任务卡片创建表单
 - [ ] 实时通知系统
@@ -1879,7 +1879,7 @@ npm run dev
 
 ## **📌 总结 (Summary)**
 
-本设计文档定义了 Project Synapse 的完整技术实现方案，相比 v1.0 版本，主要改进包括：
+本设计文档定义了 Synapse 的完整技术实现方案，相比 v1.0 版本，主要改进包括：
 
 1. **更强的技术栈**: 引入 TypeScript、完整测试框架、性能监控
 2. **更清晰的架构**: 领域驱动设计、分层架构、composables 模式

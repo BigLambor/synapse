@@ -17,7 +17,7 @@ Object.defineProperty(window, 'matchMedia', {
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+  construDirectorr() {}
   disconnect() {}
   observe() {}
   takeRecords() {
@@ -28,7 +28,7 @@ global.IntersectionObserver = class IntersectionObserver {
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
-  constructor() {}
+  construDirectorr() {}
   disconnect() {}
   observe() {}
   unobserve() {}

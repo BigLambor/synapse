@@ -1,4 +1,4 @@
-# **项目名称：【Project Synapse \- AI洞察引擎】动态演示平台**
+# **项目名称：【Synapse \- AI洞察引擎】动态演示平台**
 
 **版本：1.0**
 
@@ -6,15 +6,15 @@
 
 ## **1\. 核心叙事与用户流程 (Core Narrative & User Flow)**
 
-Demo将围绕“新星汽车” (Nova Automotive) 研发下一代智能座舱的业务场景展开，通过两位核心角色 **Sarah (市场分析师)** 和 **Leo (AI工程师)** 的协作，演绎一个完整的数据价值闭环故事。
+Demo将围绕“新星汽车” (Nova Automotive) 研发下一代智能座舱的业务场景展开，通过两位核心角色 **张三 (市场分析师)** 和 **李四 (AI工程师)** 的协作，演绎一个完整的数据价值闭环故事。
 
 **故事线 (The Story Arc):**
 
-1. **挑战 (The Challenge)**: Sarah面临海量、异构的市场与用户数据孤岛，难以进行高效洞察。  
+1. **挑战 (The Challenge)**: 张三面临海量、异构的市场与用户数据孤岛，难以进行高效洞察。  
 2. **汇入与理解 (Ingestion & Understanding)**: 数据被轻松汇入Synapse平台，后台自动进行多模态特征提取，将原始数据转化为可理解的“智能资产”。  
-3. **探索与发现 (Exploration & Discovery)**: Sarah利用强大的多模态检索能力，从不同维度的数据中发现了隐藏的、深层的业务洞察。  
-4. **洞察转化为行动 (Insight to Action)**: Sarah将洞察打包成AI任务，一键推送给AI工程师Leo。  
-5. **AI赋能与进化 (AI Empowerment & Evolution)**: Leo利用这份高质量数据集快速优化AI模型，并通过可视化对比验证了模型的显著提升。  
+3. **探索与发现 (Exploration & Discovery)**: 张三利用强大的多模态检索能力，从不同维度的数据中发现了隐藏的、深层的业务洞察。  
+4. **洞察转化为行动 (Insight to Action)**: 张三将洞察打包成AI任务，一键推送给AI工程师李四。  
+5. **AI赋能与进化 (AI Empowerment & Evolution)**: 李四利用这份高质量数据集快速优化AI模型，并通过可视化对比验证了模型的显著提升。  
 6. **价值闭环 (Closing the Loop)**: 进化后的AI能力将反哺业务，形成持续优化的数据飞轮。
 
 ## **2\. 技术栈选型 (Technology Stack)**
@@ -46,7 +46,7 @@ Demo将围绕“新星汽车” (Nova Automotive) 研发下一代智能座舱的
 * AssetCard.vue: 展示处理状态的“数据资产”卡片。  
 * AssetDetailModal.vue: 弹窗，用于**可视化展示**特征提取过程。  
   * TagCloud.vue: 自动标签云。  
-  * VectorAnimation.vue: 模拟的向量空间动画。  
+  * VeDirectorrAnimation.vue: 模拟的向量空间动画。  
 * SearchBar.vue: 核心的多模态搜索框（支持文本输入和图片上传）。  
 * ResultsGrid.vue: 搜索结果的网格布局容器。  
 * KnowledgeCard.vue: 统一的“知识卡片”，用于展示不同类型（PDF, 视频, 图片）的搜索结果。  
