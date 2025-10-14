@@ -53,11 +53,11 @@
             <span class="text-neutral-500">支持最大 500MB 的文件</span>
             <AppButton 
               size="sm" 
-              variant="ghost"
+              variant="primary"
               @click="uploadAll"
-              :disabled="uploadQueue.length === 0"
+              :disabled="pendingFilesCount === 0"
             >
-              上传全部 ({{ uploadQueue.length }})
+              上传全部 ({{ pendingFilesCount }})
             </AppButton>
           </div>
         </template>
@@ -100,13 +100,36 @@
                 </div>
               </div>
               
-              <!-- Status -->
-              <div>
+              <!-- Actions -->
+              <div class="flex items-center gap-2">
+                <!-- Upload Single File Button -->
+                <AppButton
+                  v-if="item.status === 'pending'"
+                  size="sm"
+                  variant="primary"
+                  @click="uploadFile(item)"
+                >
+                  上传
+                </AppButton>
+                
+                <!-- Status Badge -->
                 <AppBadge
-                  :variant="item.status === 'completed' ? 'success' : item.status === 'failed' ? 'error' : 'warning'"
+                  :variant="item.status === 'completed' ? 'success' : item.status === 'failed' ? 'error' : item.status === 'pending' ? 'default' : 'warning'"
                 >
                   {{ getStatusText(item.status) }}
                 </AppBadge>
+                
+                <!-- Remove Button -->
+                <button
+                  v-if="item.status === 'pending' || item.status === 'failed'"
+                  @click="removeFromQueue(item.id)"
+                  class="text-neutral-500 hover:text-red-500 transition-colors"
+                  title="移除"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </button>
               </div>
             </div>
           </AppCard>
@@ -156,7 +179,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AppCard from '@/components/atoms/AppCard.vue'
 import AppButton from '@/components/atoms/AppButton.vue'
 import AppBadge from '@/components/atoms/AppBadge.vue'
@@ -185,29 +208,80 @@ const handleFileSelect = (event: Event) => {
   addFilesToQueue(files)
 }
 
-const addFilesToQueue = async (files: File[]) => {
+const addFilesToQueue = (files: File[]) => {
   for (const file of files) {
-    const asset = await mockAPI.uploadFile(file)
+    // 验证文件大小（最大500MB）
+    const maxSize = 500 * 1024 * 1024 // 500MB in bytes
+    if (file.size > maxSize) {
+      alert(`文件 "${file.name}" 超过大小限制（最大500MB）`)
+      continue
+    }
+
+    // 验证文件类型
+    const allowedExtensions = ['.pdf', '.doc', '.docx', '.txt', '.mp4', '.avi', '.mov', '.jpg', '.jpeg', '.png', '.mp3', '.wav']
+    const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase()
+    if (!allowedExtensions.includes(fileExtension)) {
+      alert(`文件 "${file.name}" 类型不支持。支持的类型：${allowedExtensions.join(', ')}`)
+      continue
+    }
+
+    // 创建文件项（未上传状态）
+    const asset = {
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      name: file.name,
+      size: file.size,
+      file: file, // 保存原始文件对象
+      thumbnail: getFileThumbnail(file.type),
+      status: 'pending',
+      progress: 0,
+      tags: []
+    }
     uploadQueue.value.push(asset)
-    
-    // 模拟处理进度
-    mockAPI.subscribeToProgress(asset.id, (progress) => {
-      const item = uploadQueue.value.find(a => a.id === asset.id)
-      if (item) {
-        item.progress = progress
-        if (progress === 100) {
-          item.status = 'completed'
-          // 添加模拟标签
-          item.tags = ['AI处理', '已索引', '可搜索']
-        }
-      }
-    })
   }
 }
 
-const uploadAll = () => {
-  // 所有文件都会自动处理
-  console.log('Uploading all files...')
+const uploadAll = async () => {
+  const pendingFiles = uploadQueue.value.filter(item => item.status === 'pending')
+  
+  for (const item of pendingFiles) {
+    await uploadFile(item)
+  }
+}
+
+const uploadFile = async (item: any) => {
+  try {
+    item.status = 'processing'
+    item.progress = 0
+    
+    const uploadedAsset = await mockAPI.uploadFile(item.file)
+    
+    // 模拟处理进度
+    mockAPI.subscribeToProgress(uploadedAsset.id, (progress) => {
+      item.progress = progress
+      if (progress === 100) {
+        item.status = 'completed'
+        item.tags = ['AI处理', '已索引', '可搜索']
+      }
+    })
+  } catch (error) {
+    item.status = 'failed'
+    console.error('Upload failed:', error)
+  }
+}
+
+const removeFromQueue = (itemId: string) => {
+  const index = uploadQueue.value.findIndex(item => item.id === itemId)
+  if (index > -1) {
+    uploadQueue.value.splice(index, 1)
+  }
+}
+
+const getFileThumbnail = (fileType: string): string => {
+  if (fileType.startsWith('image/')) return '🖼️'
+  if (fileType.startsWith('video/')) return '🎥'
+  if (fileType.startsWith('audio/')) return '🎵'
+  if (fileType.includes('pdf')) return '📕'
+  return '📄'
 }
 
 const formatSize = (bytes: number): string => {
@@ -228,10 +302,15 @@ const formatDate = (dateStr: string): string => {
 
 const getStatusText = (status: string): string => {
   const statusMap: Record<string, string> = {
+    pending: '待上传',
     processing: '处理中',
     completed: '已完成',
     failed: '失败'
   }
   return statusMap[status] || status
 }
+
+const pendingFilesCount = computed(() => {
+  return uploadQueue.value.filter(item => item.status === 'pending').length
+})
 </script>
