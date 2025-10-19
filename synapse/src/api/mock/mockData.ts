@@ -227,7 +227,7 @@ export const processingStages = [
 
 // 团队成员数据
 export const teamMembers = [
-  { id: '1', name: '张三', role: '市场分析师', avatar: '👩', status: 'online' },
+  { id: '1', name: '张三', role: '数据工程师', avatar: '👩', status: 'online' },
   { id: '2', name: '李四', role: 'AI工程师', avatar: '👨', status: 'online' },
   { id: '3', name: '王五', role: 'Director', avatar: '👩‍💼', status: 'away' }
 ]
@@ -357,4 +357,744 @@ export const generateMockVectorPoints = (): VectorPoint[] => {
 }
 
 export const mockVectorPoints = generateMockVectorPoints()
+
+// ============================================
+// 知识图谱 Mock 数据
+// ============================================
+
+export interface KnowledgeGraphNode {
+  id: string
+  label: string
+  type: 'product' | 'feature' | 'person' | 'company' | 'technology' | 'problem' | 'solution'
+  size: number
+  color: string
+  x?: number
+  y?: number
+  description?: string
+  metadata?: Record<string, any>
+}
+
+export interface KnowledgeGraphEdge {
+  id: string
+  source: string
+  target: string
+  label: string
+  type: 'depends_on' | 'related_to' | 'causes' | 'solves' | 'implements' | 'competes_with' | 'mentions'
+  weight: number
+  color?: string
+}
+
+export interface KnowledgeGraphData {
+  nodes: KnowledgeGraphNode[]
+  edges: KnowledgeGraphEdge[]
+  statistics: {
+    totalNodes: number
+    totalEdges: number
+    clusters: number
+    density: number
+  }
+}
+
+// 生成知识图谱mock数据
+export const mockKnowledgeGraph: KnowledgeGraphData = {
+  nodes: [
+    // 产品节点
+    {
+      id: 'node_1',
+      label: 'Tesla Model S',
+      type: 'product',
+      size: 40,
+      color: '#6366f1',
+      description: 'Tesla旗舰电动轿车',
+      metadata: { category: '竞品', mentions: 45 }
+    },
+    {
+      id: 'node_2',
+      label: '智能座舱系统',
+      type: 'product',
+      size: 50,
+      color: '#6366f1',
+      description: '我们的核心产品',
+      metadata: { category: '自有产品', mentions: 89 }
+    },
+    {
+      id: 'node_3',
+      label: '小鹏P7',
+      type: 'product',
+      size: 35,
+      color: '#6366f1',
+      description: '小鹏汽车智能电动轿车',
+      metadata: { category: '竞品', mentions: 38 }
+    },
+    
+    // 功能节点
+    {
+      id: 'node_4',
+      label: '语音唤醒',
+      type: 'feature',
+      size: 45,
+      color: '#8b5cf6',
+      description: '免唤醒词语音交互',
+      metadata: { importance: 'high', mentions: 67 }
+    },
+    {
+      id: 'node_5',
+      label: '手势控制',
+      type: 'feature',
+      size: 30,
+      color: '#8b5cf6',
+      description: '无接触手势识别控制',
+      metadata: { importance: 'medium', mentions: 42 }
+    },
+    {
+      id: 'node_6',
+      label: '情境感知',
+      type: 'feature',
+      size: 38,
+      color: '#8b5cf6',
+      description: '基于场景的智能推荐',
+      metadata: { importance: 'high', mentions: 55 }
+    },
+    {
+      id: 'node_7',
+      label: 'HMI界面',
+      type: 'feature',
+      size: 42,
+      color: '#8b5cf6',
+      description: '人机交互界面设计',
+      metadata: { importance: 'high', mentions: 58 }
+    },
+    
+    // 技术节点
+    {
+      id: 'node_8',
+      label: 'BERT模型',
+      type: 'technology',
+      size: 32,
+      color: '#14b8a6',
+      description: '自然语言处理模型',
+      metadata: { type: 'NLP', maturity: 'mature' }
+    },
+    {
+      id: 'node_9',
+      label: '远场语音增强',
+      type: 'technology',
+      size: 35,
+      color: '#14b8a6',
+      description: '麦克风阵列技术',
+      metadata: { type: 'Audio', maturity: 'emerging' }
+    },
+    {
+      id: 'node_10',
+      label: 'CNN图像识别',
+      type: 'technology',
+      size: 28,
+      color: '#14b8a6',
+      description: '卷积神经网络',
+      metadata: { type: 'CV', maturity: 'mature' }
+    },
+    
+    // 问题节点
+    {
+      id: 'node_11',
+      label: '唤醒响应慢',
+      type: 'problem',
+      size: 38,
+      color: '#ef4444',
+      description: '用户反馈语音唤醒延迟',
+      metadata: { severity: 'high', reports: 156 }
+    },
+    {
+      id: 'node_12',
+      label: '噪音环境识别率低',
+      type: 'problem',
+      size: 35,
+      color: '#ef4444',
+      description: '嘈杂环境下识别困难',
+      metadata: { severity: 'high', reports: 142 }
+    },
+    {
+      id: 'node_13',
+      label: 'UI响应卡顿',
+      type: 'problem',
+      size: 30,
+      color: '#ef4444',
+      description: '界面交互延迟',
+      metadata: { severity: 'medium', reports: 98 }
+    },
+    
+    // 解决方案节点
+    {
+      id: 'node_14',
+      label: '本地唤醒词模型',
+      type: 'solution',
+      size: 32,
+      color: '#10b981',
+      description: '端侧唤醒词检测',
+      metadata: { status: 'proposed', confidence: 0.85 }
+    },
+    {
+      id: 'node_15',
+      label: '多麦克风波束成形',
+      type: 'solution',
+      size: 35,
+      color: '#10b981',
+      description: '降噪和语音增强',
+      metadata: { status: 'in_progress', confidence: 0.92 }
+    },
+    {
+      id: 'node_16',
+      label: 'GPU硬件加速',
+      type: 'solution',
+      size: 28,
+      color: '#10b981',
+      description: '图形渲染优化',
+      metadata: { status: 'proposed', confidence: 0.78 }
+    },
+    
+    // 公司节点
+    {
+      id: 'node_17',
+      label: 'Tesla',
+      type: 'company',
+      size: 36,
+      color: '#ec4899',
+      description: '电动汽车领导者',
+      metadata: { industry: 'automotive', mentions: 52 }
+    },
+    {
+      id: 'node_18',
+      label: '百度',
+      type: 'company',
+      size: 32,
+      color: '#ec4899',
+      description: 'AI技术公司',
+      metadata: { industry: 'tech', mentions: 45 }
+    },
+    {
+      id: 'node_19',
+      label: '小鹏汽车',
+      type: 'company',
+      size: 30,
+      color: '#ec4899',
+      description: '智能电动汽车制造商',
+      metadata: { industry: 'automotive', mentions: 41 }
+    },
+    
+    // 人物节点
+    {
+      id: 'node_20',
+      label: '张伟（首席工程师）',
+      type: 'person',
+      size: 25,
+      color: '#f59e0b',
+      description: '语音交互技术负责人',
+      metadata: { role: 'engineer', department: 'R&D' }
+    },
+    {
+      id: 'node_21',
+      label: '李娜（产品经理）',
+      type: 'person',
+      size: 22,
+      color: '#f59e0b',
+      description: 'HMI产品负责人',
+      metadata: { role: 'pm', department: 'Product' }
+    }
+  ],
+  edges: [
+    // 产品-功能关系
+    { id: 'edge_1', source: 'node_2', target: 'node_4', label: '包含', type: 'implements', weight: 3, color: '#8b5cf6' },
+    { id: 'edge_2', source: 'node_2', target: 'node_5', label: '包含', type: 'implements', weight: 2, color: '#8b5cf6' },
+    { id: 'edge_3', source: 'node_2', target: 'node_6', label: '包含', type: 'implements', weight: 3, color: '#8b5cf6' },
+    { id: 'edge_4', source: 'node_2', target: 'node_7', label: '包含', type: 'implements', weight: 3, color: '#8b5cf6' },
+    
+    { id: 'edge_5', source: 'node_1', target: 'node_4', label: '实现', type: 'implements', weight: 2, color: '#8b5cf6' },
+    { id: 'edge_6', source: 'node_3', target: 'node_4', label: '实现', type: 'implements', weight: 2, color: '#8b5cf6' },
+    
+    // 功能-技术关系
+    { id: 'edge_7', source: 'node_4', target: 'node_8', label: '依赖', type: 'depends_on', weight: 2, color: '#14b8a6' },
+    { id: 'edge_8', source: 'node_4', target: 'node_9', label: '依赖', type: 'depends_on', weight: 3, color: '#14b8a6' },
+    { id: 'edge_9', source: 'node_5', target: 'node_10', label: '依赖', type: 'depends_on', weight: 2, color: '#14b8a6' },
+    { id: 'edge_10', source: 'node_7', target: 'node_10', label: '相关', type: 'related_to', weight: 1, color: '#94a3b8' },
+    
+    // 问题-功能关系
+    { id: 'edge_11', source: 'node_11', target: 'node_4', label: '影响', type: 'causes', weight: 3, color: '#ef4444' },
+    { id: 'edge_12', source: 'node_12', target: 'node_4', label: '影响', type: 'causes', weight: 3, color: '#ef4444' },
+    { id: 'edge_13', source: 'node_13', target: 'node_7', label: '影响', type: 'causes', weight: 2, color: '#ef4444' },
+    
+    // 解决方案-问题关系
+    { id: 'edge_14', source: 'node_14', target: 'node_11', label: '解决', type: 'solves', weight: 3, color: '#10b981' },
+    { id: 'edge_15', source: 'node_15', target: 'node_12', label: '解决', type: 'solves', weight: 3, color: '#10b981' },
+    { id: 'edge_16', source: 'node_16', target: 'node_13', label: '解决', type: 'solves', weight: 2, color: '#10b981' },
+    
+    // 解决方案-技术关系
+    { id: 'edge_17', source: 'node_14', target: 'node_8', label: '使用', type: 'depends_on', weight: 2, color: '#14b8a6' },
+    { id: 'edge_18', source: 'node_15', target: 'node_9', label: '实现', type: 'implements', weight: 3, color: '#8b5cf6' },
+    
+    // 竞品关系
+    { id: 'edge_19', source: 'node_2', target: 'node_1', label: '竞争', type: 'competes_with', weight: 2, color: '#f59e0b' },
+    { id: 'edge_20', source: 'node_2', target: 'node_3', label: '竞争', type: 'competes_with', weight: 2, color: '#f59e0b' },
+    
+    // 公司-产品关系
+    { id: 'edge_21', source: 'node_17', target: 'node_1', label: '开发', type: 'implements', weight: 2, color: '#8b5cf6' },
+    { id: 'edge_22', source: 'node_19', target: 'node_3', label: '开发', type: 'implements', weight: 2, color: '#8b5cf6' },
+    
+    // 公司-技术关系
+    { id: 'edge_23', source: 'node_18', target: 'node_8', label: '研发', type: 'implements', weight: 2, color: '#8b5cf6' },
+    { id: 'edge_24', source: 'node_18', target: 'node_9', label: '持有专利', type: 'related_to', weight: 1, color: '#94a3b8' },
+    
+    // 人物-功能关系
+    { id: 'edge_25', source: 'node_20', target: 'node_4', label: '负责', type: 'implements', weight: 2, color: '#8b5cf6' },
+    { id: 'edge_26', source: 'node_21', target: 'node_7', label: '负责', type: 'implements', weight: 2, color: '#8b5cf6' },
+    
+    // 功能之间的依赖
+    { id: 'edge_27', source: 'node_6', target: 'node_4', label: '依赖', type: 'depends_on', weight: 2, color: '#14b8a6' },
+    { id: 'edge_28', source: 'node_7', target: 'node_6', label: '集成', type: 'related_to', weight: 1, color: '#94a3b8' }
+  ],
+  statistics: {
+    totalNodes: 21,
+    totalEdges: 28,
+    clusters: 7,
+    density: 0.127
+  }
+}
+
+// ============================================
+// 数据集 Mock 数据 - 核心功能：为AI训练提供高质量数据集
+// ============================================
+
+import type { Domain } from '@/types/models'
+import {
+  DatasetStatus,
+  AnnotationType,
+  AnnotationStatus,
+  ExportFormat,
+  TrainingPlatform
+} from '@/types/enums'
+
+/**
+ * Mock 数据集列表
+ */
+export const mockDatasets: Domain.Dataset[] = [
+  {
+    id: 'dataset_001',
+    name: '智能座舱用户反馈数据集',
+    description:
+      '收集整理的用户对智能座舱功能的真实反馈数据，包括语音唤醒、触控交互等场景的视频和文档，用于训练和优化语音交互模型。',
+    version: '2.1.0',
+    status: DatasetStatus.PUBLISHED,
+    createdBy: 'user_张三',
+    createdAt: '2024-09-15T10:00:00Z',
+    updatedAt: '2024-10-01T14:30:00Z',
+    publishedAt: '2024-09-20T09:00:00Z',
+    assets: [
+      {
+        assetId: '1',
+        assetType: 'video' as any,
+        annotations: [
+          {
+            id: 'ann_001',
+            assetId: '1',
+            type: AnnotationType.CLASSIFICATION,
+            status: AnnotationStatus.APPROVED,
+            labels: [
+              {
+                id: 'label_001',
+                name: '语音唤醒失败',
+                category: '问题类型',
+                confidence: 0.95,
+                source: 'manual'
+              },
+              {
+                id: 'label_002',
+                name: '噪音环境',
+                category: '场景',
+                confidence: 0.88,
+                source: 'ai'
+              }
+            ],
+            annotator: 'user_张三',
+            reviewer: 'user_李四',
+            confidence: 0.92,
+            createdAt: '2024-09-16T10:00:00Z',
+            reviewedAt: '2024-09-17T14:00:00Z',
+            notes: '典型的噪音环境下唤醒失败案例'
+          }
+        ],
+        includedAt: '2024-09-15T10:30:00Z',
+        split: 'train'
+      }
+      // 更多资产...
+    ],
+    totalAssets: 850,
+    splits: {
+      train: { count: 680, percentage: 80 },
+      validation: { count: 85, percentage: 10 },
+      test: { count: 85, percentage: 10 }
+    },
+    quality: {
+      completeness: 0.95,
+      consistency: 0.92,
+      accuracy: 0.94,
+      labelQuality: 0.91,
+      diversity: 0.88,
+      balance: 0.85
+    },
+    statistics: {
+      totalSize: 12800000000, // 12.8GB
+      avgFileSize: 15058824,
+      minFileSize: 102400,
+      maxFileSize: 450000000,
+      typeDistribution: {
+        video: 450,
+        document: 280,
+        audio: 120
+      },
+      labelDistribution: {
+        语音唤醒失败: 230,
+        触控问题: 180,
+        UI问题: 150,
+        性能问题: 145,
+        其他: 145
+      },
+      totalAnnotations: 2456,
+      avgAnnotationsPerAsset: 2.89
+    },
+    annotationConfig: {
+      types: [AnnotationType.CLASSIFICATION, AnnotationType.TRANSCRIPTION],
+      labels: ['语音唤醒失败', '触控问题', 'UI问题', '性能问题', '功能建议', '其他'],
+      requireReview: true,
+      minAnnotatorsPerAsset: 1,
+      guidelines: '请标注用户遇到的主要问题类型，并对视频中的语音内容进行转录'
+    },
+    exports: [
+      {
+        id: 'export_001',
+        exportedAt: '2024-09-25T10:00:00Z',
+        exportedBy: 'user_李四',
+        format: ExportFormat.COCO,
+        platform: TrainingPlatform.PYTORCH,
+        fileSize: 13500000000,
+        downloadUrl: '/downloads/dataset_001_coco_v2.1.0.zip',
+        config: {
+          format: ExportFormat.COCO,
+          targetPlatform: TrainingPlatform.PYTORCH,
+          includeAugmentations: true,
+          normalizeFormat: true,
+          generateManifest: true,
+          compressOutput: true,
+          splits: ['train', 'validation', 'test'],
+          cocoOptions: {
+            includeSegmentations: false,
+            includeCaptions: true
+          }
+        }
+      },
+      {
+        id: 'export_002',
+        exportedAt: '2024-10-01T15:00:00Z',
+        exportedBy: 'user_李四',
+        format: ExportFormat.HUGGINGFACE,
+        platform: TrainingPlatform.HUGGINGFACE,
+        fileSize: 13200000000,
+        downloadUrl: 'https://huggingface.co/datasets/synapse/smart-cabin-feedback',
+        config: {
+          format: ExportFormat.HUGGINGFACE,
+          targetPlatform: TrainingPlatform.HUGGINGFACE,
+          includeAugmentations: false,
+          normalizeFormat: true,
+          generateManifest: true,
+          compressOutput: false,
+          splits: ['train', 'validation', 'test'],
+          huggingfaceOptions: {
+            repoName: 'synapse/smart-cabin-feedback',
+            private: false,
+            license: 'cc-by-4.0'
+          }
+        }
+      }
+    ],
+    tags: ['语音交互', '智能座舱', '用户反馈', 'NLP', '质量保证'],
+    category: '用户反馈分析'
+  },
+  {
+    id: 'dataset_002',
+    name: '竞品UI设计图像数据集',
+    description:
+      '收集的各品牌智能座舱UI界面截图和设计稿，包含按钮、旋钮、仪表盘等组件的图像数据，用于训练目标检测和分类模型。',
+    version: '1.5.0',
+    status: DatasetStatus.READY,
+    createdBy: 'user_张三',
+    createdAt: '2024-09-20T08:00:00Z',
+    updatedAt: '2024-10-05T11:00:00Z',
+    assets: [],
+    totalAssets: 1250,
+    splits: {
+      train: { count: 1000, percentage: 80 },
+      validation: { count: 125, percentage: 10 },
+      test: { count: 125, percentage: 10 }
+    },
+    quality: {
+      completeness: 0.88,
+      consistency: 0.90,
+      accuracy: 0.92,
+      labelQuality: 0.89,
+      diversity: 0.93,
+      balance: 0.82
+    },
+    statistics: {
+      totalSize: 3200000000, // 3.2GB
+      avgFileSize: 2560000,
+      minFileSize: 204800,
+      maxFileSize: 8388608,
+      typeDistribution: {
+        image: 1250
+      },
+      labelDistribution: {
+        按钮: 450,
+        旋钮: 320,
+        仪表盘: 280,
+        菜单: 200
+      },
+      totalAnnotations: 4520,
+      avgAnnotationsPerAsset: 3.62
+    },
+    annotationConfig: {
+      types: [AnnotationType.DETECTION, AnnotationType.CLASSIFICATION],
+      labels: ['按钮', '旋钮', '仪表盘', '菜单', '图标', '文字'],
+      requireReview: true,
+      minAnnotatorsPerAsset: 2,
+      guidelines: '请标注UI组件的边界框和类型，确保标注精确'
+    },
+    exports: [
+      {
+        id: 'export_003',
+        exportedAt: '2024-10-03T09:00:00Z',
+        exportedBy: 'user_李四',
+        format: ExportFormat.YOLO,
+        platform: TrainingPlatform.PYTORCH,
+        fileSize: 3400000000,
+        downloadUrl: '/downloads/dataset_002_yolo_v1.5.0.zip',
+        config: {
+          format: ExportFormat.YOLO,
+          targetPlatform: TrainingPlatform.PYTORCH,
+          includeAugmentations: true,
+          normalizeFormat: true,
+          generateManifest: true,
+          compressOutput: true,
+          splits: ['train', 'validation', 'test'],
+          yoloOptions: {
+            classMapFile: true,
+            normalizeCoordinates: true
+          }
+        }
+      }
+    ],
+    tags: ['UI设计', '目标检测', '竞品分析', 'CV', '界面元素'],
+    category: '设计资产'
+  },
+  {
+    id: 'dataset_003',
+    name: '专利文档NER数据集',
+    description: '汽车行业专利文档，标注了技术术语、公司名称、人名、地名等实体，用于命名实体识别模型训练。',
+    version: '1.0.0',
+    status: DatasetStatus.DRAFT,
+    createdBy: 'user_张三',
+    createdAt: '2024-10-01T14:00:00Z',
+    updatedAt: '2024-10-07T10:00:00Z',
+    assets: [],
+    totalAssets: 560,
+    splits: {
+      train: { count: 448, percentage: 80 },
+      validation: { count: 56, percentage: 10 },
+      test: { count: 56, percentage: 10 }
+    },
+    quality: {
+      completeness: 0.65,
+      consistency: 0.70,
+      accuracy: 0.75,
+      labelQuality: 0.68,
+      diversity: 0.80,
+      balance: 0.75
+    },
+    statistics: {
+      totalSize: 1800000000, // 1.8GB
+      avgFileSize: 3214286,
+      minFileSize: 512000,
+      maxFileSize: 15728640,
+      typeDistribution: {
+        document: 560
+      },
+      labelDistribution: {
+        技术术语: 3450,
+        公司名: 1280,
+        人名: 890,
+        产品名: 760,
+        地名: 520
+      },
+      totalAnnotations: 1245,
+      avgAnnotationsPerAsset: 2.22
+    },
+    annotationConfig: {
+      types: [AnnotationType.NER],
+      labels: ['技术术语', '公司名', '人名', '产品名', '地名', '时间', '数字'],
+      requireReview: true,
+      minAnnotatorsPerAsset: 1,
+      guidelines: '标注文档中的命名实体，注意技术术语的完整性'
+    },
+    exports: [],
+    tags: ['NER', '专利分析', 'NLP', '实体识别', '知识图谱'],
+    category: '文档分析'
+  },
+  {
+    id: 'dataset_004',
+    name: '语音指令多模态数据集',
+    description:
+      '用户在不同场景下的语音指令录音及对应的场景视频，包含噪音、口音、背景干扰等真实情况，用于训练鲁棒的语音识别模型。',
+    version: '3.0.0',
+    status: DatasetStatus.PUBLISHED,
+    createdBy: 'user_李四',
+    createdAt: '2024-08-10T09:00:00Z',
+    updatedAt: '2024-10-06T16:00:00Z',
+    publishedAt: '2024-09-01T10:00:00Z',
+    assets: [],
+    totalAssets: 2100,
+    splits: {
+      train: { count: 1680, percentage: 80 },
+      validation: { count: 210, percentage: 10 },
+      test: { count: 210, percentage: 10 }
+    },
+    quality: {
+      completeness: 0.97,
+      consistency: 0.95,
+      accuracy: 0.96,
+      labelQuality: 0.94,
+      diversity: 0.92,
+      balance: 0.90
+    },
+    statistics: {
+      totalSize: 8900000000, // 8.9GB
+      avgFileSize: 4238095,
+      minFileSize: 307200,
+      maxFileSize: 52428800,
+      typeDistribution: {
+        audio: 1050,
+        video: 1050
+      },
+      labelDistribution: {
+        清晰: 890,
+        噪音: 680,
+        口音: 530
+      },
+      totalAnnotations: 6850,
+      avgAnnotationsPerAsset: 3.26
+    },
+    annotationConfig: {
+      types: [AnnotationType.TRANSCRIPTION, AnnotationType.CLASSIFICATION],
+      labels: ['清晰', '噪音', '口音', '背景干扰', '多人说话'],
+      requireReview: true,
+      minAnnotatorsPerAsset: 2,
+      guidelines: '转录语音内容并标注音频质量和环境特征'
+    },
+    exports: [
+      {
+        id: 'export_004',
+        exportedAt: '2024-09-15T11:00:00Z',
+        exportedBy: 'user_李四',
+        format: ExportFormat.JSON,
+        platform: TrainingPlatform.TENSORFLOW,
+        fileSize: 9200000000,
+        downloadUrl: '/downloads/dataset_004_json_v3.0.0.zip',
+        config: {
+          format: ExportFormat.JSON,
+          targetPlatform: TrainingPlatform.TENSORFLOW,
+          includeAugmentations: true,
+          normalizeFormat: true,
+          generateManifest: true,
+          compressOutput: true,
+          splits: ['train', 'validation', 'test']
+        }
+      }
+    ],
+    tags: ['语音识别', 'ASR', '多模态', '音频处理', '噪音鲁棒性'],
+    category: '语音处理'
+  },
+  {
+    id: 'dataset_005',
+    name: '用户情感分析数据集',
+    description: '用户评论和反馈文本，标注了情感极性和细粒度情感类别，用于训练情感分析模型。',
+    version: '1.2.0',
+    status: DatasetStatus.PROCESSING,
+    createdBy: 'user_张三',
+    createdAt: '2024-10-05T13:00:00Z',
+    updatedAt: '2024-10-07T09:30:00Z',
+    assets: [],
+    totalAssets: 3500,
+    splits: {
+      train: { count: 2800, percentage: 80 },
+      validation: { count: 350, percentage: 10 },
+      test: { count: 350, percentage: 10 }
+    },
+    quality: {
+      completeness: 0.45,
+      consistency: 0.50,
+      accuracy: 0.55,
+      labelQuality: 0.48,
+      diversity: 0.85,
+      balance: 0.65
+    },
+    statistics: {
+      totalSize: 450000000, // 450MB
+      avgFileSize: 128571,
+      minFileSize: 2048,
+      maxFileSize: 1048576,
+      typeDistribution: {
+        document: 3500
+      },
+      labelDistribution: {
+        正面: 1200,
+        负面: 1450,
+        中性: 850
+      },
+      totalAnnotations: 1580,
+      avgAnnotationsPerAsset: 0.45
+    },
+    annotationConfig: {
+      types: [AnnotationType.CLASSIFICATION],
+      labels: [
+        '正面',
+        '负面',
+        '中性',
+        '愤怒',
+        '喜悦',
+        '悲伤',
+        '惊讶',
+        '厌恶',
+        '恐惧'
+      ],
+      requireReview: true,
+      minAnnotatorsPerAsset: 2,
+      guidelines: '标注文本的整体情感倾向和具体情感类别'
+    },
+    exports: [],
+    tags: ['情感分析', 'NLP', '文本分类', '用户反馈'],
+    category: '文本分析'
+  }
+]
+
+/**
+ * 获取数据集统计概览
+ */
+export const getDatasetStatistics = () => ({
+  totalDatasets: mockDatasets.length,
+  published: mockDatasets.filter((d) => d.status === DatasetStatus.PUBLISHED).length,
+  ready: mockDatasets.filter((d) => d.status === DatasetStatus.READY).length,
+  draft: mockDatasets.filter((d) => d.status === DatasetStatus.DRAFT).length,
+  processing: mockDatasets.filter((d) => d.status === DatasetStatus.PROCESSING).length,
+  totalAssets: mockDatasets.reduce((sum, d) => sum + d.totalAssets, 0),
+  totalSize: mockDatasets.reduce((sum, d) => sum + d.statistics.totalSize, 0),
+  totalExports: mockDatasets.reduce((sum, d) => sum + d.exports.length, 0),
+  avgQuality:
+    mockDatasets.reduce((sum, d) => sum + d.quality.accuracy, 0) / mockDatasets.length
+})
 

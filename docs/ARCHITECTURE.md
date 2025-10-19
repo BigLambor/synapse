@@ -4,6 +4,25 @@
 
 Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，确保代码的可维护性和可扩展性。
 
+### 🎯 核心定位：AI训练平台的数据集贡献者
+
+**Synapse的本质价值**：作为多模态数据湖，最终目标是为AI训练平台提供高质量、标准化的训练数据集。
+
+**价值链路**：
+```
+原始数据 → 数据入湖 → AI处理 → 向量化存储 → 智能探索 → 数据集构建 → [导出给AI训练平台]
+                                                                    ↑
+                                                              核心价值输出
+```
+
+**关键能力**：
+- ✅ 多模态数据统一处理（文档、图片、视频、音频）
+- ✅ AI驱动的自动标注和特征提取
+- ✅ 质量评估和数据清洗
+- ✅ 标准格式导出（COCO、YOLO、HuggingFace等）
+- ✅ 训练/验证/测试数据划分
+- ✅ 版本控制和导出历史追踪
+
 ## 架构分层
 
 ```
@@ -31,15 +50,16 @@ Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，确保�
 
 #### 页面路由
 
-| 路由 | 页面 | 功能 |
-|:-----|:-----|:-----|
-| / | LandingView | 着陆页，角色选择 |
-| /ingestion | IngestionView | 数据上传 |
-| /processing | ProcessingView | 处理可视化 |
-| /exploration | ExplorationView | 多模态搜索 |
-| /collaboration | CollaborationView | 团队协作 |
-| /model-optimization | ModelOptimizationView | 模型优化 |
-| /dashboard | DashboardView | Director仪表板 |
+| 路由 | 页面 | 功能 | 在数据价值链中的位置 |
+|:-----|:-----|:-----|:-------------------|
+| / | LandingView | 着陆页，角色选择 | 入口 |
+| /ingestion | IngestionView | 数据上传 | 📥 **数据源头** |
+| /processing | ProcessingView | 处理可视化 | ⚙️ **数据加工** |
+| /exploration | ExplorationView | 多模态搜索 | 🔍 **数据探索** |
+| **/dataset** | **DatasetView** | **训练数据集管理** | 🎯 **核心产出** - 为AI训练提供数据集 |
+| /collaboration | CollaborationView | 团队协作 | 🤝 **协作增效** |
+| /model-optimization | ModelOptimizationView | 模型优化 | 🚀 **价值验证** |
+| /dashboard | DashboardView | Director仪表板 | 📊 **全局监控** |
 
 ### 2. 应用层 (Application Layer)
 
@@ -55,13 +75,14 @@ Synapse采用分层架构设计，基于领域驱动设计(DDD)原则，确保�
 
 #### Pinia Stores
 
-| Store | 职责 |
-|:------|:-----|
-| useUIStore | UI状态（主题、侧边栏、模态框、通知） |
-| useUserStore | 用户管理（当前用户、角色切换） |
-| useAssetsStore | 数据资产管理（资产列表、上传队列、处理状态） |
-| useSearchStore | 搜索管理（查询、结果、过滤器、排序） |
-| useDashboardStore | 仪表板（任务、指标、洞察） |
+| Store | 职责 | 优先级 |
+|:------|:-----|:------|
+| useUIStore | UI状态（主题、侧边栏、模态框、通知） | 基础 |
+| useUserStore | 用户管理（当前用户、角色切换） | 基础 |
+| useAssetsStore | 数据资产管理（资产列表、上传队列、处理状态） | 核心 |
+| useSearchStore | 搜索管理（查询、结果、过滤器、排序） | 核心 |
+| **useDatasetStore** | **数据集管理（创建、标注、导出、质量评估）** | **🎯 核心** |
+| useDashboardStore | 仪表板（任务、指标、洞察） | 辅助 |
 
 #### 类型系统
 
@@ -104,6 +125,36 @@ Domain.DashboardMetrics
 User Action → Component Event → Store Action → API Call → Store State Update → Component Re-render
 ```
 
+### 🎯 核心流程：从数据到训练集
+
+```
+1. 数据入湖 (IngestionView)
+   ↓ 用户上传多模态文件
+   
+2. AI处理 (ProcessingView)
+   ↓ Ray分布式处理 + 特征提取
+   
+3. 向量存储 (Milvus + PostgreSQL)
+   ↓ 向量化 + 元数据存储
+   
+4. 智能探索 (ExplorationView)
+   ↓ 语义搜索 + 相关资产发现
+   
+5. 🎯 数据集构建 (DatasetView)
+   ├─ 选择资产
+   ├─ 添加标注（人工/AI辅助）
+   ├─ 数据划分（训练/验证/测试）
+   ├─ 质量评估
+   └─ 导出标准格式
+   
+6. 导出给AI训练平台
+   ├─ COCO格式 → 目标检测
+   ├─ YOLO格式 → 实时检测
+   ├─ HuggingFace → NLP任务
+   ├─ TFRecord → TensorFlow
+   └─ 自定义JSON → 通用格式
+```
+
 ### 示例：搜索流程
 
 1. 用户在SearchBar输入查询
@@ -113,6 +164,17 @@ User Action → Component Event → Store Action → API Call → Store State Up
 5. 调用`mockAPI.search()`
 6. 更新`searchStore.results`
 7. ResultsGrid自动更新显示
+
+### 🆕 示例：数据集创建与导出流程
+
+1. 用户在ExplorationView搜索相关资产
+2. 选择资产并点击"添加到数据集"
+3. 跳转到DatasetView，配置数据集信息
+4. AI自动标注 + 人工复核
+5. 系统评估数据集质量
+6. 选择导出格式和目标平台
+7. 一键导出，生成下载链接
+8. AI训练平台直接使用导出的数据集
 
 ## 性能优化策略
 

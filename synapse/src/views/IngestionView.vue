@@ -7,113 +7,301 @@
           数据入湖
         </h1>
         <p class="text-lg text-neutral-400">
-          上传多模态数据，AI自动提取特征并构建知识图谱
+          多种数据源接入方式，AI自动处理并构建知识图谱
         </p>
       </div>
 
-      <!-- Upload Area -->
-      <AppCard variant="elevated" class="mb-8">
-        <template #header>
-          <h2 class="text-xl font-semibold">上传文件</h2>
-        </template>
+      <!-- 数据源方式选择 -->
+      <div class="mb-8">
+        <div class="flex items-center gap-4 overflow-x-auto pb-2">
+          <button
+            v-for="source in dataSources"
+            :key="source.type"
+            @click="currentSource = source.type"
+            :class="[
+              'flex items-center gap-3 px-6 py-4 rounded-xl transition-all whitespace-nowrap',
+              currentSource === source.type
+                ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/50'
+                : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-800 hover:text-white'
+            ]"
+          >
+            <span class="text-2xl">{{ source.icon }}</span>
+            <div class="text-left">
+              <div class="font-semibold">{{ source.name }}</div>
+              <div class="text-xs opacity-75">{{ source.description }}</div>
+            </div>
+          </button>
+        </div>
+      </div>
 
-        <div
-          class="border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300"
-          :class="isDragging 
-            ? 'border-primary-500 bg-primary-500/10' 
-            : 'border-neutral-700 hover:border-neutral-600'"
-          @dragover.prevent="isDragging = true"
-          @dragleave.prevent="isDragging = false"
-          @drop.prevent="handleDrop"
-        >
-          <div class="text-6xl mb-4">📁</div>
-          <h3 class="text-xl font-semibold mb-2">拖拽文件到此处</h3>
-          <p class="text-neutral-400 mb-6">
-            或者 <label class="text-primary-400 hover:text-primary-300 cursor-pointer underline">
-              <input
-                type="file"
-                multiple
-                class="hidden"
-                @change="handleFileSelect"
-                accept=".pdf,.doc,.docx,.txt,.mp4,.avi,.mov,.jpg,.jpeg,.png,.mp3,.wav"
+      <!-- Web上传 -->
+      <div v-show="currentSource === 'web_upload'">
+        <AppCard variant="elevated" class="mb-8">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-semibold">📤 本地文件上传</h2>
+              <div class="text-sm text-neutral-400">
+                支持大文件、断点续传、批量上传
+              </div>
+            </div>
+          </template>
+
+          <div
+            class="border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300"
+            :class="isDragging 
+              ? 'border-primary-500 bg-primary-500/10 scale-[1.02]' 
+              : 'border-neutral-700 hover:border-neutral-600'"
+            @dragover.prevent="isDragging = true"
+            @dragleave.prevent="isDragging = false"
+            @drop.prevent="handleDrop"
+          >
+            <div class="text-6xl mb-4">📁</div>
+            <h3 class="text-xl font-semibold mb-2">拖拽文件到此处</h3>
+            <p class="text-neutral-400 mb-6">
+              或者 <label class="text-primary-400 hover:text-primary-300 cursor-pointer underline">
+                <input
+                  type="file"
+                  multiple
+                  class="hidden"
+                  @change="handleFileSelect"
+                  accept=".pdf,.doc,.docx,.txt,.mp4,.avi,.mov,.jpg,.jpeg,.png,.mp3,.wav"
+                />
+                点击选择文件
+              </label>
+            </p>
+            <div class="flex items-center justify-center gap-6 text-sm text-neutral-500">
+              <span>📄 文档</span>
+              <span>🎥 视频</span>
+              <span>🖼️ 图片</span>
+              <span>🎵 音频</span>
+            </div>
+            <div class="mt-6 text-sm text-neutral-500">
+              支持最大 {{ formatSize(uploadConfig.maxFileSize) }} 的文件 • 自动分片上传大文件
+            </div>
+          </div>
+
+          <template #footer v-if="activeUploads.length > 0">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <span class="text-sm text-neutral-400">
+                  上传中: {{ activeUploads.length }} 个文件
+                </span>
+                <div class="w-48 h-2 bg-neutral-700 rounded-full overflow-hidden">
+                  <div
+                    class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all"
+                    :style="{ width: totalUploadProgress + '%' }"
+                  />
+                </div>
+                <span class="text-sm text-neutral-400">{{ Math.floor(totalUploadProgress) }}%</span>
+              </div>
+              <AppButton size="sm" variant="ghost" @click="dataSourceStore.clearCompletedTasks()">
+                清理已完成
+              </AppButton>
+            </div>
+          </template>
+        </AppCard>
+      </div>
+
+      <!-- URL导入 -->
+      <div v-show="currentSource === 'url_import'">
+        <AppCard variant="elevated" class="mb-8">
+          <template #header>
+            <h2 class="text-xl font-semibold">🔗 URL导入</h2>
+          </template>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">
+                输入文件URL（支持批量，每行一个）
+              </label>
+              <textarea
+                v-model="urlInput"
+                rows="5"
+                placeholder="https://example.com/video.mp4&#10;https://example.com/document.pdf&#10;https://example.com/image.png"
+                class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 resize-none"
               />
-              点击选择文件
-            </label>
-          </p>
-          <div class="flex items-center justify-center gap-6 text-sm text-neutral-500">
-            <span>📄 文档</span>
-            <span>🎥 视频</span>
-            <span>🖼️ 图片</span>
-            <span>🎵 音频</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-2">分类</label>
+                <input
+                  v-model="urlCategory"
+                  type="text"
+                  placeholder="例如: 用户反馈"
+                  class="w-full px-4 py-2 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-neutral-300 mb-2">标签（逗号分隔）</label>
+                <input
+                  v-model="urlTags"
+                  type="text"
+                  placeholder="例如: 视频, 语音"
+                  class="w-full px-4 py-2 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                />
+              </div>
+            </div>
+
+            <AppButton @click="handleURLImport" :disabled="!urlInput.trim()" class="w-full">
+              🚀 开始导入
+            </AppButton>
+          </div>
+        </AppCard>
+      </div>
+
+      <!-- 对象存储集成 -->
+      <div v-show="currentSource === 's3' || currentSource === 'oss' || currentSource === 'minio'">
+        <AppCard variant="elevated" class="mb-8">
+          <template #header>
+            <h2 class="text-xl font-semibold">☁️ 对象存储集成</h2>
+          </template>
+
+          <div class="space-y-6">
+            <!-- 已配置的数据源 -->
+            <div v-if="activeDataSources.length > 0">
+              <h3 class="text-sm font-medium text-neutral-300 mb-3">已配置的数据源</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div
+                  v-for="ds in activeDataSources"
+                  :key="ds.id"
+                  class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500/50 transition-all"
+                >
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <h4 class="font-semibold text-white">{{ ds.name }}</h4>
+                      <p class="text-xs text-neutral-400 mt-1">{{ ds.description }}</p>
+                    </div>
+                    <AppBadge
+                      :variant="ds.status === 'connected' ? 'success' : 'warning'"
+                      size="sm"
+                    >
+                      {{ getStatusText(ds.status) }}
+                    </AppBadge>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-3 mb-3 text-sm">
+                    <div>
+                      <div class="text-neutral-500">文件数</div>
+                      <div class="text-white font-semibold">{{ ds.statistics.syncedFiles.toLocaleString() }}</div>
+                    </div>
+                    <div>
+                      <div class="text-neutral-500">总大小</div>
+                      <div class="text-white font-semibold">{{ formatSize(ds.statistics.syncedSize) }}</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-neutral-500">
+                      最后同步: {{ formatRelativeTime(ds.lastSyncAt) }}
+                    </span>
+                    <AppButton
+                      size="sm"
+                      variant="ghost"
+                      @click="handleSync(ds.id)"
+                      :disabled="ds.status === 'syncing'"
+                    >
+                      {{ ds.status === 'syncing' ? '同步中...' : '立即同步' }}
+                    </AppButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 添加新数据源 -->
+            <div>
+              <AppButton @click="showDataSourceModal = true" class="w-full">
+                ➕ 配置新的对象存储
+              </AppButton>
+            </div>
+          </div>
+        </AppCard>
+      </div>
+
+      <!-- 上传队列 -->
+      <div v-if="allTasks.length > 0" class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold">处理队列</h2>
+          <div class="flex items-center gap-2">
+            <AppBadge variant="info">{{ allTasks.length }} 个任务</AppBadge>
+            <AppButton size="sm" variant="ghost" @click="dataSourceStore.clearCompletedTasks()">
+              清理已完成
+            </AppButton>
           </div>
         </div>
 
-        <template #footer>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-neutral-500">支持最大 500MB 的文件</span>
-            <AppButton 
-              size="sm" 
-              variant="ghost"
-              @click="uploadAll"
-              :disabled="uploadQueue.length === 0"
-            >
-              上传全部 ({{ uploadQueue.length }})
-            </AppButton>
-          </div>
-        </template>
-      </AppCard>
-
-      <!-- Upload Queue -->
-      <div v-if="uploadQueue.length > 0" class="mb-8">
-        <h2 class="text-2xl font-bold mb-6">上传队列</h2>
         <div class="space-y-4">
           <AppCard
-            v-for="item in uploadQueue"
-            :key="item.id"
+            v-for="task in allTasks"
+            :key="task.id"
             variant="outlined"
           >
             <div class="flex items-center gap-4">
-              <div class="text-4xl">{{ item.thumbnail }}</div>
+              <div class="text-4xl">{{ getTaskIcon(task) }}</div>
               <div class="flex-1 min-w-0">
-                <h3 class="font-semibold truncate">{{ item.name }}</h3>
-                <p class="text-sm text-neutral-500">{{ formatSize(item.size) }}</p>
+                <h3 class="font-semibold truncate">{{ getTaskName(task) }}</h3>
+                <p class="text-sm text-neutral-500">{{ getTaskSize(task) }}</p>
                 
-                <!-- Progress Bar -->
-                <div v-if="item.status === 'processing'" class="mt-2">
+                <!-- 进度条 -->
+                <div v-if="isTaskActive(task)" class="mt-2">
                   <div class="flex items-center justify-between text-xs text-neutral-400 mb-1">
-                    <span>处理中...</span>
-                    <span>{{ item.progress }}%</span>
+                    <span>{{ getTaskStatusText(task) }}</span>
+                    <div class="flex items-center gap-3">
+                      <span v-if="'speed' in task.progress && task.progress.speed">
+                        {{ formatSpeed(task.progress.speed) }}
+                      </span>
+                      <span>{{ task.progress.percentage }}%</span>
+                    </div>
                   </div>
                   <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
                     <div
                       class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300"
-                      :style="{ width: item.progress + '%' }"
+                      :style="{ width: task.progress.percentage + '%' }"
                     />
                   </div>
                 </div>
-
-                <!-- Tags -->
-                <div v-if="item.status === 'completed' && item.tags.length > 0" class="flex gap-2 mt-2">
-                  <AppBadge v-for="tag in item.tags" :key="tag" size="sm" variant="info">
-                    {{ tag }}
-                  </AppBadge>
-                </div>
               </div>
               
-              <!-- Status -->
-              <div>
+              <!-- 状态和操作 -->
+              <div class="flex items-center gap-2">
                 <AppBadge
-                  :variant="item.status === 'completed' ? 'success' : item.status === 'failed' ? 'error' : 'warning'"
+                  :variant="getTaskBadgeVariant(task)"
                 >
-                  {{ getStatusText(item.status) }}
+                  {{ getTaskStatusText(task) }}
                 </AppBadge>
+                
+                <!-- 操作按钮 -->
+                <button
+                  v-if="canPauseTask(task)"
+                  @click="handlePauseTask(task)"
+                  class="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  title="暂停"
+                >
+                  ⏸
+                </button>
+                <button
+                  v-if="canResumeTask(task)"
+                  @click="handleResumeTask(task)"
+                  class="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  title="继续"
+                >
+                  ▶️
+                </button>
+                <button
+                  v-if="canCancelTask(task)"
+                  @click="handleCancelTask(task)"
+                  class="p-2 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-all"
+                  title="取消"
+                >
+                  ✕
+                </button>
               </div>
             </div>
           </AppCard>
         </div>
       </div>
 
-      <!-- Recent Assets -->
+      <!-- 近期资产 -->
       <div>
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-2xl font-bold">近期资产</h2>
@@ -152,67 +340,254 @@
         </div>
       </div>
     </div>
+
+    <!-- 数据源配置Modal -->
+    <DataSourceConfigModal
+      v-if="showDataSourceModal"
+      :show="showDataSourceModal"
+      :source-type="currentSource"
+      @close="showDataSourceModal = false"
+      @created="handleDataSourceCreated"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useDataSourceStore } from '@/stores/dataSource'
 import AppCard from '@/components/atoms/AppCard.vue'
 import AppButton from '@/components/atoms/AppButton.vue'
 import AppBadge from '@/components/atoms/AppBadge.vue'
+import DataSourceConfigModal from '@/components/organisms/DataSourceConfigModal.vue'
 import { mockAPI } from '@/api/mock/mockAPI'
 import type { Asset } from '@/api/mock/mockData'
+import { DataSourceType, DataSourceStatus, UploadMethod } from '@/types/enums'
+import type { Domain } from '@/types/models'
+
+const dataSourceStore = useDataSourceStore()
+
+// ============================================
+// 数据源选择
+// ============================================
+
+const dataSources = [
+  {
+    type: 'web_upload',
+    name: 'Web上传',
+    icon: '📤',
+    description: '本地文件拖拽或选择'
+  },
+  {
+    type: 'url_import',
+    name: 'URL导入',
+    icon: '🔗',
+    description: '从URL下载导入'
+  },
+  {
+    type: 's3',
+    name: 'S3存储',
+    icon: '☁️',
+    description: 'AWS S3或兼容存储'
+  },
+  {
+    type: 'oss',
+    name: '阿里云OSS',
+    icon: '☁️',
+    description: '阿里云对象存储'
+  },
+  {
+    type: 'minio',
+    name: 'MinIO',
+    icon: '🗄️',
+    description: '私有化对象存储'
+  }
+]
+
+const currentSource = ref<string>('web_upload')
+
+// ============================================
+// Web上传
+// ============================================
 
 const isDragging = ref(false)
-const uploadQueue = ref<Asset[]>([])
-const recentAssets = ref<Asset[]>([])
-
-onMounted(async () => {
-  // 加载近期资产
-  const assets = await mockAPI.getAssets()
-  recentAssets.value = assets.slice(0, 6)
-})
+const { uploadConfig, activeUploads, totalUploadProgress } = dataSourceStore
 
 const handleDrop = (event: DragEvent) => {
   isDragging.value = false
   const files = Array.from(event.dataTransfer?.files || [])
-  addFilesToQueue(files)
+  uploadFiles(files)
 }
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement
   const files = Array.from(target.files || [])
-  addFilesToQueue(files)
+  uploadFiles(files)
 }
 
-const addFilesToQueue = async (files: File[]) => {
-  for (const file of files) {
-    const asset = await mockAPI.uploadFile(file)
-    uploadQueue.value.push(asset)
-    
-    // 模拟处理进度
-    mockAPI.subscribeToProgress(asset.id, (progress) => {
-      const item = uploadQueue.value.find(a => a.id === asset.id)
-      if (item) {
-        item.progress = progress
-        if (progress === 100) {
-          item.status = 'completed'
-          // 添加模拟标签
-          item.tags = ['AI处理', '已索引', '可搜索']
-        }
-      }
-    })
+const uploadFiles = async (files: File[]) => {
+  await dataSourceStore.uploadFiles(files, {
+    method: UploadMethod.DRAG_DROP,
+    tags: ['Web上传']
+  })
+}
+
+// ============================================
+// URL导入
+// ============================================
+
+const urlInput = ref('')
+const urlCategory = ref('')
+const urlTags = ref('')
+
+const handleURLImport = async () => {
+  const urls = urlInput.value.split('\n').filter(u => u.trim())
+  const tags = urlTags.value.split(',').map(t => t.trim()).filter(t => t)
+  
+  await dataSourceStore.importFromURLs(urls, {
+    category: urlCategory.value || undefined,
+    tags: tags.length > 0 ? tags : undefined
+  })
+  
+  // 清空输入
+  urlInput.value = ''
+  urlCategory.value = ''
+  urlTags.value = ''
+}
+
+// ============================================
+// 对象存储
+// ============================================
+
+const showDataSourceModal = ref(false)
+const { activeDataSources } = dataSourceStore
+
+const handleSync = async (dataSourceId: string) => {
+  await dataSourceStore.triggerSync(dataSourceId)
+}
+
+const handleDataSourceCreated = () => {
+  showDataSourceModal.value = false
+  dataSourceStore.fetchDataSources()
+}
+
+// ============================================
+// 任务管理
+// ============================================
+
+const allTasks = computed(() => {
+  return [
+    ...dataSourceStore.uploadTasks,
+    ...dataSourceStore.urlImportTasks
+  ].sort((a, b) => 
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
+})
+
+const isTaskActive = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  return task.status === 'uploading' || task.status === 'downloading' || task.status === 'processing'
+}
+
+const canPauseTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  return 'method' in task && task.status === 'uploading'
+}
+
+const canResumeTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  return 'method' in task && task.status === 'paused'
+}
+
+const canCancelTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  return task.status === 'pending' || task.status === 'paused'
+}
+
+const handlePauseTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('method' in task) {
+    dataSourceStore.pauseUpload(task.id)
   }
 }
 
-const uploadAll = () => {
-  // 所有文件都会自动处理
-  console.log('Uploading all files...')
+const handleResumeTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('method' in task) {
+    dataSourceStore.resumeUpload(task.id)
+  }
 }
 
+const handleCancelTask = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('method' in task) {
+    dataSourceStore.cancelUpload(task.id)
+  }
+}
+
+const getTaskIcon = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('file' in task) {
+    const file = task.file
+    if (file.type.startsWith('video/')) return '🎥'
+    if (file.type.startsWith('image/')) return '🖼️'
+    if (file.type.startsWith('audio/')) return '🎵'
+    if (file.type.includes('pdf')) return '📄'
+    return '📁'
+  }
+  return '🔗'
+}
+
+const getTaskName = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('file' in task) {
+    return task.file.name
+  }
+  return task.fileName || task.url.split('/').pop() || '未知文件'
+}
+
+const getTaskSize = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if ('file' in task) {
+    return formatSize(task.file.size)
+  }
+  return task.progress.totalBytes > 0 ? formatSize(task.progress.totalBytes) : '未知大小'
+}
+
+const getTaskStatusText = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  const statusMap: Record<string, string> = {
+    pending: '等待中',
+    uploading: '上传中',
+    downloading: '下载中',
+    processing: '处理中',
+    completed: '已完成',
+    failed: '失败',
+    paused: '已暂停'
+  }
+  return statusMap[task.status] || task.status
+}
+
+const getTaskBadgeVariant = (task: Domain.UploadTask | Domain.URLImportTask) => {
+  if (task.status === 'completed') return 'success'
+  if (task.status === 'failed') return 'error'
+  if (task.status === 'paused') return 'warning'
+  return 'info'
+}
+
+// ============================================
+// 近期资产
+// ============================================
+
+const recentAssets = ref<Asset[]>([])
+
+onMounted(async () => {
+  const assets = await mockAPI.getAssets()
+  recentAssets.value = assets.slice(0, 6)
+  await dataSourceStore.fetchDataSources()
+})
+
+// ============================================
+// 工具函数
+// ============================================
+
 const formatSize = (bytes: number): string => {
-  const mb = bytes / 1024 / 1024
-  return mb.toFixed(1) + ' MB'
+  if (bytes < 1024) return bytes + ' B'
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
+  if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
+  return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB'
+}
+
+const formatSpeed = (bytesPerSec: number): string => {
+  return formatSize(bytesPerSec) + '/s'
 }
 
 const formatDate = (dateStr: string): string => {
@@ -226,11 +601,18 @@ const formatDate = (dateStr: string): string => {
   return `${Math.floor(hours / 24)}天前`
 }
 
-const getStatusText = (status: string): string => {
-  const statusMap: Record<string, string> = {
-    processing: '处理中',
-    completed: '已完成',
-    failed: '失败'
+const formatRelativeTime = (dateStr?: string): string => {
+  if (!dateStr) return '从未'
+  return formatDate(dateStr)
+}
+
+const getStatusText = (status: DataSourceStatus): string => {
+  const statusMap: Record<DataSourceStatus, string> = {
+    [DataSourceStatus.CONNECTED]: '已连接',
+    [DataSourceStatus.DISCONNECTED]: '未连接',
+    [DataSourceStatus.SYNCING]: '同步中',
+    [DataSourceStatus.ERROR]: '错误',
+    [DataSourceStatus.CONFIGURING]: '配置中'
   }
   return statusMap[status] || status
 }

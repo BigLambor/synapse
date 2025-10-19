@@ -56,8 +56,9 @@ const navItems = [
   { path: '/ingestion', label: '数据入湖', icon: '📥', roles: ['all'] },
   { path: '/processing', label: '数据处理', icon: '⚙️', roles: ['all'] },
   { path: '/exploration', label: '智能探索', icon: '🔍', roles: ['all'] },
+  { path: '/dataset', label: '训练数据集', icon: '🎯', roles: ['all'] },
   { path: '/collaboration', label: '团队协作', icon: '🤝', roles: ['all'] },
-  { path: '/model-optimization', label: '模型优化', icon: '🎯', roles: ['all'] },
+  { path: '/model-optimization', label: '模型优化', icon: '🚀', roles: ['all'] },
   { path: '/dashboard', label: 'Director视角', icon: '📊', roles: ['user_王五'] }
 ]
 
@@ -82,14 +83,14 @@ const currentUser = computed(() => {
   // 默认用户
   return {
     name: '张三',
-    role: '市场分析师',
+    role: '数据工程师',
     avatar: '👩'
   }
 })
 
 const getRoleText = (role: string): string => {
   const roleMap: Record<string, string> = {
-    'Market Analyst': '市场分析师',
+    'Market Analyst': '数据工程师',
     'AI Engineer': 'AI工程师',
     'Director': '技术总监'
   }

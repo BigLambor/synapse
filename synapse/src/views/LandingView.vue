@@ -33,7 +33,7 @@
           >
             <div class="text-5xl mb-4">👩</div>
             <h3 class="text-xl font-bold text-neutral-100 mb-2">张三</h3>
-            <p class="text-sm text-primary-400 mb-3">市场分析师</p>
+            <p class="text-sm text-primary-400 mb-3">数据工程师</p>
             <p class="text-xs text-neutral-400">
               深度挖掘用户洞察<br/>快速定位市场机会
             </p>

@@ -111,19 +111,19 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <span class="text-sm">CPU使用率</span>
-                  <span class="text-sm font-medium">{{ systemStatus.cpu }}%</span>
+                  <span class="text-sm font-medium">{{ systemStatus.cpu.toFixed(2) }}%</span>
                 </div>
                 <AppProgress :value="systemStatus.cpu" :show-label="false" />
                 
                 <div class="flex items-center justify-between">
                   <span class="text-sm">内存使用率</span>
-                  <span class="text-sm font-medium">{{ systemStatus.memory }}%</span>
+                  <span class="text-sm font-medium">{{ systemStatus.memory.toFixed(2) }}%</span>
                 </div>
                 <AppProgress :value="systemStatus.memory" :show-label="false" variant="warning" />
                 
                 <div class="flex items-center justify-between">
                   <span class="text-sm">GPU利用率</span>
-                  <span class="text-sm font-medium">{{ systemStatus.gpu }}%</span>
+                  <span class="text-sm font-medium">{{ systemStatus.gpu.toFixed(2) }}%</span>
                 </div>
                 <AppProgress :value="systemStatus.gpu" :show-label="false" variant="success" />
               </div>
@@ -172,7 +172,7 @@
           <template #footer>
             <div class="flex items-center justify-between">
               <span class="text-sm text-neutral-400">最后更新: 刚刚</span>
-              <AppButton size="sm" variant="outline">
+              <AppButton size="sm" variant="outline" @click="showKnowledgeGraph = true">
                 查看完整图谱 →
               </AppButton>
             </div>
@@ -205,6 +205,12 @@
         <VectorDatabaseDemo />
       </div>
     </div>
+
+    <!-- Knowledge Graph Modal -->
+    <KnowledgeGraphModal
+      v-model="showKnowledgeGraph"
+      :graph-data="mockKnowledgeGraph"
+    />
   </div>
 </template>
 
@@ -219,6 +225,8 @@ import FeatureExtractionDemo from '@/components/organisms/FeatureExtractionDemo.
 import RayCodeDemo from '@/components/organisms/RayCodeDemo.vue'
 import VectorVisualization from '@/components/organisms/VectorVisualization.vue'
 import VectorDatabaseDemo from '@/components/organisms/VectorDatabaseDemo.vue'
+import KnowledgeGraphModal from '@/components/organisms/KnowledgeGraphModal.vue'
+import { mockKnowledgeGraph } from '@/api/mock/mockData'
 
 interface ProcessingStage {
   id: string
@@ -241,6 +249,7 @@ const tabs = [
 ]
 
 const activeTab = ref('monitor')
+const showKnowledgeGraph = ref(false)
 
 const processingStages = ref<ProcessingStage[]>([
   {

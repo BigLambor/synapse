@@ -28,6 +28,24 @@ const router = createRouter({
       meta: { title: '智能探索', preload: ['SearchBar', 'ResultsGrid'] }
     },
     {
+      path: '/dataset',
+      name: 'Dataset',
+      component: () => import('@/views/DatasetView.vue'),
+      meta: { 
+        title: '训练数据集 - AI训练平台的数据源',
+        description: '为AI训练提供高质量、标准化的数据集'
+      }
+    },
+    {
+      path: '/dataset/publish-demo',
+      name: 'DatasetPublishDemo',
+      component: () => import('@/views/DatasetPublishDemoView.vue'),
+      meta: { 
+        title: '数据集发布流程演示',
+        description: '交互式演示数据集从创建到发布的完整流程'
+      }
+    },
+    {
       path: '/collaboration',
       name: 'Collaboration',
       component: () => import('@/views/CollaborationView.vue'),

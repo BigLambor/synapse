@@ -178,7 +178,7 @@ interface User {
 本次实施完全符合 `DESIGN_SPECIFICATION_V2.md`:
 
 ### 角色定义（第51-64行）
-✅ 张三 - 市场分析师
+✅ 张三 - 数据工程师
 ✅ 李四 - AI工程师  
 ✅ 王五 - Director
 

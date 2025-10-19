@@ -52,7 +52,7 @@
               <div class="text-3xl mb-2">📊</div>
               <h4 class="font-semibold mb-2">元数据数据库层</h4>
               <div class="text-xs text-neutral-300 space-y-1 mb-3">
-                <div>• PostgreSQL</div>
+                <div>• PostgreSQL/Mysql(Gravitino)</div>
                 <div>• 存储业务信息</div>
                 <div>• 关系型查询</div>
                 <div>• 事务支持</div>
@@ -289,7 +289,7 @@
               </div>
               <div>
                 <div class="text-xs text-neutral-400 mb-1">消息队列</div>
-                <AppBadge size="sm">RabbitMQ</AppBadge>
+                <AppBadge size="sm">Kafka</AppBadge>
               </div>
               <div>
                 <div class="text-xs text-neutral-400 mb-1">任务调度</div>

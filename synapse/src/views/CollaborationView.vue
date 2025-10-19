@@ -42,7 +42,7 @@
                 <AppAvatar emoji="👩" size="sm" />
                 <div>
                   <h2 class="text-xl font-semibold">张三 的洞察看板</h2>
-                  <p class="text-sm text-neutral-400">市场分析师</p>
+                  <p class="text-sm text-neutral-400">数据工程师</p>
                 </div>
               </div>
               <AppButton size="sm" variant="outline" @click="createInsight">
@@ -241,7 +241,7 @@ interface Task {
 }
 
 const teamMembers = ref<TeamMember[]>([
-  { id: 'user_张三', name: '张三', role: '市场分析师', avatar: '👩', status: 'online' },
+  { id: 'user_张三', name: '张三', role: '数据工程师', avatar: '👩', status: 'online' },
   { id: 'user_李四', name: '李四', role: 'AI工程师', avatar: '👨', status: 'online' },
   { id: 'user_王五', name: '王五', role: 'Director', avatar: '👩‍💼', status: 'away' }
 ])
