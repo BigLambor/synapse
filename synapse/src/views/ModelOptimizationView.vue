@@ -1,12 +1,12 @@
 <template>
-  <div class="model-optimization-view min-h-screen bg-gradient-to-br from-neutral-950 via-orange-900/10 to-neutral-950">
-    <div class="container mx-auto px-6 py-12">
+  <div class="model-optimization-view page-shell">
+    <div class="page-container">
       <!-- Header -->
       <div class="mb-12">
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+        <h1 class="page-title mb-2">
           模型优化与微调
         </h1>
-        <p class="text-lg text-neutral-400">
+        <p class="page-subtitle">
           对比分析模型性能，验证优化效果
         </p>
       </div>
@@ -19,7 +19,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-xl font-semibold">基线模型 (v1.0)</h2>
-                <p class="text-sm text-neutral-400">优化前</p>
+                <p class="text-2xs text-cursor-fg-muted">优化前</p>
               </div>
               <AppBadge variant="default">Baseline</AppBadge>
             </div>
@@ -28,21 +28,21 @@
           <div class="space-y-6">
             <!-- Key Metrics -->
             <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 rounded-lg bg-neutral-900/50">
-                <div class="text-3xl font-bold text-neutral-300 mb-1">82.3%</div>
-                <div class="text-sm text-neutral-500">准确率</div>
+              <div class="p-4 rounded-cursor bg-cursor-panel">
+                <div class="text-3xl font-bold text-cursor-fg mb-1">82.3%</div>
+                <div class="text-2xs text-cursor-fg-muted">准确率</div>
               </div>
-              <div class="p-4 rounded-lg bg-neutral-900/50">
-                <div class="text-3xl font-bold text-neutral-300 mb-1">1.8s</div>
-                <div class="text-sm text-neutral-500">响应时间</div>
+              <div class="p-4 rounded-cursor bg-cursor-panel">
+                <div class="text-3xl font-bold text-cursor-fg mb-1">1.8s</div>
+                <div class="text-2xs text-cursor-fg-muted">响应时间</div>
               </div>
-              <div class="p-4 rounded-lg bg-neutral-900/50">
-                <div class="text-3xl font-bold text-neutral-300 mb-1">76%</div>
-                <div class="text-sm text-neutral-500">F1 Score</div>
+              <div class="p-4 rounded-cursor bg-cursor-panel">
+                <div class="text-3xl font-bold text-cursor-fg mb-1">76%</div>
+                <div class="text-2xs text-cursor-fg-muted">F1 Score</div>
               </div>
-              <div class="p-4 rounded-lg bg-neutral-900/50">
-                <div class="text-3xl font-bold text-neutral-300 mb-1">234MB</div>
-                <div class="text-sm text-neutral-500">模型大小</div>
+              <div class="p-4 rounded-cursor bg-cursor-panel">
+                <div class="text-3xl font-bold text-cursor-fg mb-1">234MB</div>
+                <div class="text-2xs text-cursor-fg-muted">模型大小</div>
               </div>
             </div>
 
@@ -68,7 +68,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-xl font-semibold">优化模型 (v2.0)</h2>
-                <p class="text-sm text-neutral-400">优化后</p>
+                <p class="text-2xs text-cursor-fg-muted">优化后</p>
               </div>
               <AppBadge variant="success">Optimized</AppBadge>
             </div>
@@ -77,25 +77,25 @@
           <div class="space-y-6">
             <!-- Key Metrics with Improvements -->
             <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+              <div class="p-4 rounded-cursor bg-green-500/10 border border-green-500/30">
                 <div class="text-3xl font-bold text-green-400 mb-1">94.7%</div>
                 <div class="text-sm text-green-500 flex items-center gap-1">
                   准确率 <span class="text-xs">↑ 12.4%</span>
                 </div>
               </div>
-              <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+              <div class="p-4 rounded-cursor bg-green-500/10 border border-green-500/30">
                 <div class="text-3xl font-bold text-green-400 mb-1">0.9s</div>
                 <div class="text-sm text-green-500 flex items-center gap-1">
                   响应时间 <span class="text-xs">↓ 50%</span>
                 </div>
               </div>
-              <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+              <div class="p-4 rounded-cursor bg-green-500/10 border border-green-500/30">
                 <div class="text-3xl font-bold text-green-400 mb-1">91%</div>
                 <div class="text-sm text-green-500 flex items-center gap-1">
                   F1 Score <span class="text-xs">↑ 15%</span>
                 </div>
               </div>
-              <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+              <div class="p-4 rounded-cursor bg-green-500/10 border border-green-500/30">
                 <div class="text-3xl font-bold text-green-400 mb-1">187MB</div>
                 <div class="text-sm text-green-500 flex items-center gap-1">
                   模型大小 <span class="text-xs">↓ 20%</span>
@@ -129,17 +129,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <!-- Baseline -->
           <div>
-            <h3 class="text-sm font-medium text-neutral-400 mb-4 text-center">基线模型</h3>
+            <h3 class="text-sm font-medium text-cursor-fg-muted mb-4 text-center">基线模型</h3>
             <div class="grid grid-cols-3 gap-2">
-              <div class="text-center text-xs text-neutral-500"></div>
-              <div class="text-center text-xs text-neutral-400 font-medium">预测: 正例</div>
-              <div class="text-center text-xs text-neutral-400 font-medium">预测: 负例</div>
+              <div class="text-center text-xs text-cursor-fg-muted"></div>
+              <div class="text-center text-xs text-cursor-fg-muted font-medium">预测: 正例</div>
+              <div class="text-center text-xs text-cursor-fg-muted font-medium">预测: 负例</div>
               
-              <div class="text-xs text-neutral-400 font-medium flex items-center">真实: 正例</div>
+              <div class="text-xs text-cursor-fg-muted font-medium flex items-center">真实: 正例</div>
               <div class="p-4 bg-green-500/20 text-green-400 text-center rounded font-bold">876</div>
               <div class="p-4 bg-red-500/20 text-red-400 text-center rounded font-bold">124</div>
               
-              <div class="text-xs text-neutral-400 font-medium flex items-center">真实: 负例</div>
+              <div class="text-xs text-cursor-fg-muted font-medium flex items-center">真实: 负例</div>
               <div class="p-4 bg-red-500/20 text-red-400 text-center rounded font-bold">156</div>
               <div class="p-4 bg-green-500/20 text-green-400 text-center rounded font-bold">844</div>
             </div>
@@ -149,15 +149,15 @@
           <div>
             <h3 class="text-sm font-medium text-green-400 mb-4 text-center">优化模型</h3>
             <div class="grid grid-cols-3 gap-2">
-              <div class="text-center text-xs text-neutral-500"></div>
-              <div class="text-center text-xs text-neutral-400 font-medium">预测: 正例</div>
-              <div class="text-center text-xs text-neutral-400 font-medium">预测: 负例</div>
+              <div class="text-center text-xs text-cursor-fg-muted"></div>
+              <div class="text-center text-xs text-cursor-fg-muted font-medium">预测: 正例</div>
+              <div class="text-center text-xs text-cursor-fg-muted font-medium">预测: 负例</div>
               
-              <div class="text-xs text-neutral-400 font-medium flex items-center">真实: 正例</div>
+              <div class="text-xs text-cursor-fg-muted font-medium flex items-center">真实: 正例</div>
               <div class="p-4 bg-green-500/30 text-green-300 text-center rounded font-bold">967</div>
               <div class="p-4 bg-red-500/20 text-red-400 text-center rounded font-bold">33</div>
               
-              <div class="text-xs text-neutral-400 font-medium flex items-center">真实: 负例</div>
+              <div class="text-xs text-cursor-fg-muted font-medium flex items-center">真实: 负例</div>
               <div class="p-4 bg-red-500/20 text-red-400 text-center rounded font-bold">72</div>
               <div class="p-4 bg-green-500/30 text-green-300 text-center rounded font-bold">928</div>
             </div>
@@ -185,7 +185,7 @@
           <div
             v-for="testCase in testCases"
             :key="testCase.id"
-            class="p-4 rounded-lg bg-neutral-900/50 border border-neutral-800"
+            class="p-4 rounded-cursor bg-cursor-panel border border-cursor-border"
           >
             <div class="flex items-start gap-4">
               <div class="text-3xl">{{ testCase.icon }}</div>
@@ -199,21 +199,21 @@
                     {{ testCase.improved ? '✓ 改进' : '⚠ 待优化' }}
                   </AppBadge>
                 </div>
-                <p class="text-sm text-neutral-400 mb-3">{{ testCase.description }}</p>
+                <p class="text-2xs text-cursor-fg-muted mb-3">{{ testCase.description }}</p>
                 
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <div class="text-xs text-neutral-500 mb-1">基线模型</div>
+                    <div class="text-xs text-cursor-fg-muted mb-1">基线模型</div>
                     <div class="flex items-center gap-2">
                       <AppProgress :value="testCase.baseline.confidence" :show-label="false" class="flex-1" />
                       <span class="text-sm font-medium">{{ testCase.baseline.confidence }}%</span>
                     </div>
-                    <div class="text-xs text-neutral-500 mt-1">
+                    <div class="text-xs text-cursor-fg-muted mt-1">
                       结果: {{ testCase.baseline.result }}
                     </div>
                   </div>
                   <div>
-                    <div class="text-xs text-neutral-500 mb-1">优化模型</div>
+                    <div class="text-xs text-cursor-fg-muted mb-1">优化模型</div>
                     <div class="flex items-center gap-2">
                       <AppProgress :value="testCase.optimized.confidence" :show-label="false" variant="success" class="flex-1" />
                       <span class="text-sm font-medium text-green-400">{{ testCase.optimized.confidence }}%</span>
@@ -236,10 +236,10 @@
         </template>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 rounded-lg bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20">
+          <div class="p-6 rounded-cursor bg-cursor-surface border border-cursor-border">
             <div class="text-4xl mb-3">🎯</div>
             <h3 class="font-semibold mb-2">关键改进</h3>
-            <ul class="space-y-2 text-sm text-neutral-300">
+            <ul class="space-y-2 text-sm text-cursor-fg">
               <li>• 引入注意力机制</li>
               <li>• 数据增强策略</li>
               <li>• 模型剪枝优化</li>
@@ -247,10 +247,10 @@
             </ul>
           </div>
 
-          <div class="p-6 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20">
+          <div class="p-6 rounded-cursor bg-cursor-surface border border-cursor-border">
             <div class="text-4xl mb-3">📊</div>
             <h3 class="font-semibold mb-2">性能提升</h3>
-            <ul class="space-y-2 text-sm text-neutral-300">
+            <ul class="space-y-2 text-sm text-cursor-fg">
               <li>• 准确率提升 12.4%</li>
               <li>• 响应速度提升 50%</li>
               <li>• F1 Score 提升 15%</li>
@@ -258,10 +258,10 @@
             </ul>
           </div>
 
-          <div class="p-6 rounded-lg bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20">
+          <div class="p-6 rounded-cursor bg-cursor-surface border border-cursor-border">
             <div class="text-4xl mb-3">💡</div>
             <h3 class="font-semibold mb-2">业务价值</h3>
-            <ul class="space-y-2 text-sm text-neutral-300">
+            <ul class="space-y-2 text-sm text-cursor-fg">
               <li>• 用户满意度预计提升 25%</li>
               <li>• 减少误判率 45%</li>
               <li>• 降低服务器成本 30%</li>
@@ -272,7 +272,7 @@
 
         <template #footer>
           <div class="flex items-center justify-between">
-            <span class="text-sm text-neutral-400">优化完成时间: 2024-10-07 14:30</span>
+            <span class="text-2xs text-cursor-fg-muted">优化完成时间: 2024-10-07 14:30</span>
             <div class="flex gap-2">
               <AppButton variant="outline" size="sm">
                 📥 下载模型

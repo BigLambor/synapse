@@ -1,8 +1,8 @@
 <template>
   <div :class="avatarClasses">
     <img v-if="src" :src="src" :alt="alt" class="w-full h-full object-cover" />
-    <span v-else-if="name" class="font-semibold">{{ initials }}</span>
-    <span v-else class="text-xl">{{ emoji || '👤' }}</span>
+    <span v-else-if="name" class="font-mono font-medium">{{ initials }}</span>
+    <span v-else class="text-xs font-mono">{{ fallback }}</span>
   </div>
 </template>
 
@@ -23,15 +23,15 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const avatarClasses = computed(() => {
-  const base = 'relative inline-flex items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white overflow-hidden'
-  
+  const base = 'relative inline-flex items-center justify-center rounded-cursor bg-cursor-panel border border-cursor-border text-cursor-accent overflow-hidden'
+
   const sizes = {
-    sm: 'w-8 h-8 text-xs',
-    md: 'w-10 h-10 text-sm',
-    lg: 'w-12 h-12 text-base',
-    xl: 'w-16 h-16 text-lg'
+    sm: 'w-6 h-6 text-2xs',
+    md: 'w-7 h-7 text-xs',
+    lg: 'w-9 h-9 text-sm',
+    xl: 'w-12 h-12 text-base'
   }
-  
+
   return `${base} ${sizes[props.size]}`
 })
 
@@ -44,5 +44,6 @@ const initials = computed(() => {
     .toUpperCase()
     .slice(0, 2)
 })
-</script>
 
+const fallback = computed(() => props.emoji ? props.emoji.slice(0, 2) : '?')
+</script>

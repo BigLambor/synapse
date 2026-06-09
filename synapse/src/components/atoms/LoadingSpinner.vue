@@ -19,19 +19,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 const spinnerClasses = computed(() => {
   const base = 'inline-block animate-spin'
-  
+
   const sizes = {
-    sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12'
+    sm: 'w-3.5 h-3.5',
+    md: 'w-6 h-6',
+    lg: 'w-8 h-8'
   }
-  
-  const colors = {
-    primary: 'border-primary-500',
-    white: 'border-white',
-    secondary: 'border-secondary-500'
-  }
-  
+
   return `${base} ${sizes[props.size]}`
 })
 </script>
@@ -40,8 +34,8 @@ const spinnerClasses = computed(() => {
 .spinner-ring {
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(99, 102, 241, 0.2);
-  border-top-color: currentColor;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #007acc;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -52,4 +46,3 @@ const spinnerClasses = computed(() => {
   }
 }
 </style>
-

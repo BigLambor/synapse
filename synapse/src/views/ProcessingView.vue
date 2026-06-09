@@ -1,12 +1,12 @@
 <template>
-  <div class="processing-view min-h-screen bg-gradient-to-br from-neutral-950 via-purple-900/10 to-neutral-950">
-    <div class="container mx-auto px-6 py-12">
+  <div class="processing-view page-shell">
+    <div class="page-container">
       <!-- Header -->
       <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <h1 class="page-title mb-2">
           数据处理中心
         </h1>
-        <p class="text-lg text-neutral-400 mb-6">
+        <p class="page-subtitle mb-6">
           实时监控AI数据处理流程 - 特征提取、向量化、知识图谱构建
         </p>
         
@@ -16,10 +16,10 @@
             v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+            class="px-4 py-2 rounded-cursor text-sm font-medium transition-all"
             :class="activeTab === tab.id 
-              ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20' 
-              : 'bg-neutral-800/50 text-neutral-300 hover:bg-neutral-700/50'"
+              ? 'bg-cursor-accent text-white ' 
+              : 'bg-cursor-surface text-cursor-fg hover:bg-cursor-border/50'"
           >
             {{ tab.icon }} {{ tab.label }}
           </button>
@@ -52,15 +52,15 @@
                       :class="stage.status === 'completed' 
                         ? 'bg-green-500/20 text-green-400' 
                         : stage.status === 'processing' 
-                        ? 'bg-primary-500/20 text-primary-400 animate-pulse' 
-                        : 'bg-neutral-700 text-neutral-500'"
+                        ? 'bg-cursor-accent-muted text-cursor-accent animate-pulse' 
+                        : 'bg-cursor-border text-cursor-fg-muted'"
                     >
                       {{ stage.icon }}
                     </div>
                     <div class="flex-1">
                       <div class="flex items-center justify-between mb-1">
                         <h3 class="font-semibold">{{ stage.label }}</h3>
-                        <span class="text-sm text-neutral-400">{{ stage.duration }}</span>
+                        <span class="text-2xs text-cursor-fg-muted">{{ stage.duration }}</span>
                       </div>
                       <AppProgress
                         :value="stage.progress"
@@ -72,7 +72,7 @@
                   </div>
                   
                   <!-- Stage Details -->
-                  <div v-if="stage.status === 'processing'" class="ml-14 mt-2 text-sm text-neutral-400">
+                  <div v-if="stage.status === 'processing'" class="ml-14 mt-2 text-2xs text-cursor-fg-muted">
                     <p>{{ stage.details }}</p>
                   </div>
                 </div>
@@ -89,16 +89,16 @@
               
               <div class="space-y-4">
                 <div>
-                  <div class="text-3xl font-bold text-primary-400 mb-1">{{ stats.processed }}</div>
-                  <div class="text-sm text-neutral-400">已处理资产</div>
+                  <div class="text-3xl font-bold text-cursor-accent mb-1">{{ stats.processed }}</div>
+                  <div class="text-2xs text-cursor-fg-muted">已处理资产</div>
                 </div>
                 <div>
                   <div class="text-3xl font-bold text-secondary-400 mb-1">{{ stats.speed }}</div>
-                  <div class="text-sm text-neutral-400">处理速度（个/分钟）</div>
+                  <div class="text-2xs text-cursor-fg-muted">处理速度（个/分钟）</div>
                 </div>
                 <div>
                   <div class="text-3xl font-bold text-accent-400 mb-1">{{ stats.accuracy }}%</div>
-                  <div class="text-sm text-neutral-400">特征提取准确率</div>
+                  <div class="text-2xs text-cursor-fg-muted">特征提取准确率</div>
                 </div>
               </div>
             </AppCard>
@@ -136,34 +136,34 @@
           <template #header>
             <div>
               <h2 class="text-xl font-semibold mb-1">知识图谱构建</h2>
-              <p class="text-sm text-neutral-400">自动识别实体和关系，构建知识网络</p>
+              <p class="text-2xs text-cursor-fg-muted">自动识别实体和关系，构建知识网络</p>
             </div>
           </template>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="p-6 rounded-lg bg-neutral-900/50 border border-neutral-800">
+            <div class="p-6 rounded-cursor bg-cursor-panel border border-cursor-border">
               <div class="text-4xl mb-3">🏷️</div>
-              <div class="text-3xl font-bold text-primary-400 mb-2">{{ knowledgeGraph.entities }}</div>
-              <div class="text-sm text-neutral-400">识别实体</div>
-              <div class="mt-3 text-xs text-neutral-500">
+              <div class="text-3xl font-bold text-cursor-accent mb-2">{{ knowledgeGraph.entities }}</div>
+              <div class="text-2xs text-cursor-fg-muted">识别实体</div>
+              <div class="mt-3 text-xs text-cursor-fg-muted">
                 产品、功能、人物、品牌等
               </div>
             </div>
 
-            <div class="p-6 rounded-lg bg-neutral-900/50 border border-neutral-800">
+            <div class="p-6 rounded-cursor bg-cursor-panel border border-cursor-border">
               <div class="text-4xl mb-3">🔗</div>
               <div class="text-3xl font-bold text-secondary-400 mb-2">{{ knowledgeGraph.relations }}</div>
-              <div class="text-sm text-neutral-400">关系连接</div>
-              <div class="mt-3 text-xs text-neutral-500">
+              <div class="text-2xs text-cursor-fg-muted">关系连接</div>
+              <div class="mt-3 text-xs text-cursor-fg-muted">
                 依赖、对比、因果等关系
               </div>
             </div>
 
-            <div class="p-6 rounded-lg bg-neutral-900/50 border border-neutral-800">
+            <div class="p-6 rounded-cursor bg-cursor-panel border border-cursor-border">
               <div class="text-4xl mb-3">💡</div>
               <div class="text-3xl font-bold text-accent-400 mb-2">{{ knowledgeGraph.insights }}</div>
-              <div class="text-sm text-neutral-400">洞察生成</div>
-              <div class="mt-3 text-xs text-neutral-500">
+              <div class="text-2xs text-cursor-fg-muted">洞察生成</div>
+              <div class="mt-3 text-xs text-cursor-fg-muted">
                 自动发现的关键洞察
               </div>
             </div>
@@ -171,7 +171,7 @@
 
           <template #footer>
             <div class="flex items-center justify-between">
-              <span class="text-sm text-neutral-400">最后更新: 刚刚</span>
+              <span class="text-2xs text-cursor-fg-muted">最后更新: 刚刚</span>
               <AppButton size="sm" variant="outline" @click="showKnowledgeGraph = true">
                 查看完整图谱 →
               </AppButton>

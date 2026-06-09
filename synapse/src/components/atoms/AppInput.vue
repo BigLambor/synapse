@@ -1,8 +1,8 @@
 <template>
   <div class="w-full">
-    <label v-if="label" :for="inputId" class="block text-sm font-medium text-neutral-300 mb-2">
+    <label v-if="label" :for="inputId" class="block text-sm font-medium text-cursor-fg mb-1.5">
       {{ label }}
-      <span v-if="required" class="text-red-400">*</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
     <div class="relative">
       <input
@@ -20,8 +20,8 @@
         <slot name="suffix" />
       </div>
     </div>
-    <p v-if="error" class="mt-1 text-sm text-red-400">{{ error }}</p>
-    <p v-else-if="hint" class="mt-1 text-sm text-neutral-500">{{ hint }}</p>
+    <p v-if="error" class="mt-1 text-sm text-error">{{ error }}</p>
+    <p v-else-if="hint" class="mt-1 text-sm text-cursor-fg-muted">{{ hint }}</p>
   </div>
 </template>
 
@@ -55,12 +55,12 @@ const inputId = `input-${Math.random().toString(36).substr(2, 9)}`
 const localValue = ref(props.modelValue)
 
 const inputClasses = computed(() => {
-  const base = 'block w-full rounded-lg bg-neutral-800 border px-4 py-2.5 text-neutral-100 placeholder-neutral-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0'
-  const borderColor = props.error 
-    ? 'border-red-500 focus:ring-red-500' 
-    : 'border-neutral-700 focus:ring-primary-500 focus:border-transparent'
-  const disabled = props.disabled ? 'opacity-50 cursor-not-allowed' : ''
-  
+  const base = 'block w-full rounded-cursor bg-cursor-input border px-3 py-2 text-sm text-cursor-fg placeholder-cursor-fg-subtle transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-0'
+  const borderColor = props.error
+    ? 'border-error focus:ring-error/20'
+    : 'border-cursor-border focus:ring-cursor-accent/20 focus:border-cursor-accent'
+  const disabled = props.disabled ? 'opacity-50 cursor-not-allowed bg-cursor-panel' : ''
+
   return `${base} ${borderColor} ${disabled}`
 })
 
@@ -69,4 +69,3 @@ const handleInput = (event: Event) => {
   emit('update:modelValue', target.value)
 }
 </script>
-

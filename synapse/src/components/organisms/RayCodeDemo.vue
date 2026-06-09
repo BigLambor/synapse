@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-xl font-semibold mb-1">⚡ Ray分布式处理实现</h2>
-          <p class="text-sm text-neutral-400">高性能并行特征提取代码示例</p>
+          <p class="text-2xs text-cursor-fg-muted">高性能并行特征提取代码示例</p>
         </div>
         <div class="flex gap-2">
           <AppButton
@@ -28,30 +28,30 @@
             📋 复制代码
           </AppButton>
         </div>
-        <pre class="bg-neutral-950 rounded-lg p-4 overflow-x-auto border border-neutral-800"><code class="text-xs text-neutral-300 font-mono leading-relaxed">{{ currentCode }}</code></pre>
+        <pre class="bg-cursor-bg rounded-cursor p-4 overflow-x-auto border border-cursor-border"><code class="text-xs text-cursor-fg font-mono leading-relaxed">{{ currentCode }}</code></pre>
       </div>
 
       <!-- 代码说明 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-gradient-to-br from-primary-500/10 to-primary-600/10 rounded-lg p-4 border border-primary-500/20">
+        <div class="bg-cursor-surface rounded-cursor p-4 border border-cursor-accent/20">
           <h4 class="font-semibold text-sm mb-2 flex items-center gap-2">
             <span>🎯</span>
             <span>核心特性</span>
           </h4>
-          <ul class="space-y-2 text-xs text-neutral-300">
+          <ul class="space-y-2 text-xs text-cursor-fg">
             <li v-for="feature in currentExample.features" :key="feature" class="flex items-start gap-2">
-              <span class="text-primary-400 mt-0.5">•</span>
+              <span class="text-cursor-accent mt-0.5">•</span>
               <span>{{ feature }}</span>
             </li>
           </ul>
         </div>
 
-        <div class="bg-gradient-to-br from-secondary-500/10 to-secondary-600/10 rounded-lg p-4 border border-secondary-500/20">
+        <div class="bg-cursor-surface rounded-cursor p-4 border border-secondary-500/20">
           <h4 class="font-semibold text-sm mb-2 flex items-center gap-2">
             <span>📈</span>
             <span>性能优势</span>
           </h4>
-          <ul class="space-y-2 text-xs text-neutral-300">
+          <ul class="space-y-2 text-xs text-cursor-fg">
             <li v-for="benefit in currentExample.benefits" :key="benefit" class="flex items-start gap-2">
               <span class="text-secondary-400 mt-0.5">•</span>
               <span>{{ benefit }}</span>
@@ -61,7 +61,7 @@
       </div>
 
       <!-- 执行流程可视化 -->
-      <div class="bg-neutral-900/50 rounded-lg p-4 border border-neutral-800">
+      <div class="bg-cursor-panel rounded-cursor p-4 border border-cursor-border">
         <h4 class="font-semibold text-sm mb-4 flex items-center gap-2">
           <span>🔄</span>
           <span>执行流程</span>
@@ -72,14 +72,14 @@
             :key="index"
             class="flex items-start gap-3"
           >
-            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500/20 text-primary-400 flex items-center justify-center text-xs font-semibold">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-cursor-accent-muted text-cursor-accent flex items-center justify-center text-xs font-semibold">
               {{ index + 1 }}
             </div>
             <div class="flex-1">
               <div class="font-medium text-sm mb-1">{{ step.title }}</div>
-              <div class="text-xs text-neutral-400">{{ step.description }}</div>
+              <div class="text-xs text-cursor-fg-muted">{{ step.description }}</div>
             </div>
-            <div v-if="step.time" class="text-xs text-neutral-500 whitespace-nowrap">
+            <div v-if="step.time" class="text-xs text-cursor-fg-muted whitespace-nowrap">
               {{ step.time }}
             </div>
           </div>
@@ -87,7 +87,7 @@
       </div>
 
       <!-- 性能对比 -->
-      <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg p-4 border border-green-500/20">
+      <div class="bg-cursor-surface rounded-cursor p-4 border border-cursor-border">
         <h4 class="font-semibold text-sm mb-3 flex items-center gap-2">
           <span>⚡</span>
           <span>性能对比</span>
@@ -95,15 +95,15 @@
         <div class="grid grid-cols-3 gap-4">
           <div class="text-center">
             <div class="text-2xl font-bold text-red-400 mb-1">{{ currentExample.performance.sequential }}</div>
-            <div class="text-xs text-neutral-400">单线程处理</div>
+            <div class="text-xs text-cursor-fg-muted">单线程处理</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-yellow-400 mb-1">{{ currentExample.performance.multiprocess }}</div>
-            <div class="text-xs text-neutral-400">多进程处理</div>
+            <div class="text-xs text-cursor-fg-muted">多进程处理</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-green-400 mb-1">{{ currentExample.performance.ray }}</div>
-            <div class="text-xs text-neutral-400">Ray分布式</div>
+            <div class="text-xs text-cursor-fg-muted">Ray分布式</div>
           </div>
         </div>
         <div class="mt-3 text-center">

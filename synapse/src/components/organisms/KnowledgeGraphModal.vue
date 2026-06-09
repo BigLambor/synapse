@@ -3,43 +3,43 @@
     <Transition name="modal">
       <div
         v-if="modelValue"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 "
         @click.self="close"
       >
-        <div class="relative w-full max-w-7xl h-[90vh] bg-gradient-to-br from-neutral-900 via-neutral-900 to-purple-900/20 rounded-2xl shadow-2xl border border-neutral-800 flex flex-col">
+        <div class="relative w-full max-w-7xl h-[90vh] bg-cursor-surface rounded-cursor  border border-cursor-border flex flex-col">
           <!-- Header -->
-          <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-800">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-cursor-border">
             <div>
-              <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h2 class="text-2xl font-bold text-cursor-fg">
                 知识图谱
               </h2>
-              <p class="text-sm text-neutral-400 mt-1">
+              <p class="text-2xs text-cursor-fg-muted mt-1">
                 实体关系可视化 - {{ graphData.statistics.totalNodes }} 个节点 · {{ graphData.statistics.totalEdges }} 条关系
               </p>
             </div>
             <button
               @click="close"
-              class="w-10 h-10 rounded-lg bg-neutral-800/50 hover:bg-neutral-700/50 text-neutral-400 hover:text-white transition-all flex items-center justify-center"
+              class="w-10 h-10 rounded-cursor bg-cursor-surface hover:bg-cursor-border/50 text-cursor-fg-muted hover:text-cursor-fg transition-all flex items-center justify-center"
             >
               <span class="text-2xl">×</span>
             </button>
           </div>
 
           <!-- Controls -->
-          <div class="flex items-center gap-4 px-6 py-3 border-b border-neutral-800 bg-neutral-900/50">
+          <div class="flex items-center gap-4 px-6 py-3 border-b border-cursor-border bg-cursor-panel">
             <div class="flex items-center gap-2">
               <button
                 @click="resetView"
-                class="px-3 py-1.5 text-xs font-medium rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-all"
+                class="px-3 py-1.5 text-xs font-medium rounded-cursor bg-cursor-panel hover:bg-cursor-border text-cursor-fg transition-all"
               >
                 🔄 重置视图
               </button>
               <button
                 @click="togglePhysics"
-                class="px-3 py-1.5 text-xs font-medium rounded-lg transition-all"
+                class="px-3 py-1.5 text-xs font-medium rounded-cursor transition-all"
                 :class="physicsEnabled 
-                  ? 'bg-primary-500 text-white' 
-                  : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'"
+                  ? 'bg-cursor-accent text-white' 
+                  : 'bg-cursor-panel hover:bg-cursor-border text-cursor-fg'"
               >
                 {{ physicsEnabled ? '⏸️ 暂停动画' : '▶️ 启动动画' }}
               </button>
@@ -47,15 +47,15 @@
 
             <!-- Filter by Type -->
             <div class="flex items-center gap-2 flex-1">
-              <span class="text-xs text-neutral-400">筛选类型:</span>
+              <span class="text-xs text-cursor-fg-muted">筛选类型:</span>
               <button
                 v-for="type in nodeTypes"
                 :key="type.value"
                 @click="toggleTypeFilter(type.value)"
                 class="px-2 py-1 text-xs font-medium rounded transition-all"
                 :class="selectedTypes.includes(type.value)
-                  ? 'text-white shadow-lg'
-                  : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50'"
+                  ? 'text-white '
+                  : 'bg-cursor-surface text-cursor-fg-muted hover:bg-cursor-border/50'"
                 :style="selectedTypes.includes(type.value) ? { backgroundColor: type.color } : {}"
               >
                 {{ type.label }}
@@ -64,14 +64,14 @@
 
             <!-- Relationship Type Filter -->
             <div class="flex items-center gap-2">
-              <span class="text-xs text-neutral-400">关系:</span>
+              <span class="text-xs text-cursor-fg-muted">关系:</span>
               <div class="flex items-center gap-2 text-xs">
                 <button
                   @click="toggleEdgeTypeFilter('depends_on')"
                   class="px-2 py-1 rounded transition-all flex items-center gap-1"
                   :class="selectedEdgeTypes.includes('depends_on')
-                    ? 'bg-primary-500 text-white shadow-lg'
-                    : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50'"
+                    ? 'bg-cursor-accent text-white '
+                    : 'bg-cursor-surface text-cursor-fg-muted hover:bg-cursor-border/50'"
                 >
                   <div class="w-3 h-0.5 bg-current"></div>
                   <span>依赖</span>
@@ -80,8 +80,8 @@
                   @click="toggleEdgeTypeFilter('solves')"
                   class="px-2 py-1 rounded transition-all flex items-center gap-1"
                   :class="selectedEdgeTypes.includes('solves')
-                    ? 'bg-green-500 text-white shadow-lg'
-                    : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50'"
+                    ? 'bg-green-500 text-white '
+                    : 'bg-cursor-surface text-cursor-fg-muted hover:bg-cursor-border/50'"
                 >
                   <div class="w-3 h-0.5 bg-current"></div>
                   <span>解决</span>
@@ -90,8 +90,8 @@
                   @click="toggleEdgeTypeFilter('causes')"
                   class="px-2 py-1 rounded transition-all flex items-center gap-1"
                   :class="selectedEdgeTypes.includes('causes')
-                    ? 'bg-red-500 text-white shadow-lg'
-                    : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50'"
+                    ? 'bg-red-500 text-white '
+                    : 'bg-cursor-surface text-cursor-fg-muted hover:bg-cursor-border/50'"
                 >
                   <div class="w-3 h-0.5 bg-current"></div>
                   <span>影响</span>
@@ -281,7 +281,7 @@
           <Transition name="slide-up">
             <div
               v-if="selectedNode"
-              class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-neutral-900 to-neutral-900/95 border-t border-neutral-800 p-6 backdrop-blur-sm"
+              class="absolute bottom-0 left-0 right-0 bg-cursor-panel border-t border-cursor-border p-6 "
             >
               <div class="flex items-start justify-between gap-6">
                 <div class="flex-1">
@@ -290,23 +290,23 @@
                       class="w-3 h-3 rounded-full"
                       :style="{ backgroundColor: selectedNode.color }"
                     ></div>
-                    <h3 class="text-lg font-semibold text-white">{{ selectedNode.label }}</h3>
-                    <span class="px-2 py-0.5 text-xs rounded bg-neutral-800 text-neutral-300">
+                    <h3 class="text-lg font-semibold text-cursor-fg">{{ selectedNode.label }}</h3>
+                    <span class="px-2 py-0.5 text-xs rounded bg-cursor-panel text-cursor-fg">
                       {{ getNodeTypeLabel(selectedNode.type) }}
                     </span>
                   </div>
-                  <p class="text-sm text-neutral-400 mb-4">{{ selectedNode.description }}</p>
+                  <p class="text-2xs text-cursor-fg-muted mb-4">{{ selectedNode.description }}</p>
                   
                   <div class="grid grid-cols-3 gap-4">
                     <div>
-                      <div class="text-xs text-neutral-500 mb-1">连接数</div>
-                      <div class="text-lg font-semibold text-primary-400">
+                      <div class="text-xs text-cursor-fg-muted mb-1">连接数</div>
+                      <div class="text-lg font-semibold text-cursor-accent">
                         {{ getNodeConnections(selectedNode.id) }}
                       </div>
                     </div>
                     <div v-if="selectedNode.metadata">
-                      <div class="text-xs text-neutral-500 mb-1">附加信息</div>
-                      <div class="text-sm text-neutral-300">
+                      <div class="text-xs text-cursor-fg-muted mb-1">附加信息</div>
+                      <div class="text-sm text-cursor-fg">
                         {{ Object.entries(selectedNode.metadata).map(([k, v]) => `${k}: ${v}`).join(', ') }}
                       </div>
                     </div>
@@ -315,7 +315,7 @@
                 
                 <button
                   @click="selectedNode = null"
-                  class="px-3 py-1.5 text-sm rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-all"
+                  class="px-3 py-1.5 text-sm rounded-cursor bg-cursor-panel hover:bg-cursor-border text-cursor-fg transition-all"
                 >
                   关闭
                 </button>

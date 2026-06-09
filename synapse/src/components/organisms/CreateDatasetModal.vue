@@ -7,27 +7,27 @@
         @click.self="handleCancel"
       >
         <!-- 背景遮罩 -->
-        <div class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div class="fixed inset-0 bg-black/60 "></div>
 
         <!-- Modal内容 -->
         <div class="flex min-h-screen items-center justify-center p-4">
           <div
-            class="relative w-full max-w-4xl bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden"
+            class="relative w-full max-w-4xl bg-cursor-panel rounded-cursor  border border-cursor-border overflow-hidden"
             @click.stop
           >
             <!-- 头部 -->
-            <div class="px-8 py-6 border-b border-neutral-700/50 bg-gradient-to-r from-primary-900/20 to-transparent">
+            <div class="px-8 py-6 border-b border-cursor-border bg-cursor-panel">
               <div class="flex items-center justify-between">
                 <div>
-                  <h2 class="text-2xl font-bold text-white mb-1">
+                  <h2 class="text-2xl font-semibold text-cursor-fg mb-1">
                     🎯 创建训练数据集
                   </h2>
-                  <p class="text-neutral-400 text-sm">
+                  <p class="text-cursor-fg-muted text-sm">
                     为AI训练平台准备高质量、标准化的数据集
                   </p>
                 </div>
                 <button
-                  class="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-800 rounded-lg"
+                  class="text-cursor-fg-muted hover:text-cursor-fg transition-colors p-2 hover:bg-cursor-panel rounded-cursor"
                   @click="handleCancel"
                 >
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,8 +54,8 @@
                           :class="[
                             'w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all',
                             currentStep >= index
-                              ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/50'
-                              : 'bg-neutral-800 text-neutral-500'
+                              ? 'bg-cursor-accent text-white '
+                              : 'bg-cursor-panel text-cursor-fg-muted'
                           ]"
                         >
                           {{ index + 1 }}
@@ -63,7 +63,7 @@
                         <span
                           :class="[
                             'text-xs mt-2 font-medium',
-                            currentStep >= index ? 'text-primary-400' : 'text-neutral-500'
+                            currentStep >= index ? 'text-cursor-accent' : 'text-cursor-fg-muted'
                           ]"
                         >
                           {{ step }}
@@ -73,7 +73,7 @@
                         v-if="index < steps.length - 1"
                         :class="[
                           'flex-1 h-0.5 mx-4 transition-all',
-                          currentStep > index ? 'bg-primary-600' : 'bg-neutral-700'
+                          currentStep > index ? 'bg-primary-600' : 'bg-cursor-border'
                         ]"
                       ></div>
                     </div>
@@ -82,34 +82,34 @@
 
                 <!-- 步骤1: 基本信息 -->
                 <div v-show="currentStep === 0" class="space-y-6">
-                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-cursor-fg mb-4 flex items-center gap-2">
                     <span>📝</span> 基本信息
                   </h3>
 
                   <!-- 数据集名称 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-2">
+                    <label class="block text-sm font-medium text-cursor-fg mb-2">
                       数据集名称 <span class="text-red-500">*</span>
                     </label>
                     <input
                       v-model="formData.name"
                       type="text"
                       placeholder="例如: 智能座舱用户反馈数据集"
-                      class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all"
+                      class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50 transition-all"
                       required
                     />
                   </div>
 
                   <!-- 数据集描述 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-2">
+                    <label class="block text-sm font-medium text-cursor-fg mb-2">
                       数据集描述 <span class="text-red-500">*</span>
                     </label>
                     <textarea
                       v-model="formData.description"
                       rows="4"
                       placeholder="描述数据集的用途、包含的数据类型、适用场景等..."
-                      class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all resize-none"
+                      class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50 transition-all resize-none"
                       required
                     ></textarea>
                   </div>
@@ -117,12 +117,12 @@
                   <!-- 分类和标签 -->
                   <div class="grid grid-cols-2 gap-4">
                     <div>
-                      <label class="block text-sm font-medium text-neutral-300 mb-2">
+                      <label class="block text-sm font-medium text-cursor-fg mb-2">
                         数据集分类 <span class="text-red-500">*</span>
                       </label>
                       <select
                         v-model="formData.category"
-                        class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50"
+                        class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                         required
                       >
                         <option value="">选择分类</option>
@@ -138,33 +138,33 @@
                     </div>
 
                     <div>
-                      <label class="block text-sm font-medium text-neutral-300 mb-2">
+                      <label class="block text-sm font-medium text-cursor-fg mb-2">
                         版本号
                       </label>
                       <input
                         v-model="formData.version"
                         type="text"
                         placeholder="1.0.0"
-                        class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50"
+                        class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                       />
                     </div>
                   </div>
 
                   <!-- 标签输入 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-2">
+                    <label class="block text-sm font-medium text-cursor-fg mb-2">
                       标签（按Enter添加）
                     </label>
                     <div class="flex flex-wrap gap-2 mb-2">
                       <span
                         v-for="(tag, index) in formData.tags"
                         :key="index"
-                        class="px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-sm flex items-center gap-2"
+                        class="px-3 py-1 bg-cursor-accent-muted text-cursor-accent rounded-full text-sm flex items-center gap-2"
                       >
                         {{ tag }}
                         <button
                           type="button"
-                          class="hover:text-primary-300"
+                          class="hover:text-cursor-accent-hover"
                           @click="removeTag(index)"
                         >
                           ×
@@ -175,21 +175,21 @@
                       v-model="tagInput"
                       type="text"
                       placeholder="输入标签并按Enter"
-                      class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50"
+                      class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                       @keyup.enter="addTag"
                     />
                   </div>
 
                   <!-- 创建者信息 -->
-                  <div class="mt-6 p-4 bg-neutral-800/30 border border-neutral-700/50 rounded-lg">
+                  <div class="mt-6 p-4 bg-cursor-surface border border-cursor-border rounded-cursor">
                     <div class="flex items-center gap-3">
-                      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-2xl">
+                      <div class="w-12 h-12 rounded-full bg-cursor-panel border border-cursor-border flex items-center justify-center text-2xl">
                         {{ creatorAvatar }}
                       </div>
                       <div>
-                        <div class="text-sm text-neutral-400">创建者</div>
-                        <div class="text-white font-medium">{{ creatorName }}</div>
-                        <div class="text-xs text-neutral-500">{{ creatorRole }}</div>
+                        <div class="text-2xs text-cursor-fg-muted">创建者</div>
+                        <div class="text-cursor-fg font-medium">{{ creatorName }}</div>
+                        <div class="text-xs text-cursor-fg-muted">{{ creatorRole }}</div>
                       </div>
                     </div>
                   </div>
@@ -197,63 +197,63 @@
 
                 <!-- 步骤2: 数据配置 -->
                 <div v-show="currentStep === 1" class="space-y-6">
-                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-cursor-fg mb-4 flex items-center gap-2">
                     <span>⚙️</span> 数据配置
                   </h3>
 
                   <!-- 数据划分比例 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-4">
+                    <label class="block text-sm font-medium text-cursor-fg mb-4">
                       数据划分比例
                     </label>
                     <div class="grid grid-cols-3 gap-4">
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-xs text-neutral-400 mb-2">训练集</div>
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-xs text-cursor-fg-muted mb-2">训练集</div>
                         <div class="flex items-baseline gap-2">
                           <input
                             v-model.number="formData.splitRatio.train"
                             type="number"
                             min="0"
                             max="100"
-                            class="w-20 px-3 py-2 bg-neutral-800 border border-neutral-700 rounded text-white text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                            class="w-20 px-3 py-2 bg-cursor-panel border border-cursor-border rounded-cursor text-cursor-fg text-2xl font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                           />
-                          <span class="text-white text-lg">%</span>
+                          <span class="text-cursor-fg-muted text-lg font-medium">%</span>
                         </div>
-                        <div class="text-xs text-neutral-500 mt-2">
+                        <div class="text-xs text-cursor-fg-muted mt-2">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.train / 100)) }} 个资产
                         </div>
                       </div>
 
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-xs text-neutral-400 mb-2">验证集</div>
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-xs text-cursor-fg-muted mb-2">验证集</div>
                         <div class="flex items-baseline gap-2">
                           <input
                             v-model.number="formData.splitRatio.validation"
                             type="number"
                             min="0"
                             max="100"
-                            class="w-20 px-3 py-2 bg-neutral-800 border border-neutral-700 rounded text-white text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                            class="w-20 px-3 py-2 bg-cursor-panel border border-cursor-border rounded-cursor text-cursor-fg text-2xl font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                           />
-                          <span class="text-white text-lg">%</span>
+                          <span class="text-cursor-fg-muted text-lg font-medium">%</span>
                         </div>
-                        <div class="text-xs text-neutral-500 mt-2">
+                        <div class="text-xs text-cursor-fg-muted mt-2">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.validation / 100)) }} 个资产
                         </div>
                       </div>
 
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-xs text-neutral-400 mb-2">测试集</div>
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-xs text-cursor-fg-muted mb-2">测试集</div>
                         <div class="flex items-baseline gap-2">
                           <input
                             v-model.number="formData.splitRatio.test"
                             type="number"
                             min="0"
                             max="100"
-                            class="w-20 px-3 py-2 bg-neutral-800 border border-neutral-700 rounded text-white text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                            class="w-20 px-3 py-2 bg-cursor-panel border border-cursor-border rounded-cursor text-cursor-fg text-2xl font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                           />
-                          <span class="text-white text-lg">%</span>
+                          <span class="text-cursor-fg-muted text-lg font-medium">%</span>
                         </div>
-                        <div class="text-xs text-neutral-500 mt-2">
+                        <div class="text-xs text-cursor-fg-muted mt-2">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.test / 100)) }} 个资产
                         </div>
                       </div>
@@ -271,7 +271,7 @@
 
                   <!-- 标注配置 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-3">
+                    <label class="block text-sm font-medium text-cursor-fg mb-3">
                       标注类型 <span class="text-red-500">*</span>
                     </label>
                     <div class="grid grid-cols-2 gap-3">
@@ -279,21 +279,21 @@
                         v-for="type in annotationTypes"
                         :key="type.value"
                         :class="[
-                          'flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all',
+                          'flex items-center gap-3 p-4 border rounded-cursor cursor-pointer transition-all',
                           formData.annotationConfig.types.includes(type.value)
-                            ? 'bg-primary-500/10 border-primary-500 text-primary-400'
-                            : 'bg-neutral-800/30 border-neutral-700 text-neutral-300 hover:border-neutral-600'
+                            ? 'bg-cursor-accent-muted border-cursor-accent text-cursor-accent'
+                            : 'bg-cursor-surface border-cursor-border text-cursor-fg hover:border-cursor-border'
                         ]"
                       >
                         <input
                           v-model="formData.annotationConfig.types"
                           type="checkbox"
                           :value="type.value"
-                          class="w-5 h-5 rounded border-neutral-600 text-primary-600 focus:ring-primary-500 focus:ring-offset-0 bg-neutral-800"
+                          class="w-5 h-5 rounded border-cursor-border text-primary-600 focus:ring-primary-500 focus:ring-offset-0 bg-cursor-panel"
                         />
                         <div class="flex-1">
                           <div class="font-medium">{{ type.label }}</div>
-                          <div class="text-xs text-neutral-500">{{ type.description }}</div>
+                          <div class="text-xs text-cursor-fg-muted">{{ type.description }}</div>
                         </div>
                       </label>
                     </div>
@@ -301,19 +301,19 @@
 
                   <!-- 标注标签 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-2">
+                    <label class="block text-sm font-medium text-cursor-fg mb-2">
                       标注标签（按Enter添加）
                     </label>
                     <div class="flex flex-wrap gap-2 mb-2">
                       <span
                         v-for="(label, index) in formData.annotationConfig.labels"
                         :key="index"
-                        class="px-3 py-1 bg-neutral-700/50 text-neutral-300 rounded-full text-sm flex items-center gap-2"
+                        class="px-3 py-1 bg-cursor-border/50 text-cursor-fg rounded-full text-sm flex items-center gap-2"
                       >
                         {{ label }}
                         <button
                           type="button"
-                          class="hover:text-white"
+                          class="hover:text-cursor-fg"
                           @click="removeLabel(index)"
                         >
                           ×
@@ -324,33 +324,33 @@
                       v-model="labelInput"
                       type="text"
                       placeholder="输入标签并按Enter，例如: 语音唤醒失败"
-                      class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50"
+                      class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                       @keyup.enter="addLabel"
                     />
                   </div>
 
                   <!-- 质量控制 -->
                   <div class="grid grid-cols-2 gap-4">
-                    <label class="flex items-center gap-3 p-4 bg-neutral-800/30 border border-neutral-700/50 rounded-lg cursor-pointer hover:border-neutral-600 transition-all">
+                    <label class="flex items-center gap-3 p-4 bg-cursor-surface border border-cursor-border rounded-cursor cursor-pointer hover:border-cursor-border transition-all">
                       <input
                         v-model="formData.annotationConfig.requireReview"
                         type="checkbox"
-                        class="w-5 h-5 rounded border-neutral-600 text-primary-600 focus:ring-primary-500 focus:ring-offset-0 bg-neutral-800"
+                        class="w-5 h-5 rounded border-cursor-border text-primary-600 focus:ring-primary-500 focus:ring-offset-0 bg-cursor-panel"
                       />
                       <div>
-                        <div class="text-white font-medium">需要人工复核</div>
-                        <div class="text-xs text-neutral-500">AI标注后需要人工审核</div>
+                        <div class="text-cursor-fg font-medium">需要人工复核</div>
+                        <div class="text-xs text-cursor-fg-muted">AI标注后需要人工审核</div>
                       </div>
                     </label>
 
-                    <div class="p-4 bg-neutral-800/30 border border-neutral-700/50 rounded-lg">
-                      <label class="text-white font-medium mb-2 block">每资产最少标注人数</label>
+                    <div class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor">
+                      <label class="text-cursor-fg font-medium mb-2 block">每资产最少标注人数</label>
                       <input
                         v-model.number="formData.annotationConfig.minAnnotatorsPerAsset"
                         type="number"
                         min="1"
                         max="5"
-                        class="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                        class="w-full px-3 py-2 bg-cursor-panel border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
                       />
                     </div>
                   </div>
@@ -358,25 +358,25 @@
 
                 <!-- 步骤3: 选择资产 -->
                 <div v-show="currentStep === 2" class="space-y-6">
-                  <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-cursor-fg mb-4 flex items-center gap-2">
                     <span>📦</span> 选择资产
                   </h3>
 
-                  <div class="bg-gradient-to-br from-primary-500/10 to-secondary-500/10 border border-primary-500/30 rounded-lg p-6">
+                  <div class="bg-cursor-surface border border-cursor-accent/30 rounded-cursor p-6">
                     <div class="text-center">
                       <div class="text-6xl mb-4">🗂️</div>
-                      <h4 class="text-xl font-semibold text-white mb-2">从数据湖选择资产</h4>
-                      <p class="text-neutral-400 mb-4">
+                      <h4 class="text-xl font-semibold text-cursor-fg mb-2">从数据湖选择资产</h4>
+                      <p class="text-cursor-fg-muted mb-4">
                         选择已经处理完成的多模态资产添加到数据集
                       </p>
                       <div class="flex items-center justify-center gap-6 text-sm">
                         <div class="flex items-center gap-2">
                           <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                          <span class="text-neutral-300">已选: {{ selectedAssetCount }}</span>
+                          <span class="text-cursor-fg">已选: {{ selectedAssetCount }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                          <span class="text-neutral-300">可用: 1,247</span>
+                          <span class="text-cursor-fg">可用: 1,247</span>
                         </div>
                       </div>
                     </div>
@@ -384,41 +384,41 @@
 
                   <!-- 快速选择预设 -->
                   <div>
-                    <label class="block text-sm font-medium text-neutral-300 mb-3">
+                    <label class="block text-sm font-medium text-cursor-fg mb-3">
                       快速选择（演示用）
                     </label>
                     <div class="grid grid-cols-2 gap-3">
                       <button
                         type="button"
-                        class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500 hover:bg-primary-500/10 transition-all text-left"
+                        class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor hover:border-cursor-accent hover:bg-cursor-accent-muted transition-all text-left"
                         @click="selectPreset('small')"
                       >
-                        <div class="font-medium text-white">小型数据集</div>
-                        <div class="text-sm text-neutral-400">100个资产 · 适合快速验证</div>
+                        <div class="font-medium text-cursor-fg">小型数据集</div>
+                        <div class="text-2xs text-cursor-fg-muted">100个资产 · 适合快速验证</div>
                       </button>
                       <button
                         type="button"
-                        class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500 hover:bg-primary-500/10 transition-all text-left"
+                        class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor hover:border-cursor-accent hover:bg-cursor-accent-muted transition-all text-left"
                         @click="selectPreset('medium')"
                       >
-                        <div class="font-medium text-white">中型数据集</div>
-                        <div class="text-sm text-neutral-400">500个资产 · 平衡性能和效果</div>
+                        <div class="font-medium text-cursor-fg">中型数据集</div>
+                        <div class="text-2xs text-cursor-fg-muted">500个资产 · 平衡性能和效果</div>
                       </button>
                       <button
                         type="button"
-                        class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500 hover:bg-primary-500/10 transition-all text-left"
+                        class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor hover:border-cursor-accent hover:bg-cursor-accent-muted transition-all text-left"
                         @click="selectPreset('large')"
                       >
-                        <div class="font-medium text-white">大型数据集</div>
-                        <div class="text-sm text-neutral-400">1000个资产 · 生产级训练</div>
+                        <div class="font-medium text-cursor-fg">大型数据集</div>
+                        <div class="text-2xs text-cursor-fg-muted">1000个资产 · 生产级训练</div>
                       </button>
                       <button
                         type="button"
-                        class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500 hover:bg-primary-500/10 transition-all text-left"
+                        class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor hover:border-cursor-accent hover:bg-cursor-accent-muted transition-all text-left"
                         @click="selectPreset('custom')"
                       >
-                        <div class="font-medium text-white">自定义选择</div>
-                        <div class="text-sm text-neutral-400">手动从数据湖选择</div>
+                        <div class="font-medium text-cursor-fg">自定义选择</div>
+                        <div class="text-2xs text-cursor-fg-muted">手动从数据湖选择</div>
                       </button>
                     </div>
                   </div>
@@ -427,34 +427,34 @@
                   <div v-if="selectedAssetCount > 0" class="space-y-4">
                     <!-- 数据划分统计 -->
                     <div class="grid grid-cols-3 gap-4">
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-neutral-400 text-sm mb-1">训练集</div>
-                        <div class="text-white text-2xl font-bold">
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-cursor-fg-muted text-sm mb-1">训练集</div>
+                        <div class="text-cursor-accent text-2xl font-bold tabular-nums">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.train / 100)) }}
                         </div>
                       </div>
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-neutral-400 text-sm mb-1">验证集</div>
-                        <div class="text-white text-2xl font-bold">
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-cursor-fg-muted text-sm mb-1">验证集</div>
+                        <div class="text-cursor-accent text-2xl font-bold tabular-nums">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.validation / 100)) }}
                         </div>
                       </div>
-                      <div class="bg-neutral-800/30 border border-neutral-700/50 rounded-lg p-4">
-                        <div class="text-neutral-400 text-sm mb-1">测试集</div>
-                        <div class="text-white text-2xl font-bold">
+                      <div class="bg-cursor-surface border border-cursor-border rounded-cursor p-4">
+                        <div class="text-cursor-fg-muted text-sm mb-1">测试集</div>
+                        <div class="text-cursor-accent text-2xl font-bold tabular-nums">
                           {{ Math.floor(selectedAssetCount * (formData.splitRatio.test / 100)) }}
                         </div>
                       </div>
                     </div>
 
                     <!-- 资产类型分布（如果是自定义选择） -->
-                    <div v-if="selectedAssetsData.length > 0" class="bg-gradient-to-br from-primary-500/5 to-secondary-500/5 border border-primary-500/20 rounded-lg p-4">
-                      <h5 class="text-sm font-medium text-white mb-3">已选资产类型分布</h5>
+                    <div v-if="selectedAssetsData.length > 0" class="bg-cursor-surface border border-cursor-accent/20 rounded-cursor p-4">
+                      <h5 class="text-sm font-medium text-cursor-fg mb-3">已选资产类型分布</h5>
                       <div class="grid grid-cols-4 gap-3">
                         <div v-for="(count, type) in assetTypeDistribution" :key="type" class="text-center">
                           <div class="text-2xl mb-1">{{ getTypeIcon(type) }}</div>
-                          <div class="text-white font-semibold">{{ count }}</div>
-                          <div class="text-xs text-neutral-400">{{ getTypeName(type) }}</div>
+                          <div class="text-cursor-fg font-semibold">{{ count }}</div>
+                          <div class="text-xs text-cursor-fg-muted">{{ getTypeName(type) }}</div>
                         </div>
                       </div>
                     </div>
@@ -464,11 +464,11 @@
             </div>
 
             <!-- 底部操作栏 -->
-            <div class="px-8 py-6 border-t border-neutral-700/50 bg-neutral-900/50 flex items-center justify-between">
+            <div class="px-8 py-6 border-t border-cursor-border bg-cursor-panel flex items-center justify-between">
               <button
                 v-if="currentStep > 0"
                 type="button"
-                class="px-6 py-3 text-neutral-300 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                class="px-6 py-3 text-cursor-fg hover:text-cursor-fg hover:bg-cursor-panel rounded-cursor transition-all"
                 @click="previousStep"
               >
                 ← 上一步
@@ -478,7 +478,7 @@
               <div class="flex items-center gap-3">
                 <button
                   type="button"
-                  class="px-6 py-3 text-neutral-300 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  class="px-6 py-3 text-cursor-fg hover:text-cursor-fg hover:bg-cursor-panel rounded-cursor transition-all"
                   @click="handleCancel"
                 >
                   取消
@@ -486,7 +486,7 @@
                 <button
                   v-if="currentStep < steps.length - 1"
                   type="button"
-                  class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="px-6 py-3 bg-cursor-accent text-white rounded-cursor hover:bg-primary-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="!canProceed"
                   @click="nextStep"
                 >
@@ -495,7 +495,7 @@
                 <button
                   v-else
                   type="button"
-                  class="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all shadow-lg hover:shadow-primary-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  class="px-8 py-3 bg-cursor-accent text-white rounded-cursor  transition-all  disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   :disabled="!canCreate || isCreating"
                   @click="handleSubmit"
                 >

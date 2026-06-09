@@ -1,18 +1,16 @@
 <template>
   <div class="w-full">
-    <div v-if="showLabel" class="flex items-center justify-between mb-2">
-      <span class="text-sm font-medium text-neutral-300">{{ label }}</span>
-      <span class="text-sm text-neutral-400">{{ value }}%</span>
+    <div v-if="showLabel" class="flex items-center justify-between mb-1.5">
+      <span class="text-2xs font-medium text-cursor-fg-muted">{{ label }}</span>
+      <span class="text-2xs text-cursor-fg-muted">{{ value }}%</span>
     </div>
-    
-    <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
+
+    <div class="w-full h-1 bg-cursor-border rounded-cursor overflow-hidden">
       <div
-        class="h-full transition-all duration-500 ease-out"
+        class="h-full transition-all duration-300 ease-out"
         :class="progressColor"
         :style="{ width: value + '%' }"
-      >
-        <div v-if="animated" class="h-full w-full animate-pulse bg-white/20"></div>
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -36,12 +34,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const progressColor = computed(() => {
   const colors = {
-    primary: 'bg-gradient-to-r from-primary-500 to-secondary-500',
-    success: 'bg-green-500',
-    warning: 'bg-yellow-500',
-    error: 'bg-red-500'
+    primary: 'bg-cursor-accent',
+    success: 'bg-success',
+    warning: 'bg-warning',
+    error: 'bg-error'
   }
   return colors[props.variant]
 })
 </script>
-

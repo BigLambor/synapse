@@ -5,7 +5,7 @@
         Synapse
       </h1>
       <p class="body-lg text-neutral-300 mb-12 max-w-2xl mx-auto animate-slide-up">
-        AI洞察引擎动态演示平台
+        AI洞察引擎平台
       </p>
       
       <div class="flex gap-4 justify-center">

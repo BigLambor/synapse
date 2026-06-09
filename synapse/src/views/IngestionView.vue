@@ -1,12 +1,12 @@
 <template>
-  <div class="ingestion-view min-h-screen bg-gradient-to-br from-neutral-950 via-primary-900/10 to-neutral-950">
-    <div class="container mx-auto px-6 py-12">
+  <div class="ingestion-view page-shell">
+    <div class="page-container">
       <!-- Header -->
       <div class="mb-12">
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
+        <h1 class="page-title mb-2">
           数据入湖
         </h1>
-        <p class="text-lg text-neutral-400">
+        <p class="page-subtitle">
           多种数据源接入方式，AI自动处理并构建知识图谱
         </p>
       </div>
@@ -19,10 +19,10 @@
             :key="source.type"
             @click="currentSource = source.type"
             :class="[
-              'flex items-center gap-3 px-6 py-4 rounded-xl transition-all whitespace-nowrap',
+              'flex items-center gap-3 px-6 py-4 rounded-cursor transition-all whitespace-nowrap',
               currentSource === source.type
-                ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/50'
-                : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-800 hover:text-white'
+                ? 'bg-cursor-accent text-white '
+                : 'bg-cursor-surface text-cursor-fg-muted hover:bg-cursor-panel hover:text-cursor-fg'
             ]"
           >
             <span class="text-2xl">{{ source.icon }}</span>
@@ -40,25 +40,25 @@
           <template #header>
             <div class="flex items-center justify-between">
               <h2 class="text-xl font-semibold">📤 本地文件上传</h2>
-              <div class="text-sm text-neutral-400">
+              <div class="text-2xs text-cursor-fg-muted">
                 支持大文件、断点续传、批量上传
               </div>
             </div>
           </template>
 
           <div
-            class="border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300"
+            class="border-2 border-dashed rounded-cursor p-12 text-center transition-all duration-300"
             :class="isDragging 
-              ? 'border-primary-500 bg-primary-500/10 scale-[1.02]' 
-              : 'border-neutral-700 hover:border-neutral-600'"
+              ? 'border-cursor-accent bg-cursor-accent-muted scale-[1.02]' 
+              : 'border-cursor-border hover:border-cursor-border'"
             @dragover.prevent="isDragging = true"
             @dragleave.prevent="isDragging = false"
             @drop.prevent="handleDrop"
           >
             <div class="text-6xl mb-4">📁</div>
             <h3 class="text-xl font-semibold mb-2">拖拽文件到此处</h3>
-            <p class="text-neutral-400 mb-6">
-              或者 <label class="text-primary-400 hover:text-primary-300 cursor-pointer underline">
+            <p class="text-cursor-fg-muted mb-6">
+              或者 <label class="text-cursor-accent hover:text-cursor-accent-hover cursor-pointer underline">
                 <input
                   type="file"
                   multiple
@@ -69,13 +69,13 @@
                 点击选择文件
               </label>
             </p>
-            <div class="flex items-center justify-center gap-6 text-sm text-neutral-500">
+            <div class="flex items-center justify-center gap-6 text-2xs text-cursor-fg-muted">
               <span>📄 文档</span>
               <span>🎥 视频</span>
               <span>🖼️ 图片</span>
               <span>🎵 音频</span>
             </div>
-            <div class="mt-6 text-sm text-neutral-500">
+            <div class="mt-6 text-2xs text-cursor-fg-muted">
               支持最大 {{ formatSize(uploadConfig.maxFileSize) }} 的文件 • 自动分片上传大文件
             </div>
           </div>
@@ -83,16 +83,16 @@
           <template #footer v-if="activeUploads.length > 0">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
-                <span class="text-sm text-neutral-400">
+                <span class="text-2xs text-cursor-fg-muted">
                   上传中: {{ activeUploads.length }} 个文件
                 </span>
-                <div class="w-48 h-2 bg-neutral-700 rounded-full overflow-hidden">
+                <div class="w-48 h-2 bg-cursor-border rounded-full overflow-hidden">
                   <div
-                    class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all"
+                    class="h-full bg-gradient-to-r from-cursor-accent to-cursor-accent-hover transition-all"
                     :style="{ width: totalUploadProgress + '%' }"
                   />
                 </div>
-                <span class="text-sm text-neutral-400">{{ Math.floor(totalUploadProgress) }}%</span>
+                <span class="text-2xs text-cursor-fg-muted">{{ Math.floor(totalUploadProgress) }}%</span>
               </div>
               <AppButton size="sm" variant="ghost" @click="dataSourceStore.clearCompletedTasks()">
                 清理已完成
@@ -111,34 +111,34 @@
 
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-neutral-300 mb-2">
+              <label class="block text-sm font-medium text-cursor-fg mb-2">
                 输入文件URL（支持批量，每行一个）
               </label>
               <textarea
                 v-model="urlInput"
                 rows="5"
                 placeholder="https://example.com/video.mp4&#10;https://example.com/document.pdf&#10;https://example.com/image.png"
-                class="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 resize-none"
+                class="w-full px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 resize-none"
               />
             </div>
             
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-neutral-300 mb-2">分类</label>
+                <label class="block text-sm font-medium text-cursor-fg mb-2">分类</label>
                 <input
                   v-model="urlCategory"
                   type="text"
                   placeholder="例如: 用户反馈"
-                  class="w-full px-4 py-2 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                  class="w-full px-4 py-2 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50"
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-neutral-300 mb-2">标签（逗号分隔）</label>
+                <label class="block text-sm font-medium text-cursor-fg mb-2">标签（逗号分隔）</label>
                 <input
                   v-model="urlTags"
                   type="text"
                   placeholder="例如: 视频, 语音"
-                  class="w-full px-4 py-2 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                  class="w-full px-4 py-2 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50"
                 />
               </div>
             </div>
@@ -160,17 +160,17 @@
           <div class="space-y-6">
             <!-- 已配置的数据源 -->
             <div v-if="activeDataSources.length > 0">
-              <h3 class="text-sm font-medium text-neutral-300 mb-3">已配置的数据源</h3>
+              <h3 class="text-sm font-medium text-cursor-fg mb-3">已配置的数据源</h3>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div
                   v-for="ds in activeDataSources"
                   :key="ds.id"
-                  class="p-4 bg-neutral-800/30 border border-neutral-700 rounded-lg hover:border-primary-500/50 transition-all"
+                  class="p-4 bg-cursor-surface border border-cursor-border rounded-cursor hover:border-cursor-accent/50 transition-all"
                 >
                   <div class="flex items-start justify-between mb-3">
                     <div>
-                      <h4 class="font-semibold text-white">{{ ds.name }}</h4>
-                      <p class="text-xs text-neutral-400 mt-1">{{ ds.description }}</p>
+                      <h4 class="font-semibold text-cursor-fg">{{ ds.name }}</h4>
+                      <p class="text-xs text-cursor-fg-muted mt-1">{{ ds.description }}</p>
                     </div>
                     <AppBadge
                       :variant="ds.status === 'connected' ? 'success' : 'warning'"
@@ -182,17 +182,17 @@
 
                   <div class="grid grid-cols-2 gap-3 mb-3 text-sm">
                     <div>
-                      <div class="text-neutral-500">文件数</div>
-                      <div class="text-white font-semibold">{{ ds.statistics.syncedFiles.toLocaleString() }}</div>
+                      <div class="text-cursor-fg-muted">文件数</div>
+                      <div class="text-cursor-fg font-semibold">{{ ds.statistics.syncedFiles.toLocaleString() }}</div>
                     </div>
                     <div>
-                      <div class="text-neutral-500">总大小</div>
-                      <div class="text-white font-semibold">{{ formatSize(ds.statistics.syncedSize) }}</div>
+                      <div class="text-cursor-fg-muted">总大小</div>
+                      <div class="text-cursor-fg font-semibold">{{ formatSize(ds.statistics.syncedSize) }}</div>
                     </div>
                   </div>
 
                   <div class="flex items-center justify-between">
-                    <span class="text-xs text-neutral-500">
+                    <span class="text-xs text-cursor-fg-muted">
                       最后同步: {{ formatRelativeTime(ds.lastSyncAt) }}
                     </span>
                     <AppButton
@@ -240,11 +240,11 @@
               <div class="text-4xl">{{ getTaskIcon(task) }}</div>
               <div class="flex-1 min-w-0">
                 <h3 class="font-semibold truncate">{{ getTaskName(task) }}</h3>
-                <p class="text-sm text-neutral-500">{{ getTaskSize(task) }}</p>
+                <p class="text-2xs text-cursor-fg-muted">{{ getTaskSize(task) }}</p>
                 
                 <!-- 进度条 -->
                 <div v-if="isTaskActive(task)" class="mt-2">
-                  <div class="flex items-center justify-between text-xs text-neutral-400 mb-1">
+                  <div class="flex items-center justify-between text-xs text-cursor-fg-muted mb-1">
                     <span>{{ getTaskStatusText(task) }}</span>
                     <div class="flex items-center gap-3">
                       <span v-if="'speed' in task.progress && task.progress.speed">
@@ -253,9 +253,9 @@
                       <span>{{ task.progress.percentage }}%</span>
                     </div>
                   </div>
-                  <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
+                  <div class="w-full h-2 bg-cursor-border rounded-full overflow-hidden">
                     <div
-                      class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300"
+                      class="h-full bg-gradient-to-r from-cursor-accent to-cursor-accent-hover transition-all duration-300"
                       :style="{ width: task.progress.percentage + '%' }"
                     />
                   </div>
@@ -274,7 +274,7 @@
                 <button
                   v-if="canPauseTask(task)"
                   @click="handlePauseTask(task)"
-                  class="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  class="p-2 text-cursor-fg-muted hover:text-cursor-fg hover:bg-cursor-panel rounded-cursor transition-all"
                   title="暂停"
                 >
                   ⏸
@@ -282,7 +282,7 @@
                 <button
                   v-if="canResumeTask(task)"
                   @click="handleResumeTask(task)"
-                  class="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  class="p-2 text-cursor-fg-muted hover:text-cursor-fg hover:bg-cursor-panel rounded-cursor transition-all"
                   title="继续"
                 >
                   ▶️
@@ -290,7 +290,7 @@
                 <button
                   v-if="canCancelTask(task)"
                   @click="handleCancelTask(task)"
-                  class="p-2 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-all"
+                  class="p-2 text-cursor-fg-muted hover:text-red-400 hover:bg-cursor-panel rounded-cursor transition-all"
                   title="取消"
                 >
                   ✕
@@ -319,7 +319,7 @@
               <div class="text-4xl">{{ asset.thumbnail }}</div>
               <div class="flex-1 min-w-0">
                 <h3 class="font-semibold text-sm mb-1 truncate">{{ asset.name }}</h3>
-                <p class="text-xs text-neutral-500 mb-2">
+                <p class="text-xs text-cursor-fg-muted mb-2">
                   {{ formatDate(asset.uploadDate) }}
                 </p>
                 <div class="flex flex-wrap gap-1">

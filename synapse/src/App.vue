@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="min-h-screen bg-neutral-950 text-neutral-50">
+  <div id="app" class="min-h-screen bg-cursor-bg text-cursor-fg">
     <AppHeader v-if="showHeader" />
     <RouterView />
   </div>
@@ -13,7 +13,3 @@ import AppHeader from './components/organisms/AppHeader.vue'
 const route = useRoute()
 const showHeader = computed(() => route.path !== '/')
 </script>
-
-<style>
-/* 全局样式已在main.css中定义 */
-</style>

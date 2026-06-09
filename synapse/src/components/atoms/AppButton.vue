@@ -4,7 +4,7 @@
     :disabled="disabled || loading"
     @click="handleClick"
   >
-    <span v-if="loading" class="inline-block mr-2 animate-spin">⟳</span>
+    <span v-if="loading" class="inline-block mr-1.5 animate-spin text-xs">⟳</span>
     <slot />
   </button>
 </template>
@@ -31,21 +31,21 @@ const emit = defineEmits<{
 }>()
 
 const buttonClasses = computed(() => {
-  const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed'
-  
+  const base = 'inline-flex items-center justify-center font-medium rounded-cursor transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-cursor-accent disabled:opacity-40 disabled:cursor-not-allowed'
+
   const variants = {
-    primary: 'bg-primary-600 hover:bg-primary-500 text-white shadow-lg hover:shadow-xl',
-    secondary: 'bg-secondary-600 hover:bg-secondary-500 text-white shadow-lg hover:shadow-xl',
-    outline: 'border-2 border-primary-500 text-primary-400 hover:bg-primary-500/10',
-    ghost: 'text-neutral-300 hover:bg-neutral-800'
+    primary: 'bg-cursor-accent hover:bg-cursor-accent-hover text-white border border-transparent',
+    secondary: 'bg-cursor-panel hover:bg-cursor-elevated text-cursor-fg border border-cursor-border',
+    outline: 'border border-cursor-border text-cursor-fg hover:bg-cursor-surface-hover bg-transparent',
+    ghost: 'text-cursor-fg-muted hover:text-cursor-fg hover:bg-cursor-surface-hover bg-transparent border border-transparent'
   }
-  
+
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-6 py-2.5 text-base',
-    lg: 'px-8 py-3 text-lg'
+    sm: 'px-2.5 py-1 text-2xs',
+    md: 'px-4 py-1.5 text-sm',
+    lg: 'px-5 py-2 text-sm'
   }
-  
+
   return `${base} ${variants[props.variant]} ${sizes[props.size]}`
 })
 
@@ -55,4 +55,3 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 </script>
-

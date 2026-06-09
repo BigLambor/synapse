@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-xl font-semibold mb-1">🧬 多模态特征提取</h2>
-          <p class="text-sm text-neutral-400">不同数据类型的AI特征提取方法</p>
+          <p class="text-2xs text-cursor-fg-muted">不同数据类型的AI特征提取方法</p>
         </div>
         <div class="flex gap-2">
           <AppButton
@@ -29,13 +29,13 @@
             <span>📥</span>
             <span>输入数据</span>
           </h3>
-          <div class="bg-neutral-900/50 rounded-lg p-4 border border-neutral-800">
+          <div class="bg-cursor-panel rounded-cursor p-4 border border-cursor-border">
             <div v-if="selectedType === 'document'" class="space-y-3">
               <div class="flex items-start gap-3">
                 <div class="text-2xl">📄</div>
                 <div class="flex-1">
                   <div class="font-medium text-sm mb-2">产品需求文档.pdf</div>
-                  <div class="text-xs text-neutral-400 leading-relaxed">
+                  <div class="text-xs text-cursor-fg-muted leading-relaxed">
                     "本产品旨在通过AI技术实现多模态数据的智能检索和分析。主要功能包括：
                     1. 支持文档、图片、视频、音频等多种格式
                     2. 自动提取特征向量并建立索引
@@ -55,7 +55,7 @@
                 <div class="text-2xl">🖼️</div>
                 <div class="flex-1">
                   <div class="font-medium text-sm mb-2">产品架构图.png</div>
-                  <div class="w-full h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded border border-neutral-700 flex items-center justify-center text-xs text-neutral-400">
+                  <div class="w-full h-32 bg-cursor-accent-muted rounded border border-cursor-border flex items-center justify-center text-xs text-cursor-fg-muted">
                     [架构图预览]<br/>包含：前端层、API层、处理层、存储层
                   </div>
                   <div class="mt-3 flex gap-2">
@@ -72,15 +72,15 @@
                 <div class="text-2xl">🎵</div>
                 <div class="flex-1">
                   <div class="font-medium text-sm mb-2">产品会议录音.mp3</div>
-                  <div class="w-full p-3 bg-neutral-800/50 rounded border border-neutral-700">
+                  <div class="w-full p-3 bg-cursor-surface rounded border border-cursor-border">
                     <div class="flex items-center gap-3 mb-2">
-                      <div class="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center text-primary-400">▶</div>
-                      <div class="flex-1 h-1 bg-neutral-700 rounded-full overflow-hidden">
+                      <div class="w-8 h-8 rounded-full bg-cursor-accent-muted flex items-center justify-center text-cursor-accent">▶</div>
+                      <div class="flex-1 h-1 bg-cursor-border rounded-full overflow-hidden">
                         <div class="h-full w-1/3 bg-primary-500"></div>
                       </div>
-                      <span class="text-xs text-neutral-400">05:32</span>
+                      <span class="text-xs text-cursor-fg-muted">05:32</span>
                     </div>
-                    <div class="text-xs text-neutral-400">
+                    <div class="text-xs text-cursor-fg-muted">
                       "大家好，今天我们讨论一下新版本的核心功能..."
                     </div>
                   </div>
@@ -98,10 +98,10 @@
                 <div class="text-2xl">🎬</div>
                 <div class="flex-1">
                   <div class="font-medium text-sm mb-2">产品演示视频.mp4</div>
-                  <div class="w-full h-32 bg-gradient-to-br from-pink-500/20 to-orange-500/20 rounded border border-neutral-700 flex items-center justify-center">
+                  <div class="w-full h-32 bg-cursor-accent-muted rounded border border-cursor-border flex items-center justify-center">
                     <div class="text-center">
                       <div class="text-3xl mb-2">▶️</div>
-                      <div class="text-xs text-neutral-400">视频预览</div>
+                      <div class="text-xs text-cursor-fg-muted">视频预览</div>
                     </div>
                   </div>
                   <div class="mt-3 flex gap-2">
@@ -122,22 +122,22 @@
             <span>📊</span>
             <span>提取特征</span>
           </h3>
-          <div class="bg-neutral-900/50 rounded-lg p-4 border border-neutral-800 space-y-4">
+          <div class="bg-cursor-panel rounded-cursor p-4 border border-cursor-border space-y-4">
             <!-- 特征向量 -->
             <div>
-              <div class="text-xs font-medium text-neutral-400 mb-2">特征向量 (768维)</div>
-              <div class="bg-neutral-800/50 rounded p-3 font-mono text-xs text-neutral-300 max-h-24 overflow-y-auto">
+              <div class="text-xs font-medium text-cursor-fg-muted mb-2">特征向量 (768维)</div>
+              <div class="bg-cursor-surface rounded p-3 font-mono text-xs text-cursor-fg max-h-24 overflow-y-auto">
                 [{{ currentFeatures.vector.slice(0, 8).map(v => v.toFixed(4)).join(', ') }}, ..., 
                 {{ currentFeatures.vector.slice(-4).map(v => v.toFixed(4)).join(', ') }}]
               </div>
-              <div class="mt-2 text-xs text-neutral-500">
+              <div class="mt-2 text-xs text-cursor-fg-muted">
                 使用 {{ currentFeatures.model }} 模型提取
               </div>
             </div>
 
             <!-- 语义标签 -->
             <div>
-              <div class="text-xs font-medium text-neutral-400 mb-2">语义标签</div>
+              <div class="text-xs font-medium text-cursor-fg-muted mb-2">语义标签</div>
               <div class="flex flex-wrap gap-2">
                 <AppBadge
                   v-for="tag in currentFeatures.tags"
@@ -152,14 +152,14 @@
 
             <!-- 关键实体 -->
             <div>
-              <div class="text-xs font-medium text-neutral-400 mb-2">关键实体</div>
+              <div class="text-xs font-medium text-cursor-fg-muted mb-2">关键实体</div>
               <div class="space-y-2">
                 <div
                   v-for="entity in currentFeatures.entities"
                   :key="entity.name"
                   class="flex items-center justify-between text-xs"
                 >
-                  <span class="text-neutral-300">{{ entity.name }}</span>
+                  <span class="text-cursor-fg">{{ entity.name }}</span>
                   <AppBadge size="sm">{{ entity.type }}</AppBadge>
                 </div>
               </div>
@@ -167,7 +167,7 @@
 
             <!-- 置信度 -->
             <div>
-              <div class="text-xs font-medium text-neutral-400 mb-2">提取置信度</div>
+              <div class="text-xs font-medium text-cursor-fg-muted mb-2">提取置信度</div>
               <div class="flex items-center gap-2">
                 <AppProgress
                   :value="currentFeatures.confidence"
@@ -185,12 +185,12 @@
       </div>
 
       <!-- 技术说明 -->
-      <div class="bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-lg p-4 border border-primary-500/20">
+      <div class="bg-cursor-surface rounded-cursor p-4 border border-cursor-accent/20">
         <div class="flex items-start gap-3">
           <div class="text-2xl">💡</div>
           <div class="flex-1 space-y-2">
             <h4 class="font-semibold text-sm">{{ currentFeatures.technique.title }}</h4>
-            <p class="text-xs text-neutral-300 leading-relaxed">
+            <p class="text-xs text-cursor-fg leading-relaxed">
               {{ currentFeatures.technique.description }}
             </p>
             <div class="flex gap-2">

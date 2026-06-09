@@ -2,17 +2,17 @@
   <div
     v-if="show"
     :class="notificationClasses"
-    class="fixed top-4 right-4 z-50 min-w-80 rounded-lg shadow-2xl backdrop-blur-sm border p-4 animate-slide-in"
+    class="fixed top-3 right-3 z-50 min-w-72 rounded-cursor border p-3 animate-slide-in font-mono"
   >
-    <div class="flex items-start gap-3">
-      <div class="text-2xl">{{ icon }}</div>
+    <div class="flex items-start gap-2.5">
+      <div class="text-xs font-bold mt-0.5">{{ icon }}</div>
       <div class="flex-1 min-w-0">
-        <h4 class="font-semibold mb-1">{{ title }}</h4>
-        <p class="text-sm opacity-90">{{ message }}</p>
+        <h4 class="text-xs font-semibold mb-0.5 text-cursor-fg">{{ title }}</h4>
+        <p class="text-2xs text-cursor-fg-muted">{{ message }}</p>
       </div>
       <button
         @click="emit('close')"
-        class="text-neutral-400 hover:text-neutral-200 transition-colors"
+        class="text-cursor-fg-muted hover:text-cursor-fg transition-colors text-xs"
       >
         ✕
       </button>
@@ -40,10 +40,10 @@ const emit = defineEmits<{
 
 const notificationClasses = computed(() => {
   const types = {
-    success: 'bg-green-500/20 border-green-500/30 text-green-100',
-    error: 'bg-red-500/20 border-red-500/30 text-red-100',
-    warning: 'bg-yellow-500/20 border-yellow-500/30 text-yellow-100',
-    info: 'bg-blue-500/20 border-blue-500/30 text-blue-100'
+    success: 'bg-cursor-surface border-success/40 text-success',
+    error: 'bg-cursor-surface border-error/40 text-error',
+    warning: 'bg-cursor-surface border-warning/40 text-warning',
+    info: 'bg-cursor-surface border-cursor-accent/40 text-cursor-accent'
   }
   return types[props.type]
 })
@@ -52,8 +52,8 @@ const icon = computed(() => {
   const icons = {
     success: '✓',
     error: '✗',
-    warning: '⚠',
-    info: 'ℹ'
+    warning: '!',
+    info: 'i'
   }
   return icons[props.type]
 })
@@ -72,7 +72,6 @@ const icon = computed(() => {
 }
 
 .animate-slide-in {
-  animation: slide-in 0.3s ease-out;
+  animation: slide-in 0.2s ease-out;
 }
 </style>
-

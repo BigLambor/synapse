@@ -7,27 +7,27 @@
         @click.self="handleCancel"
       >
         <!-- 背景遮罩 -->
-        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="fixed inset-0 bg-black/60 "></div>
 
         <!-- Modal内容 -->
         <div class="flex min-h-screen items-center justify-center p-4">
           <div
-            class="relative w-full max-w-7xl bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-700/50 overflow-hidden flex flex-col max-h-[90vh]"
+            class="relative w-full max-w-7xl bg-cursor-panel rounded-cursor  border border-cursor-border overflow-hidden flex flex-col max-h-[90vh]"
             @click.stop
           >
             <!-- 头部 -->
-            <div class="px-8 py-6 border-b border-neutral-700/50 bg-gradient-to-r from-primary-900/20 to-transparent flex-shrink-0">
+            <div class="px-8 py-6 border-b border-cursor-border bg-cursor-panel flex-shrink-0">
               <div class="flex items-center justify-between">
                 <div>
-                  <h2 class="text-2xl font-bold text-white mb-1">
+                  <h2 class="text-2xl font-semibold text-cursor-fg mb-1">
                     🗂️ 从数据湖选择资产
                   </h2>
-                  <p class="text-neutral-400 text-sm">
+                  <p class="text-cursor-fg-muted text-sm">
                     选择已经处理完成的多模态资产添加到数据集
                   </p>
                 </div>
                 <button
-                  class="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-800 rounded-lg"
+                  class="text-cursor-fg-muted hover:text-cursor-fg transition-colors p-2 hover:bg-cursor-panel rounded-cursor"
                   @click="handleCancel"
                 >
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,15 +40,15 @@
               <div class="mt-4 flex items-center gap-6 text-sm">
                 <div class="flex items-center gap-2">
                   <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span class="text-white font-semibold">已选: {{ selectedAssets.length }}</span>
+                  <span class="text-cursor-fg font-semibold">已选: {{ selectedAssets.length }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span class="text-neutral-300">可用: {{ availableAssets.length }}</span>
+                  <span class="text-cursor-fg">可用: {{ availableAssets.length }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
-                  <span class="text-neutral-300">
+                  <span class="text-cursor-fg">
                     总大小: {{ formatSize(selectedTotalSize) }}
                   </span>
                 </div>
@@ -56,7 +56,7 @@
             </div>
 
             <!-- 筛选和搜索栏 -->
-            <div class="px-8 py-4 border-b border-neutral-700/50 bg-neutral-900/50 flex-shrink-0">
+            <div class="px-8 py-4 border-b border-cursor-border bg-cursor-panel flex-shrink-0">
               <div class="flex flex-col md:flex-row gap-3">
                 <!-- 搜索框 -->
                 <div class="flex-1 relative">
@@ -64,10 +64,10 @@
                     v-model="searchQuery"
                     type="text"
                     placeholder="搜索资产名称、标签..."
-                    class="w-full px-4 py-2.5 pl-10 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm"
+                    class="w-full px-4 py-2.5 pl-10 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 text-sm"
                   />
                   <svg
-                    class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cursor-fg-muted"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -79,7 +79,7 @@
                 <!-- 类型筛选 -->
                 <select
                   v-model="typeFilter"
-                  class="px-4 py-2.5 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm min-w-[140px]"
+                  class="px-4 py-2.5 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 text-sm min-w-[140px]"
                 >
                   <option value="">所有类型</option>
                   <option value="video">🎥 视频</option>
@@ -91,7 +91,7 @@
                 <!-- 状态筛选 -->
                 <select
                   v-model="statusFilter"
-                  class="px-4 py-2.5 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm min-w-[140px]"
+                  class="px-4 py-2.5 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 text-sm min-w-[140px]"
                 >
                   <option value="">所有状态</option>
                   <option value="completed">✅ 已完成</option>
@@ -101,7 +101,7 @@
                 <!-- 排序 -->
                 <select
                   v-model="sortBy"
-                  class="px-4 py-2.5 bg-neutral-800/50 border border-neutral-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 text-sm min-w-[140px]"
+                  class="px-4 py-2.5 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 text-sm min-w-[140px]"
                 >
                   <option value="uploadDate">最新上传</option>
                   <option value="name">名称</option>
@@ -113,26 +113,26 @@
               <div class="mt-3 flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <button
-                    class="px-3 py-1.5 text-xs bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white rounded-lg transition-all"
+                    class="px-3 py-1.5 text-xs bg-cursor-panel hover:bg-cursor-border text-cursor-fg hover:text-cursor-fg rounded-cursor transition-all"
                     @click="selectAll"
                   >
                     全选当前页
                   </button>
                   <button
-                    class="px-3 py-1.5 text-xs bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white rounded-lg transition-all"
+                    class="px-3 py-1.5 text-xs bg-cursor-panel hover:bg-cursor-border text-cursor-fg hover:text-cursor-fg rounded-cursor transition-all"
                     @click="clearSelection"
                     :disabled="selectedAssets.length === 0"
                   >
                     清除选择
                   </button>
                   <button
-                    class="px-3 py-1.5 text-xs bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white rounded-lg transition-all"
+                    class="px-3 py-1.5 text-xs bg-cursor-panel hover:bg-cursor-border text-cursor-fg hover:text-cursor-fg rounded-cursor transition-all"
                     @click="invertSelection"
                   >
                     反选
                   </button>
                 </div>
-                <div class="text-xs text-neutral-400">
+                <div class="text-xs text-cursor-fg-muted">
                   显示 {{ filteredAssets.length }} / {{ allAssets.length }} 个资产
                 </div>
               </div>
@@ -141,13 +141,13 @@
             <!-- 资产列表 -->
             <div class="flex-1 overflow-y-auto px-8 py-6">
               <div v-if="isLoading" class="flex justify-center items-center py-20">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cursor-accent"></div>
               </div>
 
               <div v-else-if="filteredAssets.length === 0" class="text-center py-20">
                 <div class="text-6xl mb-4">🔍</div>
-                <h3 class="text-xl font-semibold text-neutral-300 mb-2">未找到匹配的资产</h3>
-                <p class="text-neutral-500">尝试调整筛选条件或搜索关键词</p>
+                <h3 class="text-xl font-semibold text-cursor-fg mb-2">未找到匹配的资产</h3>
+                <p class="text-cursor-fg-muted">尝试调整筛选条件或搜索关键词</p>
               </div>
 
               <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -155,17 +155,17 @@
                   v-for="asset in paginatedAssets"
                   :key="asset.id"
                   :class="[
-                    'relative bg-neutral-800/30 rounded-lg border-2 transition-all duration-200 cursor-pointer overflow-hidden group',
+                    'relative bg-cursor-surface rounded-cursor border-2 transition-all duration-200 cursor-pointer overflow-hidden group',
                     isSelected(asset.id)
-                      ? 'border-primary-500 bg-primary-500/10 shadow-lg shadow-primary-500/20'
-                      : 'border-neutral-700/50 hover:border-neutral-600'
+                      ? 'border-cursor-accent bg-cursor-accent-muted '
+                      : 'border-cursor-border hover:border-cursor-border'
                   ]"
                   @click="toggleAsset(asset)"
                 >
                   <!-- 选中标记 -->
                   <div
                     v-if="isSelected(asset.id)"
-                    class="absolute top-2 right-2 z-10 w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center shadow-lg"
+                    class="absolute top-2 right-2 z-10 w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center "
                   >
                     <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -179,11 +179,11 @@
 
                   <!-- 资产信息 -->
                   <div class="p-3">
-                    <h4 class="text-sm font-medium text-white truncate mb-1 group-hover:text-primary-400 transition-colors">
+                    <h4 class="text-sm font-medium text-cursor-fg truncate mb-1 group-hover:text-cursor-accent transition-colors">
                       {{ asset.name }}
                     </h4>
                     
-                    <div class="flex items-center justify-between text-xs text-neutral-500 mb-2">
+                    <div class="flex items-center justify-between text-xs text-cursor-fg-muted mb-2">
                       <span>{{ formatSize(asset.size) }}</span>
                       <span>{{ formatDate(asset.uploadDate) }}</span>
                     </div>
@@ -202,7 +202,7 @@
                       </span>
                       <span
                         v-if="asset.progress < 100"
-                        class="text-xs text-neutral-500"
+                        class="text-xs text-cursor-fg-muted"
                       >
                         {{ asset.progress }}%
                       </span>
@@ -213,13 +213,13 @@
                       <span
                         v-for="tag in asset.tags.slice(0, 2)"
                         :key="tag"
-                        class="px-1.5 py-0.5 bg-neutral-700/50 text-neutral-400 text-xs rounded"
+                        class="px-1.5 py-0.5 bg-cursor-border/50 text-cursor-fg-muted text-xs rounded"
                       >
                         {{ tag }}
                       </span>
                       <span
                         v-if="asset.tags.length > 2"
-                        class="px-1.5 py-0.5 bg-neutral-700/50 text-neutral-400 text-xs rounded"
+                        class="px-1.5 py-0.5 bg-cursor-border/50 text-cursor-fg-muted text-xs rounded"
                       >
                         +{{ asset.tags.length - 2 }}
                       </span>
@@ -237,7 +237,7 @@
               <!-- 分页 -->
               <div v-if="totalPages > 1" class="mt-6 flex items-center justify-center gap-2">
                 <button
-                  class="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="px-3 py-2 bg-cursor-panel hover:bg-cursor-border text-white rounded-cursor transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="currentPage === 1"
                   @click="currentPage--"
                 >
@@ -248,10 +248,10 @@
                     v-for="page in visiblePages"
                     :key="page"
                     :class="[
-                      'px-3 py-2 rounded-lg transition-all',
+                      'px-3 py-2 rounded-cursor transition-all',
                       page === currentPage
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-300'
+                        ? 'bg-cursor-accent text-white'
+                        : 'bg-cursor-panel hover:bg-cursor-border text-cursor-fg'
                     ]"
                     @click="currentPage = page"
                   >
@@ -259,7 +259,7 @@
                   </button>
                 </div>
                 <button
-                  class="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="px-3 py-2 bg-cursor-panel hover:bg-cursor-border text-white rounded-cursor transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="currentPage === totalPages"
                   @click="currentPage++"
                 >
@@ -269,23 +269,23 @@
             </div>
 
             <!-- 底部操作栏 -->
-            <div class="px-8 py-6 border-t border-neutral-700/50 bg-neutral-900/50 flex items-center justify-between flex-shrink-0">
-              <div class="text-sm text-neutral-400">
-                已选择 <span class="text-white font-semibold">{{ selectedAssets.length }}</span> 个资产
+            <div class="px-8 py-6 border-t border-cursor-border bg-cursor-panel flex items-center justify-between flex-shrink-0">
+              <div class="text-2xs text-cursor-fg-muted">
+                已选择 <span class="text-cursor-fg font-semibold">{{ selectedAssets.length }}</span> 个资产
                 <span v-if="selectedAssets.length > 0">
-                  · 共 <span class="text-white font-semibold">{{ formatSize(selectedTotalSize) }}</span>
+                  · 共 <span class="text-cursor-fg font-semibold">{{ formatSize(selectedTotalSize) }}</span>
                 </span>
               </div>
 
               <div class="flex items-center gap-3">
                 <button
-                  class="px-6 py-3 text-neutral-300 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
+                  class="px-6 py-3 text-cursor-fg hover:text-cursor-fg hover:bg-cursor-panel rounded-cursor transition-all"
                   @click="handleCancel"
                 >
                   取消
                 </button>
                 <button
-                  class="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all shadow-lg hover:shadow-primary-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  class="px-8 py-3 bg-cursor-accent text-white rounded-cursor  transition-all  disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   :disabled="selectedAssets.length === 0"
                   @click="handleConfirm"
                 >

@@ -41,7 +41,7 @@ const router = createRouter({
       name: 'DatasetPublishDemo',
       component: () => import('@/views/DatasetPublishDemoView.vue'),
       meta: { 
-        title: '数据集发布流程演示',
+        title: '数据集发布流程',
         description: '交互式演示数据集从创建到发布的完整流程'
       }
     },

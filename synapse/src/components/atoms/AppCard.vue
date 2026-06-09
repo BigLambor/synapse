@@ -1,12 +1,12 @@
 <template>
   <div :class="cardClasses">
-    <div v-if="$slots.header" class="px-6 py-4 border-b border-neutral-700">
+    <div v-if="$slots.header" class="px-5 py-4 border-b border-cursor-border bg-cursor-panel">
       <slot name="header" />
     </div>
-    <div class="p-6">
+    <div class="p-5">
       <slot />
     </div>
-    <div v-if="$slots.footer" class="px-6 py-4 border-t border-neutral-700 bg-neutral-900/50">
+    <div v-if="$slots.footer" class="px-5 py-4 border-t border-cursor-border bg-cursor-panel">
       <slot name="footer" />
     </div>
   </div>
@@ -26,17 +26,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const cardClasses = computed(() => {
-  const base = 'rounded-xl overflow-hidden transition-shadow duration-200'
-  
+  const base = 'rounded-cursor overflow-hidden transition-all duration-150 border border-cursor-border bg-cursor-surface shadow-cursor'
+
   const variants = {
-    default: 'bg-neutral-800/50',
-    elevated: 'bg-neutral-800/50 shadow-xl',
-    outlined: 'bg-neutral-900/30 border border-neutral-700'
+    default: '',
+    elevated: 'shadow-cursor-lg',
+    outlined: 'shadow-none'
   }
-  
-  const hover = props.hoverable ? 'hover:shadow-2xl cursor-pointer' : ''
-  
+
+  const hover = props.hoverable ? 'hover:border-cursor-accent/40 hover:shadow-cursor-lg cursor-pointer' : ''
+
   return `${base} ${variants[props.variant]} ${hover}`
 })
 </script>
-

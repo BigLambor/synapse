@@ -1,12 +1,12 @@
 <template>
-  <div class="collaboration-view min-h-screen bg-gradient-to-br from-neutral-950 via-green-900/10 to-neutral-950">
-    <div class="container mx-auto px-6 py-12">
+  <div class="collaboration-view page-shell">
+    <div class="page-container">
       <!-- Header -->
       <div class="mb-12">
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+        <h1 class="page-title mb-2">
           团队协作
         </h1>
-        <p class="text-lg text-neutral-400">
+        <p class="page-subtitle">
           跨角色无缝协作 - 洞察分享、任务分配、数据集构建
         </p>
       </div>
@@ -16,18 +16,18 @@
         <div
           v-for="member in teamMembers"
           :key="member.id"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg bg-neutral-800/50 border border-neutral-700 hover:border-primary-500/50 transition-colors cursor-pointer"
-          :class="{ 'border-primary-500': currentUser === member.id }"
+          class="flex items-center gap-3 px-4 py-3 rounded-cursor bg-cursor-surface border border-cursor-border hover:border-cursor-accent/50 transition-colors cursor-pointer"
+          :class="{ 'border-cursor-accent': currentUser === member.id }"
           @click="switchUser(member.id)"
         >
           <AppAvatar :emoji="member.avatar" size="md" />
           <div>
             <div class="font-semibold">{{ member.name }}</div>
-            <div class="text-xs text-neutral-400">{{ member.role }}</div>
+            <div class="text-xs text-cursor-fg-muted">{{ member.role }}</div>
           </div>
           <div
             class="w-2 h-2 rounded-full ml-2"
-            :class="member.status === 'online' ? 'bg-green-500' : 'bg-neutral-500'"
+            :class="member.status === 'online' ? 'bg-green-500' : 'bg-cursor-fg-subtle'"
           ></div>
         </div>
       </div>
@@ -42,7 +42,7 @@
                 <AppAvatar emoji="👩" size="sm" />
                 <div>
                   <h2 class="text-xl font-semibold">张三 的洞察看板</h2>
-                  <p class="text-sm text-neutral-400">数据工程师</p>
+                  <p class="text-2xs text-cursor-fg-muted">数据工程师</p>
                 </div>
               </div>
               <AppButton size="sm" variant="outline" @click="createInsight">
@@ -55,7 +55,7 @@
             <div
               v-for="insight in insights"
               :key="insight.id"
-              class="p-4 rounded-lg bg-neutral-900/50 border border-neutral-800 hover:border-primary-500/30 transition-colors cursor-pointer"
+              class="p-4 rounded-cursor bg-cursor-panel border border-cursor-border hover:border-cursor-accent/30 transition-colors cursor-pointer"
               @click="selectInsight(insight)"
             >
               <div class="flex items-start justify-between mb-2">
@@ -64,12 +64,12 @@
                   {{ insight.priority }}
                 </AppBadge>
               </div>
-              <p class="text-sm text-neutral-400 mb-3">{{ insight.description }}</p>
+              <p class="text-2xs text-cursor-fg-muted mb-3">{{ insight.description }}</p>
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <span class="text-xs text-neutral-500">{{ insight.assets.length }} 个资产</span>
-                  <span class="text-xs text-neutral-500">•</span>
-                  <span class="text-xs text-neutral-500">{{ insight.createdAt }}</span>
+                  <span class="text-xs text-cursor-fg-muted">{{ insight.assets.length }} 个资产</span>
+                  <span class="text-xs text-cursor-fg-muted">•</span>
+                  <span class="text-xs text-cursor-fg-muted">{{ insight.createdAt }}</span>
                 </div>
                 <AppButton
                   size="sm"
@@ -91,7 +91,7 @@
                 <AppAvatar emoji="👨" size="sm" />
                 <div>
                   <h2 class="text-xl font-semibold">李四 的任务队列</h2>
-                  <p class="text-sm text-neutral-400">AI工程师</p>
+                  <p class="text-2xs text-cursor-fg-muted">AI工程师</p>
                 </div>
               </div>
               <AppBadge variant="warning">{{ pendingTasks }} 待处理</AppBadge>
@@ -102,7 +102,7 @@
             <div
               v-for="task in tasks"
               :key="task.id"
-              class="p-4 rounded-lg bg-neutral-900/50 border border-neutral-800"
+              class="p-4 rounded-cursor bg-cursor-panel border border-cursor-border"
             >
               <div class="flex items-start justify-between mb-2">
                 <h3 class="font-semibold">{{ task.title }}</h3>
@@ -113,20 +113,20 @@
                   {{ getStatusText(task.status) }}
                 </AppBadge>
               </div>
-              <p class="text-sm text-neutral-400 mb-3">{{ task.description }}</p>
+              <p class="text-2xs text-cursor-fg-muted mb-3">{{ task.description }}</p>
               <div class="flex items-center gap-2 mb-3">
                 <AppAvatar :emoji="task.creator.avatar" size="sm" />
-                <span class="text-xs text-neutral-500">
+                <span class="text-xs text-cursor-fg-muted">
                   {{ task.creator.name }} 创建于 {{ task.createdAt }}
                 </span>
               </div>
               
               <!-- Dataset Info -->
-              <div class="p-3 rounded bg-neutral-800/50 mb-3">
-                <div class="text-xs text-neutral-400 mb-2">包含数据集</div>
+              <div class="p-3 rounded bg-cursor-surface mb-3">
+                <div class="text-xs text-cursor-fg-muted mb-2">包含数据集</div>
                 <div class="flex items-center gap-2">
                   <span class="text-sm font-medium">{{ task.dataset.count }} 个资产</span>
-                  <span class="text-xs text-neutral-500">{{ task.dataset.size }}</span>
+                  <span class="text-xs text-cursor-fg-muted">{{ task.dataset.size }}</span>
                 </div>
               </div>
 
@@ -161,7 +161,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold">协作动态</h2>
-            <span class="text-sm text-neutral-400">实时更新</span>
+            <span class="text-2xs text-cursor-fg-muted">实时更新</span>
           </div>
         </template>
 
@@ -169,16 +169,16 @@
           <div
             v-for="activity in activities"
             :key="activity.id"
-            class="flex items-start gap-4 pb-4 border-b border-neutral-800 last:border-0"
+            class="flex items-start gap-4 pb-4 border-b border-cursor-border last:border-0"
           >
             <AppAvatar :emoji="activity.user.avatar" size="md" />
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
                 <span class="font-semibold">{{ activity.user.name }}</span>
-                <span class="text-sm text-neutral-500">{{ activity.time }}</span>
+                <span class="text-2xs text-cursor-fg-muted">{{ activity.time }}</span>
               </div>
-              <p class="text-sm text-neutral-300">{{ activity.action }}</p>
-              <div v-if="activity.target" class="mt-2 px-3 py-2 rounded bg-neutral-800/50 text-sm">
+              <p class="text-sm text-cursor-fg">{{ activity.action }}</p>
+              <div v-if="activity.target" class="mt-2 px-3 py-2 rounded bg-cursor-surface text-sm">
                 {{ activity.target }}
               </div>
             </div>

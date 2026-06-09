@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-xl font-semibold mb-1">🌌 向量空间可视化</h2>
-          <p class="text-sm text-neutral-400">3D空间中的特征向量分布 - 相似内容聚集在一起</p>
+          <p class="text-2xs text-cursor-fg-muted">3D空间中的特征向量分布 - 相似内容聚集在一起</p>
         </div>
         <div class="flex gap-2">
           <AppButton size="sm" variant="ghost" @click="rotateView">
@@ -22,56 +22,56 @@
 
     <div class="space-y-4">
       <!-- 3D可视化区域 -->
-      <div ref="canvasContainer" class="relative bg-gradient-to-br from-neutral-950 to-neutral-900 rounded-lg overflow-hidden border border-neutral-800" style="height: 500px">
+      <div ref="canvasContainer" class="relative bg-cursor-bg rounded-cursor overflow-hidden border border-cursor-border" style="height: 500px">
         <!-- Three.js Canvas将在这里渲染 -->
 
         <!-- 图例 -->
-        <div class="absolute bottom-4 left-4 bg-neutral-900/95 backdrop-blur-sm rounded-lg p-4 border border-neutral-800">
+        <div class="absolute bottom-4 left-4 bg-cursor-panel/95  rounded-cursor p-4 border border-cursor-border">
           <h4 class="text-sm font-semibold mb-3">数据类型</h4>
           <div class="space-y-2">
             <div class="flex items-center gap-3">
-              <div class="w-3 h-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50"></div>
+              <div class="w-3 h-3 rounded-full bg-blue-500  shadow-blue-500/50"></div>
               <span class="text-xs">文档 ({{ clusterStats.documents }})</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-3 h-3 rounded-full bg-pink-500 shadow-lg shadow-pink-500/50"></div>
+              <div class="w-3 h-3 rounded-full bg-pink-500  shadow-pink-500/50"></div>
               <span class="text-xs">图片 ({{ clusterStats.images }})</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-3 h-3 rounded-full bg-purple-500 shadow-lg shadow-purple-500/50"></div>
+              <div class="w-3 h-3 rounded-full bg-purple-500  shadow-purple-500/50"></div>
               <span class="text-xs">音频 ({{ clusterStats.audios }})</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500  shadow-green-500/50"></div>
               <span class="text-xs">视频 ({{ clusterStats.videos }})</span>
             </div>
           </div>
         </div>
 
         <!-- 统计信息 -->
-        <div class="absolute top-4 right-4 bg-neutral-900/95 backdrop-blur-sm rounded-lg p-4 border border-neutral-800">
+        <div class="absolute top-4 right-4 bg-cursor-panel/95  rounded-cursor p-4 border border-cursor-border">
           <div class="space-y-2 text-xs">
             <div class="flex items-center justify-between gap-4">
-              <span class="text-neutral-400">总向量数：</span>
-              <span class="font-semibold text-primary-400">{{ totalVectors.toLocaleString() }}</span>
+              <span class="text-cursor-fg-muted">总向量数：</span>
+              <span class="font-semibold text-cursor-accent">{{ totalVectors.toLocaleString() }}</span>
             </div>
             <div class="flex items-center justify-between gap-4">
-              <span class="text-neutral-400">降维方法：</span>
+              <span class="text-cursor-fg-muted">降维方法：</span>
               <span class="font-semibold">t-SNE</span>
             </div>
             <div class="flex items-center justify-between gap-4">
-              <span class="text-neutral-400">原始维度：</span>
+              <span class="text-cursor-fg-muted">原始维度：</span>
               <span class="font-semibold">768</span>
             </div>
             <div class="flex items-center justify-between gap-4">
-              <span class="text-neutral-400">显示维度：</span>
+              <span class="text-cursor-fg-muted">显示维度：</span>
               <span class="font-semibold">3D</span>
             </div>
           </div>
         </div>
 
         <!-- 聚类信息 (可切换) -->
-        <div v-if="showClusters" class="absolute bottom-4 right-4 bg-neutral-900/95 backdrop-blur-sm rounded-lg p-4 border border-neutral-800 max-w-xs">
+        <div v-if="showClusters" class="absolute bottom-4 right-4 bg-cursor-panel/95  rounded-cursor p-4 border border-cursor-border max-w-xs">
           <h4 class="text-sm font-semibold mb-3 flex items-center gap-2">
             <span>🎯</span>
             <span>发现的聚类</span>
@@ -90,7 +90,7 @@
                 <span
                   v-for="tag in cluster.topTags"
                   :key="tag"
-                  class="px-1.5 py-0.5 bg-neutral-800 rounded text-[10px] text-neutral-400"
+                  class="px-1.5 py-0.5 bg-cursor-panel rounded text-[10px] text-cursor-fg-muted"
                 >
                   {{ tag }}
                 </span>
@@ -103,34 +103,34 @@
       <!-- 向量示例展示 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- 原始向量 -->
-        <div class="bg-neutral-900/50 rounded-lg p-4 border border-neutral-800">
+        <div class="bg-cursor-panel rounded-cursor p-4 border border-cursor-border">
           <h4 class="text-sm font-semibold mb-3 flex items-center gap-2">
             <span>📊</span>
             <span>向量表示示例</span>
           </h4>
           <div class="space-y-3">
             <div>
-              <div class="text-xs text-neutral-400 mb-2">768维特征向量（部分展示）</div>
-              <div class="bg-neutral-950 rounded p-3 font-mono text-[10px] text-neutral-300 overflow-x-auto">
+              <div class="text-xs text-cursor-fg-muted mb-2">768维特征向量（部分展示）</div>
+              <div class="bg-cursor-bg rounded p-3 font-mono text-[10px] text-cursor-fg overflow-x-auto">
                 <div class="space-y-1">
                   <div>[0.0234, -0.1234, 0.5678, 0.0123, -0.3456, ...]</div>
-                  <div class="text-neutral-600">// 维度 0-7</div>
+                  <div class="text-cursor-fg-subtle">// 维度 0-7</div>
                   <div class="mt-2">[0.2341, 0.1122, -0.0987, 0.4321, 0.1111, ...]</div>
-                  <div class="text-neutral-600">// 维度 758-767</div>
+                  <div class="text-cursor-fg-subtle">// 维度 758-767</div>
                 </div>
               </div>
             </div>
             <div class="grid grid-cols-3 gap-2 text-center text-xs">
               <div>
-                <div class="text-neutral-400">最小值</div>
+                <div class="text-cursor-fg-muted">最小值</div>
                 <div class="font-semibold text-blue-400">-0.98</div>
               </div>
               <div>
-                <div class="text-neutral-400">平均值</div>
+                <div class="text-cursor-fg-muted">平均值</div>
                 <div class="font-semibold text-green-400">0.02</div>
               </div>
               <div>
-                <div class="text-neutral-400">最大值</div>
+                <div class="text-cursor-fg-muted">最大值</div>
                 <div class="font-semibold text-red-400">0.95</div>
               </div>
             </div>
@@ -138,49 +138,49 @@
         </div>
 
         <!-- 相似度计算 -->
-        <div class="bg-neutral-900/50 rounded-lg p-4 border border-neutral-800">
+        <div class="bg-cursor-panel rounded-cursor p-4 border border-cursor-border">
           <h4 class="text-sm font-semibold mb-3 flex items-center gap-2">
             <span>🔍</span>
             <span>相似度计算</span>
           </h4>
           <div class="space-y-3">
-            <div class="bg-neutral-950 rounded p-3">
-              <div class="text-xs text-neutral-400 mb-2">余弦相似度公式</div>
+            <div class="bg-cursor-bg rounded p-3">
+              <div class="text-xs text-cursor-fg-muted mb-2">余弦相似度公式</div>
               <div class="font-mono text-xs text-center py-2">
-                <div class="text-neutral-300">
+                <div class="text-cursor-fg">
                   similarity = (A · B) / (||A|| × ||B||)
                 </div>
               </div>
-              <div class="text-[10px] text-neutral-500 mt-2">
+              <div class="text-[10px] text-cursor-fg-muted mt-2">
                 值域: [-1, 1]，越接近1表示越相似
               </div>
             </div>
             
             <div class="space-y-2">
-              <div class="text-xs text-neutral-400">示例：查询相似度</div>
+              <div class="text-xs text-cursor-fg-muted">示例：查询相似度</div>
               <div class="space-y-1.5">
                 <div class="flex items-center justify-between text-xs">
-                  <span class="text-neutral-300">文档A ↔ 文档B</span>
+                  <span class="text-cursor-fg">文档A ↔ 文档B</span>
                   <div class="flex items-center gap-2">
-                    <div class="w-16 h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                    <div class="w-16 h-1.5 bg-cursor-panel rounded-full overflow-hidden">
                       <div class="h-full bg-green-500" style="width: 95%"></div>
                     </div>
                     <span class="font-semibold text-green-400 w-10 text-right">0.95</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between text-xs">
-                  <span class="text-neutral-300">文档A ↔ 图片C</span>
+                  <span class="text-cursor-fg">文档A ↔ 图片C</span>
                   <div class="flex items-center gap-2">
-                    <div class="w-16 h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                    <div class="w-16 h-1.5 bg-cursor-panel rounded-full overflow-hidden">
                       <div class="h-full bg-yellow-500" style="width: 68%"></div>
                     </div>
                     <span class="font-semibold text-yellow-400 w-10 text-right">0.68</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between text-xs">
-                  <span class="text-neutral-300">文档A ↔ 音频D</span>
+                  <span class="text-cursor-fg">文档A ↔ 音频D</span>
                   <div class="flex items-center gap-2">
-                    <div class="w-16 h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                    <div class="w-16 h-1.5 bg-cursor-panel rounded-full overflow-hidden">
                       <div class="h-full bg-red-500" style="width: 23%"></div>
                     </div>
                     <span class="font-semibold text-red-400 w-10 text-right">0.23</span>
@@ -193,14 +193,14 @@
       </div>
 
       <!-- 技术说明 -->
-      <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg p-4 border border-purple-500/20">
+      <div class="bg-cursor-surface rounded-cursor p-4 border border-cursor-border">
         <div class="flex items-start gap-3">
           <div class="text-2xl">💡</div>
           <div class="flex-1">
             <h4 class="font-semibold text-sm mb-2">为什么需要向量化？</h4>
-            <div class="text-xs text-neutral-300 space-y-2 leading-relaxed">
+            <div class="text-xs text-cursor-fg space-y-2 leading-relaxed">
               <p>
-                <strong class="text-primary-400">1. 语义理解：</strong>
+                <strong class="text-cursor-accent">1. 语义理解：</strong>
                 将文本、图片、音视频转换为数学向量，AI能理解其语义含义，而不只是字面匹配。
               </p>
               <p>

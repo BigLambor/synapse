@@ -7,76 +7,103 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary - 科技蓝
+        // 阿里云百炼风格浅色主题（保留 cursor-* 类名以兼容全站）
+        cursor: {
+          bg: '#f5f6f8',
+          surface: '#ffffff',
+          panel: '#fafbfc',
+          elevated: '#f2f3f5',
+          border: '#e5e6eb',
+          'border-subtle': 'rgba(0, 0, 0, 0.06)',
+          fg: '#1d2129',
+          'fg-muted': '#86909c',
+          'fg-subtle': '#c9cdd4',
+          accent: '#1677ff',
+          'accent-hover': '#4096ff',
+          'accent-muted': 'rgba(22, 119, 255, 0.08)',
+          active: 'rgba(22, 119, 255, 0.1)',
+          'surface-hover': '#f2f3f5',
+          input: '#ffffff',
+          selection: 'rgba(22, 119, 255, 0.2)',
+        },
+
         primary: {
-          50: '#EEF2FF',
-          100: '#E0E7FF',
-          200: '#C7D2FE',
-          300: '#A5B4FC',
-          400: '#818CF8',
-          500: '#6366F1', // 主色
-          600: '#4F46E5',
-          700: '#4338CA',
-          800: '#3730A3',
-          900: '#312E81',
+          50: '#e6f4ff',
+          100: '#bae0ff',
+          200: '#91caff',
+          300: '#69b1ff',
+          400: '#4096ff',
+          500: '#1677ff',
+          600: '#0958d9',
+          700: '#003eb3',
+          800: '#002c8c',
+          900: '#001d66',
         },
-        
-        // Secondary - 青色（数据感）
+
         secondary: {
-          500: '#06B6D4',
-          600: '#0891B2',
+          500: '#13c2c2',
+          600: '#08979c',
         },
-        
-        // Accent - 品红（强调色）
+
         accent: {
-          500: '#EC4899',
-          600: '#DB2777',
+          500: '#722ed1',
+          600: '#531dab',
         },
-        
-        // Neutral - 中性灰（深色模式）
+
         neutral: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          800: '#1F2937',
-          900: '#111827',
-          950: '#0A0F1A', // 背景色
+          50: '#fafbfc',
+          100: '#f2f3f5',
+          200: '#e5e6eb',
+          300: '#c9cdd4',
+          400: '#a9aeb8',
+          500: '#86909c',
+          600: '#6b7785',
+          700: '#4e5969',
+          800: '#272e3b',
+          900: '#1d2129',
+          950: '#0f1219',
         },
-        
-        // Semantic colors
-        success: '#10B981',
-        warning: '#F59E0B',
-        error: '#EF4444',
-        info: '#3B82F6',
+
+        success: '#00b42a',
+        warning: '#ff7d00',
+        error: '#f53f3f',
+        info: '#1677ff',
       },
-      
+
       fontFamily: {
-        sans: ['Inter var', 'system-ui', 'sans-serif'],
-        mono: ['Fira Code', 'monospace'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Segoe UI', 'system-ui', 'sans-serif'],
+        mono: ['SF Mono', 'Menlo', 'Consolas', 'monospace'],
       },
-      
+
+      fontSize: {
+        '2xs': ['0.75rem', { lineHeight: '1.25rem' }],
+      },
+
+      borderRadius: {
+        cursor: '6px',
+      },
+
       boxShadow: {
-        'glow': '0 0 20px rgba(99, 102, 241, 0.3)',
-        'glow-lg': '0 0 40px rgba(99, 102, 241, 0.5)',
+        cursor: '0 1px 2px rgba(0, 0, 0, 0.06)',
+        'cursor-lg': '0 4px 12px rgba(0, 0, 0, 0.08)',
       },
-      
+
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        'stagger': 'stagger 0.8s ease-out',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-in': 'fadeIn 0.2s ease-out',
+        'slide-up': 'slideUp 0.25s ease-out',
       },
-      
+
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { transform: 'translateY(30px)', opacity: '0' },
+          '0%': { transform: 'translateY(8px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-      }
-    }
+      },
+    },
   },
   plugins: [],
 }

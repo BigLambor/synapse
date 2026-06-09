@@ -2,9 +2,9 @@
   <div class="dataset-publish-flow">
     <!-- 流程标题 -->
     <div class="mb-8">
-      <h2 class="text-2xl font-bold text-white mb-2">数据集发布流程演示</h2>
-      <p class="text-gray-400">
-        真实模拟从创建到发布的完整过程
+      <h2 class="text-2xl font-bold text-cursor-fg mb-2">数据集发布流程演示</h2>
+      <p class="text-cursor-fg-muted">
+        从创建到发布的完整过程
       </p>
     </div>
 
@@ -23,7 +23,7 @@
         <div class="stage-icon">
           <span v-if="currentStageIndex > index" class="text-green-400">✓</span>
           <span v-else-if="currentStageIndex === index" class="text-blue-400">{{ index + 1 }}</span>
-          <span v-else class="text-gray-500">{{ index + 1 }}</span>
+          <span v-else class="text-cursor-fg-muted">{{ index + 1 }}</span>
         </div>
         <div class="stage-info">
           <div class="stage-name">{{ stage.name }}</div>
@@ -34,13 +34,13 @@
     </div>
 
     <!-- 当前阶段详情 -->
-    <div class="stage-details bg-gray-800/50 rounded-xl p-6 mb-6">
+    <div class="stage-details bg-cursor-surface rounded-cursor p-6 mb-6">
       <div class="flex items-start justify-between mb-4">
         <div>
-          <h3 class="text-xl font-bold text-white mb-2">
+          <h3 class="text-xl font-bold text-cursor-fg mb-2">
             {{ currentStage.name }}
           </h3>
-          <p class="text-gray-400">{{ currentStage.description }}</p>
+          <p class="text-cursor-fg-muted">{{ currentStage.description }}</p>
         </div>
         <div
           class="status-badge"
@@ -49,7 +49,7 @@
             'bg-blue-500/20 text-blue-400': currentStage.status === 'processing',
             'bg-green-500/20 text-green-400': currentStage.status === 'ready',
             'bg-purple-500/20 text-purple-400': currentStage.status === 'published',
-            'bg-gray-500/20 text-gray-400': currentStage.status === 'archived'
+            'bg-gray-500/20 text-cursor-fg-muted': currentStage.status === 'archived'
           }"
         >
           {{ currentStage.statusLabel }}
@@ -58,11 +58,11 @@
 
       <!-- 进度条 -->
       <div v-if="isProcessing" class="mb-6">
-        <div class="flex justify-between text-sm text-gray-400 mb-2">
+        <div class="flex justify-between text-sm text-cursor-fg-muted mb-2">
           <span>{{ processingMessage }}</span>
           <span>{{ processingProgress }}%</span>
         </div>
-        <div class="w-full bg-gray-700 rounded-full h-2">
+        <div class="w-full bg-cursor-border rounded-full h-2">
           <div
             class="bg-blue-500 h-2 rounded-full transition-all duration-300"
             :style="{ width: processingProgress + '%' }"
@@ -72,23 +72,23 @@
 
       <!-- 检查清单 -->
       <div v-if="currentStage.checklist.length > 0" class="mb-6">
-        <h4 class="text-sm font-semibold text-gray-300 mb-3">检查清单</h4>
+        <h4 class="text-sm font-semibold text-cursor-fg mb-3">检查清单</h4>
         <div class="space-y-2">
           <div
             v-for="(item, idx) in currentStage.checklist"
             :key="idx"
-            class="flex items-start gap-3 p-3 bg-gray-700/50 rounded-lg"
+            class="flex items-start gap-3 p-3 bg-cursor-panel rounded-cursor"
           >
             <div
               class="mt-0.5 flex-shrink-0"
-              :class="item.checked ? 'text-green-400' : 'text-gray-500'"
+              :class="item.checked ? 'text-green-400' : 'text-cursor-fg-muted'"
             >
               <span v-if="item.checked">✓</span>
               <span v-else>○</span>
             </div>
             <div class="flex-1">
-              <div class="text-white text-sm">{{ item.text }}</div>
-              <div v-if="item.detail" class="text-xs text-gray-400 mt-1">
+              <div class="text-cursor-fg text-sm">{{ item.text }}</div>
+              <div v-if="item.detail" class="text-xs text-cursor-fg-muted mt-1">
                 {{ item.detail }}
               </div>
             </div>
@@ -98,34 +98,34 @@
 
       <!-- 质量评估结果 -->
       <div v-if="qualityReport && currentStageIndex >= 2" class="mb-6">
-        <h4 class="text-sm font-semibold text-gray-300 mb-3">质量评估结果</h4>
-        <div class="bg-gray-700/50 rounded-lg p-4">
+        <h4 class="text-sm font-semibold text-cursor-fg mb-3">质量评估结果</h4>
+        <div class="bg-cursor-panel rounded-cursor p-4">
           <div class="flex items-center justify-between mb-4">
-            <span class="text-gray-400">总体质量分数</span>
-            <span class="text-2xl font-bold text-white">
-              {{ qualityReport.overallScore }}<span class="text-sm text-gray-400">/100</span>
+            <span class="text-cursor-fg-muted">总体质量分数</span>
+            <span class="text-2xl font-semibold text-cursor-fg">
+              {{ qualityReport.overallScore }}<span class="text-sm text-cursor-fg-muted">/100</span>
             </span>
           </div>
 
           <div class="grid grid-cols-2 gap-3 mb-4">
             <div v-for="(value, key) in qualityReport.metrics" :key="key" class="metric-item">
-              <div class="text-xs text-gray-400 mb-1">{{ metricLabels[key] }}</div>
+              <div class="text-xs text-cursor-fg-muted mb-1">{{ metricLabels[key] }}</div>
               <div class="flex items-center gap-2">
-                <div class="flex-1 bg-gray-600 rounded-full h-1.5">
+                <div class="flex-1 bg-cursor-border rounded-full h-1.5">
                   <div
                     class="h-1.5 rounded-full transition-all"
                     :class="value >= 0.9 ? 'bg-green-400' : value >= 0.8 ? 'bg-yellow-400' : 'bg-red-400'"
                     :style="{ width: (value * 100) + '%' }"
                   ></div>
                 </div>
-                <span class="text-xs text-white font-medium">{{ Math.round(value * 100) }}%</span>
+                <span class="text-xs text-cursor-fg font-medium">{{ Math.round(value * 100) }}%</span>
               </div>
             </div>
           </div>
 
           <!-- 问题列表 -->
           <div v-if="qualityReport.issues.length > 0" class="mb-3">
-            <div class="text-xs font-semibold text-gray-300 mb-2">发现的问题</div>
+            <div class="text-xs font-semibold text-cursor-fg mb-2">发现的问题</div>
             <div class="space-y-2">
               <div
                 v-for="(issue, idx) in qualityReport.issues"
@@ -142,19 +142,19 @@
                 >
                   {{ issue.severity }}
                 </span>
-                <span class="text-gray-300">{{ issue.description }}</span>
+                <span class="text-cursor-fg">{{ issue.description }}</span>
               </div>
             </div>
           </div>
 
           <!-- 优化建议 -->
           <div v-if="qualityReport.recommendations.length > 0">
-            <div class="text-xs font-semibold text-gray-300 mb-2">优化建议</div>
+            <div class="text-xs font-semibold text-cursor-fg mb-2">优化建议</div>
             <ul class="space-y-1">
               <li
                 v-for="(rec, idx) in qualityReport.recommendations"
                 :key="idx"
-                class="text-xs text-gray-400 flex items-start gap-2"
+                class="text-xs text-cursor-fg-muted flex items-start gap-2"
               >
                 <span class="text-blue-400">•</span>
                 <span>{{ rec }}</span>
@@ -167,16 +167,16 @@
       <!-- 数据集统计 -->
       <div v-if="currentDataset" class="grid grid-cols-3 gap-4 mb-6">
         <div class="stat-card">
-          <div class="text-gray-400 text-xs mb-1">总资产数</div>
-          <div class="text-white text-xl font-bold">{{ currentDataset.totalAssets }}</div>
+          <div class="text-cursor-fg-muted text-xs mb-1">总资产数</div>
+          <div class="text-cursor-fg text-xl font-bold">{{ currentDataset.totalAssets }}</div>
         </div>
         <div class="stat-card">
-          <div class="text-gray-400 text-xs mb-1">数据大小</div>
-          <div class="text-white text-xl font-bold">{{ formatBytes(currentDataset.statistics.totalSize) }}</div>
+          <div class="text-cursor-fg-muted text-xs mb-1">数据大小</div>
+          <div class="text-cursor-fg text-xl font-bold">{{ formatBytes(currentDataset.statistics.totalSize) }}</div>
         </div>
         <div class="stat-card">
-          <div class="text-gray-400 text-xs mb-1">标注数量</div>
-          <div class="text-white text-xl font-bold">{{ currentDataset.statistics.totalAnnotations }}</div>
+          <div class="text-cursor-fg-muted text-xs mb-1">标注数量</div>
+          <div class="text-cursor-fg text-xl font-bold">{{ currentDataset.statistics.totalAnnotations }}</div>
         </div>
       </div>
 
@@ -212,15 +212,15 @@
     </div>
 
     <!-- 日志记录 -->
-    <div class="activity-log bg-gray-800/50 rounded-xl p-6">
-      <h4 class="text-sm font-semibold text-gray-300 mb-3">活动日志</h4>
+    <div class="activity-log bg-cursor-surface rounded-cursor p-6">
+      <h4 class="text-sm font-semibold text-cursor-fg mb-3">活动日志</h4>
       <div class="space-y-2 max-h-60 overflow-y-auto">
         <div
           v-for="(log, idx) in activityLogs"
           :key="idx"
           class="flex items-start gap-3 text-xs"
         >
-          <span class="text-gray-500 flex-shrink-0">{{ log.time }}</span>
+          <span class="text-cursor-fg-muted flex-shrink-0">{{ log.time }}</span>
           <span
             class="px-2 py-0.5 rounded flex-shrink-0"
             :class="{
@@ -232,7 +232,7 @@
           >
             {{ log.type }}
           </span>
-          <span class="text-gray-300">{{ log.message }}</span>
+          <span class="text-cursor-fg">{{ log.message }}</span>
         </div>
       </div>
     </div>
@@ -775,15 +775,15 @@ onMounted(() => {
 }
 
 .stage-item.pending .stage-icon {
-  @apply border-gray-600 bg-gray-800 text-gray-500;
+  @apply border-cursor-border bg-cursor-panel text-cursor-fg-muted;
 }
 
 .stage-item.active .stage-icon {
-  @apply border-blue-500 bg-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/50;
+  @apply border-cursor-accent bg-cursor-accent-muted text-cursor-accent;
 }
 
 .stage-item.completed .stage-icon {
-  @apply border-green-500 bg-green-500/20 text-green-400;
+  @apply border-success bg-success/10 text-success;
 }
 
 .stage-info {
@@ -791,23 +791,23 @@ onMounted(() => {
 }
 
 .stage-name {
-  @apply text-sm font-semibold text-white mb-1;
+  @apply text-sm font-semibold text-cursor-fg mb-1;
 }
 
 .stage-status {
-  @apply text-xs text-gray-400;
+  @apply text-xs text-cursor-fg-muted;
 }
 
 .stage-item.active .stage-name {
-  @apply text-blue-400;
+  @apply text-cursor-accent;
 }
 
 .stage-item.completed .stage-name {
-  @apply text-green-400;
+  @apply text-success;
 }
 
 .stage-connector {
-  @apply absolute top-5 left-1/2 w-full h-0.5 bg-gray-700;
+  @apply absolute top-5 left-1/2 w-full h-0.5 bg-cursor-border;
   transform: translateY(-50%);
   z-index: -1;
 }
@@ -823,20 +823,20 @@ onMounted(() => {
 
 /* 统计卡片 */
 .stat-card {
-  @apply bg-gray-700/50 rounded-lg p-4;
+  @apply bg-cursor-panel rounded-cursor p-4;
 }
 
 /* 按钮 */
 .btn-primary {
-  @apply px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg;
-  @apply hover:from-blue-600 hover:to-purple-700 transition-all;
-  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply px-4 py-1.5 bg-cursor-accent text-white text-sm font-medium rounded-cursor;
+  @apply hover:bg-cursor-accent-hover transition-colors;
+  @apply disabled:opacity-40 disabled:cursor-not-allowed;
 }
 
 .btn-secondary {
-  @apply px-6 py-2.5 bg-gray-700 text-white font-semibold rounded-lg;
-  @apply hover:bg-gray-600 transition-all;
-  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply px-4 py-1.5 bg-cursor-panel text-cursor-fg text-sm font-medium rounded-cursor border border-cursor-border;
+  @apply hover:bg-cursor-elevated transition-colors;
+  @apply disabled:opacity-40 disabled:cursor-not-allowed;
 }
 
 /* 活动日志滚动条 */
@@ -845,15 +845,15 @@ onMounted(() => {
 }
 
 .activity-log ::-webkit-scrollbar-track {
-  @apply bg-gray-700 rounded;
+  @apply bg-cursor-border rounded;
 }
 
 .activity-log ::-webkit-scrollbar-thumb {
-  @apply bg-gray-600 rounded;
+  @apply bg-cursor-border rounded;
 }
 
 .activity-log ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500;
+  @apply bg-cursor-fg-subtle;
 }
 </style>
 

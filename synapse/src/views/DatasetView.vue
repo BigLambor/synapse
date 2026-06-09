@@ -1,30 +1,30 @@
 <template>
-  <div class="dataset-view min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
+  <div class="dataset-view page-shell">
     <!-- 页面头部 -->
-    <div class="border-b border-neutral-700/50 bg-neutral-900/80 backdrop-blur-sm sticky top-0 z-10">
+    <div class="border-b border-cursor-border bg-cursor-surface/95  sticky top-0 z-10">
       <div class="container mx-auto px-6 py-6">
         <div class="flex items-center justify-between">
           <div class="flex-1">
-            <h1 class="text-3xl font-bold text-white mb-2">
+            <h1 class="text-3xl font-bold text-cursor-fg mb-2">
               🎯 训练数据集管理
             </h1>
-            <p class="text-neutral-400">
+            <p class="text-cursor-fg-muted">
               为AI训练平台提供高质量、标准化的数据集 - 数据湖的核心价值输出
             </p>
           </div>
           
           <div class="flex gap-3">
             <button
-              class="px-5 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-blue-500/50 flex items-center gap-2"
+              class="px-5 py-3 bg-cursor-accent text-white rounded-cursor  transition-all duration-200  flex items-center gap-2"
               @click="goToPublishDemo"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              发布流程演示
+              发布流程
             </button>
             <button
-              class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all duration-200 shadow-lg hover:shadow-primary-500/50 flex items-center gap-2"
+              class="px-6 py-3 bg-cursor-accent text-white rounded-cursor  transition-all duration-200  flex items-center gap-2"
               @click="showCreateModal = true"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,14 +40,14 @@
           <div
             v-for="stat in statsCards"
             :key="stat.label"
-            class="bg-neutral-800/50 backdrop-blur-sm rounded-lg p-4 border border-neutral-700/30"
+            class="bg-cursor-surface  rounded-cursor p-4 border border-cursor-border"
           >
             <div class="flex items-center justify-between mb-2">
-              <span class="text-neutral-400 text-sm">{{ stat.label }}</span>
+              <span class="text-cursor-fg-muted text-sm">{{ stat.label }}</span>
               <span class="text-2xl">{{ stat.icon }}</span>
             </div>
-            <div class="text-2xl font-bold text-white">{{ stat.value }}</div>
-            <div v-if="stat.subtext" class="text-xs text-neutral-500 mt-1">
+            <div class="text-2xl font-semibold text-cursor-fg">{{ stat.value }}</div>
+            <div v-if="stat.subtext" class="text-xs text-cursor-fg-muted mt-1">
               {{ stat.subtext }}
             </div>
           </div>
@@ -65,10 +65,10 @@
             v-model="searchQuery"
             type="text"
             placeholder="搜索数据集名称、描述或标签..."
-            class="w-full px-4 py-3 pl-12 bg-neutral-800/50 border border-neutral-700/50 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50"
+            class="w-full px-4 py-3 pl-12 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg placeholder-cursor-fg-subtle focus:outline-none focus:ring-2 focus:ring-cursor-accent/50 focus:border-cursor-accent/50"
           />
           <svg
-            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-cursor-fg-muted"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -80,7 +80,7 @@
         <!-- 状态过滤 -->
         <select
           v-model="statusFilter"
-          class="px-4 py-3 bg-neutral-800/50 border border-neutral-700/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+          class="px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50"
         >
           <option value="">所有状态</option>
           <option value="published">已发布</option>
@@ -92,7 +92,7 @@
         <!-- 分类过滤 -->
         <select
           v-model="categoryFilter"
-          class="px-4 py-3 bg-neutral-800/50 border border-neutral-700/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+          class="px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50"
         >
           <option value="">所有分类</option>
           <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
@@ -101,7 +101,7 @@
         <!-- 排序 -->
         <select
           v-model="sortBy"
-          class="px-4 py-3 bg-neutral-800/50 border border-neutral-700/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+          class="px-4 py-3 bg-cursor-surface border border-cursor-border rounded-cursor text-cursor-fg focus:outline-none focus:ring-2 focus:ring-cursor-accent/50"
         >
           <option value="updatedAt">最近更新</option>
           <option value="createdAt">创建时间</option>
@@ -112,15 +112,15 @@
 
       <!-- 数据集列表 -->
       <div v-if="isLoading" class="flex justify-center items-center py-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-cursor-accent"></div>
       </div>
 
       <div v-else-if="filteredDatasets.length === 0" class="text-center py-20">
         <div class="text-6xl mb-4">📦</div>
-        <h3 class="text-xl font-semibold text-neutral-300 mb-2">暂无数据集</h3>
-        <p class="text-neutral-500 mb-6">开始创建您的第一个训练数据集</p>
+        <h3 class="text-xl font-semibold text-cursor-fg mb-2">暂无数据集</h3>
+        <p class="text-cursor-fg-muted mb-6">开始创建您的第一个训练数据集</p>
         <button
-          class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          class="px-6 py-3 bg-cursor-accent text-white rounded-cursor hover:bg-primary-700 transition-colors"
           @click="showCreateModal = true"
         >
           创建数据集
@@ -131,17 +131,17 @@
         <div
           v-for="dataset in filteredDatasets"
           :key="dataset.id"
-          class="bg-neutral-800/30 backdrop-blur-sm rounded-xl border border-neutral-700/30 overflow-hidden hover:border-primary-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10 cursor-pointer group"
+          class="bg-cursor-surface  rounded-cursor border border-cursor-border overflow-hidden hover:border-cursor-accent/50 transition-all duration-300  cursor-pointer group"
           @click="selectDataset(dataset)"
         >
           <!-- 数据集头部 -->
-          <div class="p-6 border-b border-neutral-700/30">
+          <div class="p-6 border-b border-cursor-border">
             <div class="flex items-start justify-between mb-3">
               <div class="flex-1">
-                <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-primary-400 transition-colors">
+                <h3 class="text-lg font-semibold text-cursor-fg mb-1 group-hover:text-cursor-accent transition-colors">
                   {{ dataset.name }}
                 </h3>
-                <p class="text-sm text-neutral-400 line-clamp-2">
+                <p class="text-2xs text-cursor-fg-muted line-clamp-2">
                   {{ dataset.description }}
                 </p>
               </div>
@@ -161,13 +161,13 @@
               <span
                 v-for="tag in dataset.tags.slice(0, 3)"
                 :key="tag"
-                class="px-2 py-1 bg-neutral-700/50 text-neutral-300 text-xs rounded-md"
+                class="px-2 py-1 bg-cursor-border/50 text-cursor-fg text-xs rounded-md"
               >
                 {{ tag }}
               </span>
               <span
                 v-if="dataset.tags.length > 3"
-                class="px-2 py-1 bg-neutral-700/50 text-neutral-400 text-xs rounded-md"
+                class="px-2 py-1 bg-cursor-border/50 text-cursor-fg-muted text-xs rounded-md"
               >
                 +{{ dataset.tags.length - 3 }}
               </span>
@@ -177,17 +177,17 @@
           <!-- 数据集统计 -->
           <div class="p-6 grid grid-cols-2 gap-4">
             <div>
-              <div class="text-neutral-500 text-xs mb-1">总资产</div>
-              <div class="text-white font-semibold">{{ dataset.totalAssets }}</div>
+              <div class="text-cursor-fg-muted text-xs mb-1">总资产</div>
+              <div class="text-cursor-fg font-semibold">{{ dataset.totalAssets }}</div>
             </div>
             <div>
-              <div class="text-neutral-500 text-xs mb-1">数据大小</div>
-              <div class="text-white font-semibold">{{ formatSize(dataset.statistics.totalSize) }}</div>
+              <div class="text-cursor-fg-muted text-xs mb-1">数据大小</div>
+              <div class="text-cursor-fg font-semibold">{{ formatSize(dataset.statistics.totalSize) }}</div>
             </div>
             <div>
-              <div class="text-neutral-500 text-xs mb-1">质量分数</div>
+              <div class="text-cursor-fg-muted text-xs mb-1">质量分数</div>
               <div class="flex items-center gap-2">
-                <div class="text-white font-semibold">{{ (dataset.quality.accuracy * 100).toFixed(0) }}%</div>
+                <div class="text-cursor-fg font-semibold">{{ (dataset.quality.accuracy * 100).toFixed(0) }}%</div>
                 <div
                   :class="[
                     'w-2 h-2 rounded-full',
@@ -197,18 +197,18 @@
               </div>
             </div>
             <div>
-              <div class="text-neutral-500 text-xs mb-1">导出次数</div>
-              <div class="text-white font-semibold">{{ dataset.exports.length }}</div>
+              <div class="text-cursor-fg-muted text-xs mb-1">导出次数</div>
+              <div class="text-cursor-fg font-semibold">{{ dataset.exports.length }}</div>
             </div>
           </div>
 
           <!-- 数据集操作 -->
-          <div class="px-6 py-4 bg-neutral-900/50 border-t border-neutral-700/30 flex items-center justify-between">
-            <div class="text-xs text-neutral-500">
+          <div class="px-6 py-4 bg-cursor-panel border-t border-cursor-border flex items-center justify-between">
+            <div class="text-xs text-cursor-fg-muted">
               v{{ dataset.version }} · {{ formatDate(dataset.updatedAt) }}
             </div>
             <button
-              class="text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors"
+              class="text-cursor-accent hover:text-cursor-accent-hover text-sm font-medium transition-colors"
               @click.stop="selectDataset(dataset)"
             >
               查看详情 →
@@ -321,10 +321,10 @@ const getStatusClass = (status: DatasetStatus) => {
     [DatasetStatus.PUBLISHED]: 'bg-green-500/20 text-green-400',
     [DatasetStatus.READY]: 'bg-blue-500/20 text-blue-400',
     [DatasetStatus.PROCESSING]: 'bg-yellow-500/20 text-yellow-400',
-    [DatasetStatus.DRAFT]: 'bg-neutral-500/20 text-neutral-400',
+    [DatasetStatus.DRAFT]: 'bg-cursor-panel text-cursor-fg-muted',
     [DatasetStatus.ARCHIVED]: 'bg-red-500/20 text-red-400'
   }
-  return classMap[status] || 'bg-neutral-500/20 text-neutral-400'
+  return classMap[status] || 'bg-cursor-panel text-cursor-fg-muted'
 }
 
 const getStatusText = (status: DatasetStatus) => {

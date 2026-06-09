@@ -1,12 +1,12 @@
 <template>
-  <div class="exploration-view min-h-screen bg-gradient-to-br from-neutral-950 via-accent-900/10 to-neutral-950">
-    <div class="container mx-auto px-6 py-12">
+  <div class="exploration-view page-shell">
+    <div class="page-container">
       <!-- Header - 优化：静态内容使用 v-once -->
       <div class="mb-12" v-once>
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-400 to-primary-400 bg-clip-text text-transparent">
+        <h1 class="page-title mb-2">
           智能探索
         </h1>
-        <p class="text-lg text-neutral-400">
+        <p class="page-subtitle">
           使用AI驱动的语义搜索，跨模态发现隐藏洞察
         </p>
       </div>
@@ -23,7 +23,7 @@
               <template #suffix>
                 <button
                   @click="handleSearch"
-                  class="text-primary-400 hover:text-primary-300 transition-colors"
+                  class="text-cursor-accent hover:text-cursor-accent-hover transition-colors"
                 >
                   🔍
                 </button>
@@ -37,12 +37,12 @@
 
         <template #footer>
           <div class="flex items-center gap-2 flex-wrap" v-once>
-            <span class="text-sm text-neutral-500">热门搜索:</span>
+            <span class="text-2xs text-cursor-fg-muted">热门搜索:</span>
             <button
               v-for="tag in popularTags"
               :key="tag"
               @click="quickSearch(tag)"
-              class="px-3 py-1 rounded-full bg-neutral-800 hover:bg-neutral-700 text-xs text-neutral-300 transition-colors duration-200"
+              class="px-3 py-1 rounded-full bg-cursor-panel hover:bg-cursor-border text-xs text-cursor-fg transition-colors duration-200"
             >
               {{ tag }}
             </button>
@@ -55,8 +55,8 @@
         <div class="flex items-center justify-between mb-6">
           <div>
             <h2 class="text-2xl font-bold mb-1">搜索结果</h2>
-            <p class="text-sm text-neutral-400">
-              找到 <span class="text-primary-400 font-semibold">{{ searchResults.length }}</span> 个相关结果
+            <p class="text-2xs text-cursor-fg-muted">
+              找到 <span class="text-cursor-accent font-semibold">{{ searchResults.length }}</span> 个相关结果
               <span v-if="searchTime" class="ml-2">(耗时 {{ searchTime }}ms)</span>
             </p>
           </div>
@@ -86,7 +86,7 @@
             <div class="flex gap-6">
               <!-- Thumbnail -->
               <div class="flex-shrink-0">
-                <div class="w-20 h-20 rounded-lg bg-gradient-to-br from-primary-500/20 to-secondary-500/20 flex items-center justify-center text-4xl">
+                <div class="w-20 h-20 rounded-cursor bg-cursor-accent-muted flex items-center justify-center text-4xl">
                   {{ result.thumbnail }}
                 </div>
               </div>
@@ -96,7 +96,7 @@
                 <div class="flex items-start justify-between mb-2">
                   <div class="flex-1">
                     <h3 class="text-lg font-semibold mb-1">{{ result.title }}</h3>
-                    <div class="flex items-center gap-3 text-xs text-neutral-500">
+                    <div class="flex items-center gap-3 text-xs text-cursor-fg-muted">
                       <AppBadge size="sm" :variant="getTypeVariant(result.type)">
                         {{ getTypeLabel(result.type) }}
                       </AppBadge>
@@ -108,15 +108,15 @@
                   <!-- Relevance Score -->
                   <div class="flex-shrink-0 ml-4">
                     <div class="text-center">
-                      <div class="text-2xl font-bold text-primary-400">
+                      <div class="text-2xl font-bold text-cursor-accent">
                         {{ getRelevancePercent(result.relevance) }}
                       </div>
-                      <div class="text-xs text-neutral-500">匹配度</div>
+                      <div class="text-xs text-cursor-fg-muted">匹配度</div>
                     </div>
                   </div>
                 </div>
 
-                <p class="text-sm text-neutral-300 line-clamp-2 mb-3">
+                <p class="text-sm text-cursor-fg line-clamp-2 mb-3">
                   {{ result.snippet }}
                 </p>
 
@@ -130,7 +130,7 @@
                     </AppButton>
                   </div>
                   
-                  <div class="text-xs text-neutral-500">
+                  <div class="text-xs text-cursor-fg-muted">
                     相关标签: AI分析 • 用户洞察
                   </div>
                 </div>
@@ -143,7 +143,7 @@
         <div v-else class="text-center py-16">
           <div class="text-6xl mb-4">🔍</div>
           <h3 class="text-xl font-semibold mb-2">没有找到匹配的结果</h3>
-          <p class="text-neutral-400">试试其他关键词或使用热门搜索标签</p>
+          <p class="text-cursor-fg-muted">试试其他关键词或使用热门搜索标签</p>
         </div>
       </div>
 
@@ -151,28 +151,28 @@
       <div v-else class="text-center py-16" v-once>
         <div class="text-8xl mb-6">💡</div>
         <h2 class="text-2xl font-bold mb-4">开始你的智能探索之旅</h2>
-        <p class="text-lg text-neutral-400 mb-8 max-w-2xl mx-auto">
+        <p class="page-subtitle mb-8 max-w-2xl mx-auto">
           输入关键词，AI将为你在海量多模态数据中找到最相关的洞察
         </p>
         <div class="flex items-center justify-center gap-4">
           <div class="text-center">
             <div class="text-3xl mb-2">🎥</div>
-            <div class="text-sm text-neutral-500">视频内容</div>
+            <div class="text-2xs text-cursor-fg-muted">视频内容</div>
           </div>
-          <div class="text-neutral-600">+</div>
+          <div class="text-cursor-fg-subtle">+</div>
           <div class="text-center">
             <div class="text-3xl mb-2">📄</div>
-            <div class="text-sm text-neutral-500">文档报告</div>
+            <div class="text-2xs text-cursor-fg-muted">文档报告</div>
           </div>
-          <div class="text-neutral-600">+</div>
+          <div class="text-cursor-fg-subtle">+</div>
           <div class="text-center">
             <div class="text-3xl mb-2">🖼️</div>
-            <div class="text-sm text-neutral-500">图片设计</div>
+            <div class="text-2xs text-cursor-fg-muted">图片设计</div>
           </div>
-          <div class="text-neutral-600">=</div>
+          <div class="text-cursor-fg-subtle">=</div>
           <div class="text-center">
             <div class="text-3xl mb-2">✨</div>
-            <div class="text-sm text-neutral-500">跨模态洞察</div>
+            <div class="text-2xs text-cursor-fg-muted">跨模态洞察</div>
           </div>
         </div>
       </div>
